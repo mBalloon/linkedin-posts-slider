@@ -14,13 +14,13 @@ if (!defined('ABSPATH')) {
 }
 
 // Include the new files
-require_once plugin_dir_path(__FILE__) . 'widget-registration.php';
-require_once plugin_dir_path(__FILE__) . 'options-page.php';
-require_once plugin_dir_path(__FILE__) . 'db-table-creation.php';
-require_once plugin_dir_path(__FILE__) . 'cron-event.php';
-require_once plugin_dir_path(__FILE__) . 'admin-menu.php';
-require_once plugin_dir_path(__FILE__) . 'ajax-actions.php';
-require_once plugin_dir_path(__FILE__) . 'linkedin-posts-syncing.php';
+require_once plugin_dir_path(__FILE__) . 'src/src/widget-registration.php';
+require_once plugin_dir_path(__FILE__) . 'src/options-page.php';
+require_once plugin_dir_path(__FILE__) . 'src/db-table-creation.php';
+require_once plugin_dir_path(__FILE__) . 'src/cron-event.php';
+require_once plugin_dir_path(__FILE__) . 'src/admin-menu.php';
+require_once plugin_dir_path(__FILE__) . 'src/ajax-actions.php';
+require_once plugin_dir_path(__FILE__) . 'src/linkedin-posts-syncing.php';
 
 function register_slider_widget($widgets_manager)
 {
@@ -250,6 +250,27 @@ function linkedin_posts_slider_admin_table_page()
       });
 
     }
+
+    jQuery('#posts-table tbody').sortable({
+      update: function(event, ui) {
+        var postOrder = jQuery(this).sortable('toArray');
+
+        jQuery.ajax({
+          url: ajaxurl,
+          type: 'POST',
+          data: {
+            action: 'update_post_order',
+            order: postOrder
+          },
+          success: function(response) {
+            // Handle success
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            // Handle error
+          }
+        });
+      }
+    });
   </script>
 
 <?php
