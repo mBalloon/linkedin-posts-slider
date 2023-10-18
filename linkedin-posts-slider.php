@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Include the new files
-require_once plugin_dir_path(__FILE__) . 'src/src/widget-registration.php';
+require_once plugin_dir_path(__FILE__) . 'src/widget-registration.php';
 require_once plugin_dir_path(__FILE__) . 'src/options-page.php';
 require_once plugin_dir_path(__FILE__) . 'src/db-table-creation.php';
 require_once plugin_dir_path(__FILE__) . 'src/cron-event.php';
