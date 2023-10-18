@@ -145,6 +145,37 @@ function linkedin_posts_slider_admin_table_page()
       button.text("...");
 
       // Make AJAX request
+      jQuery('.delete-button').click(function() {
+        var postId = jQuery(this).data('id');
+
+        jQuery.ajax({
+          url: ajaxurl,
+          type: 'POST',
+          data: {
+            action: 'delete_post',
+            id: postId
+          },
+          success: function(response) {
+            // Remove the post from the table
+            jQuery('#post-' + postId).remove();
+          }
+        });
+      });
+
+      jQuery('#posts-table tbody').sortable({
+        update: function(event, ui) {
+          var postOrder = jQuery(this).sortable('toArray');
+
+          jQuery.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+              action: 'update_post_order',
+              order: postOrder
+            }
+          });
+        }
+      });
       jQuery.ajax({
         url: "https://scrape-js.onrender.com/",
         type: "POST",

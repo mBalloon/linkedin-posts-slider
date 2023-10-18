@@ -122,53 +122,24 @@ add_action('wp_ajax_get_linkedin_posts', 'get_linkedin_posts');
 add_action('wp_ajax_nopriv_get_linkedin_posts', 'get_linkedin_posts');
 
 
-jQuery('.delete-button').click(function() {
-	var postId = jQuery(this).data('id');
-  
-	jQuery.ajax({
-	  url: ajaxurl,
-	  type: 'POST',
-	  data: {
-		action: 'delete_post',
-		id: postId
-	  },
-	  success: function(response) {
-		// Remove the post from the table
-		jQuery('#post-' + postId).remove();
-	  }
-	});
-  });
 
-  jQuery('#posts-table tbody').sortable({
-	update: function(event, ui) {
-	  var postOrder = jQuery(this).sortable('toArray');
-  
-	  jQuery.ajax({
-		url: ajaxurl,
-		type: 'POST',
-		data: {
-		  action: 'update_post_order',
-		  order: postOrder
-		}
-	  });
-	}
-  });
 
-  function update_post_order() {
+function update_post_order()
+{
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_posts';
 	$order = $_POST['order'];
-  
+
 	foreach ($order as $index => $postId) {
-	  $wpdb->update(
-		$table_name,
-		['order' => $index],
-		['id' => $postId],
-		['%d'],
-		['%d']
-	  );
+		$wpdb->update(
+			$table_name,
+			['order' => $index],
+			['id' => $postId],
+			['%d'],
+			['%d']
+		);
 	}
-  
+
 	wp_send_json_success();
-  }
-  add_action('wp_ajax_update_post_order', 'update_post_order');
+}
+add_action('wp_ajax_update_post_order', 'update_post_order');
