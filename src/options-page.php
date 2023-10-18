@@ -1,7 +1,7 @@
 <?php
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
-    exit;
+	exit;
 }
 
 // Add an options page for the Linkedin Posts Slider widget in the WordPress admin menu.

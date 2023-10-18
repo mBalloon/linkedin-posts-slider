@@ -146,11 +146,11 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
         'selector' => '{{WRAPPER}} .section-company',
         'fields_options' => [
           'typography' => ['default' => 'yes'],
-            'font_family' => ['default' => 'Titillium Web'],
-            'font_size' => ['default' => ['size' => 16]],
-            'line_height' => ['default' => ['size' => 21]],
-            'text_color' => ['default' => '#454545'],
-      ],
+          'font_family' => ['default' => 'Titillium Web'],
+          'font_size' => ['default' => ['size' => 16]],
+          'line_height' => ['default' => ['size' => 21]],
+          'text_color' => ['default' => '#454545'],
+        ],
       ]
     );
 
@@ -173,12 +173,12 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
         'selector' => '{{WRAPPER}} .section-author-date',
         'fields_options' => [
           'typography' => ['default' => 'yes'],
-            'font_family' => ['default' => 'Titillium Web'],
-            'font_size' => ['default' => ['size' => 14]],
-            'font_weight' => ['default' => 300],
-            'line_height' => ['default' => ['size' => 18]],
-            'text_color' => ['default' => '#454545'],
-      ],
+          'font_family' => ['default' => 'Titillium Web'],
+          'font_size' => ['default' => ['size' => 14]],
+          'font_weight' => ['default' => 300],
+          'line_height' => ['default' => ['size' => 18]],
+          'text_color' => ['default' => '#454545'],
+        ],
       ]
     );
 
@@ -204,7 +204,7 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
           'font_family' => ['default' => 'Titillium Web'],
           'font_size' => ['default' => ['size' => 16]],
           'text_color' => ['default' => '#adb5bd'],
-      ],
+        ],
       ]
     );
     $this->add_control(
@@ -240,13 +240,13 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
         'selector' => '{{WRAPPER}} .section-interactions',
         'fields_options' => [
           'typography' => ['default' => 'yes'],
-            'font_family' => ['default' => 'Titillium Web'],
-            'font_size' => ['default' => ['size' => 14]],
-            'font_weight' => ['default' => 300],
-            'line_height' => ['default' => ['size' => 18]],
-            'text_align' => ['default' => 'center'],
-            'text_color' => ['default' => '#454545'],
-      ],
+          'font_family' => ['default' => 'Titillium Web'],
+          'font_size' => ['default' => ['size' => 14]],
+          'font_weight' => ['default' => 300],
+          'line_height' => ['default' => ['size' => 18]],
+          'text_align' => ['default' => 'center'],
+          'text_color' => ['default' => '#454545'],
+        ],
       ]
     );
 
@@ -275,7 +275,6 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     );
 
     $this->end_controls_section();
-
   }
 
   /**
@@ -292,18 +291,30 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     wp_enqueue_style('swiper-script');
     wp_enqueue_script('slider-script');
     wp_enqueue_style('slider-style');
-    ?>
+?>
 
     <div class="swiper">
       <div class="swiper-wrapper">
         <div class="li-placeholder swiper-slide"></div>
       </div>
       <!-- Add Arrows -->
-      <div class="next-right-arrow"><button type="button" class="slick-next"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g><g><path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M335.083,271.083L228.416,377.749c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251c-8.341-8.341-8.341-21.824,0-30.165L289.835,256l-91.584-91.584c-8.341-8.341-8.341-21.824,0-30.165s21.824-8.341,30.165,0l106.667,106.667C343.424,249.259,343.424,262.741,335.083,271.083z"/></g></g></svg></button></div>
-      <div class="pre-left-arrow"><button type="button" class="slick-prev"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g><g><path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M313.749,347.584c8.341,8.341,8.341,21.824,0,30.165c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251L176.917,271.083c-8.341-8.341-8.341-21.824,0-30.165l106.667-106.667c8.341-8.341,21.824-8.341,30.165,0s8.341,21.824,0,30.165L222.165,256L313.749,347.584z"/></g></g></svg></button></div>
+      <div class="next-right-arrow"><button type="button" class="slick-next"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+            <g>
+              <g>
+                <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M335.083,271.083L228.416,377.749c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251c-8.341-8.341-8.341-21.824,0-30.165L289.835,256l-91.584-91.584c-8.341-8.341-8.341-21.824,0-30.165s21.824-8.341,30.165,0l106.667,106.667C343.424,249.259,343.424,262.741,335.083,271.083z" />
+              </g>
+            </g>
+          </svg></button></div>
+      <div class="pre-left-arrow"><button type="button" class="slick-prev"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+            <g>
+              <g>
+                <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M313.749,347.584c8.341,8.341,8.341,21.824,0,30.165c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251L176.917,271.083c-8.341-8.341-8.341-21.824,0-30.165l106.667-106.667c8.341-8.341,21.824-8.341,30.165,0s8.341,21.824,0,30.165L222.165,256L313.749,347.584z" />
+              </g>
+            </g>
+          </svg></button></div>
     </div>
 
-    <?php
+  <?php
   }
 
 
@@ -322,16 +333,28 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     wp_enqueue_style('swiper-script');
     wp_enqueue_script('slider-script');
     wp_enqueue_style('slider-style');
-    ?>
+  ?>
     <div class="swiper">
       <div class="swiper-wrapper">
         <div class="li-placeholder swiper-slide"></div>
       </div>
       <!-- Add Arrows -->
-      <div class="next-right-arrow"><button type="button" class="slick-next"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g><g><path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M335.083,271.083L228.416,377.749c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251c-8.341-8.341-8.341-21.824,0-30.165L289.835,256l-91.584-91.584c-8.341-8.341-8.341-21.824,0-30.165s21.824-8.341,30.165,0l106.667,106.667C343.424,249.259,343.424,262.741,335.083,271.083z"/></g></g></svg></button></div>
-      <div class="pre-left-arrow"><button type="button" class="slick-prev"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g><g><path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M313.749,347.584c8.341,8.341,8.341,21.824,0,30.165c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251L176.917,271.083c-8.341-8.341-8.341-21.824,0-30.165l106.667-106.667c8.341-8.341,21.824-8.341,30.165,0s8.341,21.824,0,30.165L222.165,256L313.749,347.584z"/></g></g></svg></button></div>
+      <div class="next-right-arrow"><button type="button" class="slick-next"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+            <g>
+              <g>
+                <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M335.083,271.083L228.416,377.749c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251c-8.341-8.341-8.341-21.824,0-30.165L289.835,256l-91.584-91.584c-8.341-8.341-8.341-21.824,0-30.165s21.824-8.341,30.165,0l106.667,106.667C343.424,249.259,343.424,262.741,335.083,271.083z" />
+              </g>
+            </g>
+          </svg></button></div>
+      <div class="pre-left-arrow"><button type="button" class="slick-prev"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+            <g>
+              <g>
+                <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M313.749,347.584c8.341,8.341,8.341,21.824,0,30.165c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251L176.917,271.083c-8.341-8.341-8.341-21.824,0-30.165l106.667-106.667c8.341-8.341,21.824-8.341,30.165,0s8.341,21.824,0,30.165L222.165,256L313.749,347.584z" />
+              </g>
+            </g>
+          </svg></button></div>
     </div>
 
-    <?php
+<?php
   }
 }

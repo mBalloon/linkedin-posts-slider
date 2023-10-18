@@ -4,7 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function linkedin_posts_slider_add_admin_menu() {
+function linkedin_posts_slider_add_admin_menu()
+{
     add_menu_page(
         'Linkedin Posts Slider Options', // page title
         'Linkedin Posts Slider', // menu title

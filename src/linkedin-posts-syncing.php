@@ -4,7 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function sync_linkedin_posts() {
+function sync_linkedin_posts()
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'linkedin_posts';
 

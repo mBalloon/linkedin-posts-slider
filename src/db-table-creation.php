@@ -1,7 +1,7 @@
 <?php
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
-    exit;
+	exit;
 }
 
 function linkedin_posts_slider_create_table()
