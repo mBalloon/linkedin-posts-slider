@@ -22,13 +22,6 @@ require_once plugin_dir_path(__FILE__) . 'src/admin-menu.php';
 require_once plugin_dir_path(__FILE__) . 'src/ajax-actions.php';
 require_once plugin_dir_path(__FILE__) . 'src/linkedin-posts-syncing.php';
 
-function register_slider_widget($widgets_manager)
-{
-  require_once(__DIR__ . '/widgets/slider-widget.php');
-
-  $widgets_manager->register(new \Elementor_Slider_Widget());
-}
-add_action('elementor/widgets/register', 'register_slider_widget');
 
 // Hook into cron event
 add_action('linkedin_posts_sync_event', 'linkedin_posts_sync');
