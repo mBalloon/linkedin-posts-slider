@@ -33,6 +33,8 @@ add_action('elementor/widgets/register', 'register_slider_widget');
 // Hook into cron event
 add_action('linkedin_posts_sync_event', 'linkedin_posts_sync');
 
+
+
 function linkedin_posts_slider_admin_table_page()
 {
 	global $wpdb;
