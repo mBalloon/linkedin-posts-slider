@@ -12,6 +12,16 @@ function linkedin_posts_slider_options_page()
 		return;
 	}
 
+	jQuery(document).ready(function($) {
+		$('#background_color').on('change', function() {
+			$('#slider-preview').css('background-color', $(this).val());
+		});
+	
+		$('#font_size').on('change', function() {
+			$('#slider-preview').css('font-size', $(this).val() + 'px');
+		});
+	});
+
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_posts';
 	$message = '';
