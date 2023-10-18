@@ -128,12 +128,12 @@ function update_post_order()
 {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_posts';
-	$order = $_POST['order'];
+	$post_order = $_POST['post_order'];
 
-	foreach ($order as $index => $postId) {
+	foreach ($post_order as $index => $postId) {
 		$wpdb->update(
 			$table_name,
-			['order' => $index],
+			['post_order' => $index],
 			['id' => $postId],
 			['%d'],
 			['%d']

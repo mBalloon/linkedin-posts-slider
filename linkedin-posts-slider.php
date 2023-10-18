@@ -171,7 +171,7 @@ function linkedin_posts_slider_admin_table_page()
             type: 'POST',
             data: {
               action: 'update_post_order',
-              order: postOrder
+              post_order: postOrder
             }
           });
         }
@@ -284,7 +284,7 @@ function linkedin_posts_slider_admin_table_page()
           type: 'POST',
           data: {
             action: 'update_post_order',
-            order: postOrder
+            post_order: postOrder
           },
           success: function(response) {
             // Handle success

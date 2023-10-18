@@ -13,20 +13,21 @@ function linkedin_posts_slider_create_table()
 	$charset_collate = $wpdb->get_charset_collate();
 
 	$sql = "CREATE TABLE $table_name (
-		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		url text NOT NULL,
-		author text NOT NULL,
-		username text NOT NULL,
-		age text NOT NULL,
-		profilePicture text NOT NULL,
-		copy text NOT NULL,
-		images text NOT NULL,
-		reactions int NOT NULL,
-		comments int NOT NULL,
-		synced boolean NOT NULL,
-		published boolean NOT NULL,
-		PRIMARY KEY  (id)
-	) $charset_collate;";
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        url text NOT NULL,
+        author text NOT NULL,
+        username text NOT NULL,
+        age text NOT NULL,
+        profilePicture text NOT NULL,
+        copy text NOT NULL,
+        images text NOT NULL,
+        reactions int NOT NULL,
+        comments int NOT NULL,
+        synced boolean NOT NULL,
+        published boolean NOT NULL,
+        post_order int NOT NULL,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
 
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	dbDelta($sql);
