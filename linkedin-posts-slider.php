@@ -23,8 +23,6 @@ require_once plugin_dir_path(__FILE__) . 'src/ajax-actions.php';
 require_once plugin_dir_path(__FILE__) . 'src/linkedin-posts-syncing.php';
 
 
-// Hook into cron event
-add_action('linkedin_posts_sync_event', 'linkedin_posts_sync');
 
 
 /**
