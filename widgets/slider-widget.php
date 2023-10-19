@@ -288,7 +288,7 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
   protected function render()
   {
     wp_enqueue_style('swiper-style');
-    wp_enqueue_style('swiper-script');
+    wp_enqueue_script('swiper-script');
     wp_enqueue_script('slider-script');
     wp_enqueue_style('slider-style');
 ?>
@@ -330,7 +330,7 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
   protected function content_template()
   {
     wp_enqueue_style('swiper-style');
-    wp_enqueue_style('swiper-script');
+    wp_enqueue_script('swiper-script');
     wp_enqueue_script('slider-script');
     wp_enqueue_style('slider-style');
   ?>

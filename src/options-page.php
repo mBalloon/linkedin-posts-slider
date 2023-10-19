@@ -4,6 +4,36 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+function linkedin_posts_slider_register_settings()
+{
+	// Company info section
+	register_setting('linkedin-posts-slider', 'section-company-color');
+	register_setting('linkedin-posts-slider', 'section-company-font-size');
+	register_setting('linkedin-posts-slider', 'section-company-font-family');
+	register_setting('linkedin-posts-slider', 'section-company-line-height');
+
+	// Author username and date section
+	register_setting('linkedin-posts-slider', 'section-author-date-color');
+	register_setting('linkedin-posts-slider', 'section-author-date-font-size');
+	register_setting('linkedin-posts-slider', 'section-author-date-font-family');
+	register_setting('linkedin-posts-slider', 'section-author-date-font-weight');
+	register_setting('linkedin-posts-slider', 'section-author-date-line-height');
+
+	// Post text section
+	register_setting('linkedin-posts-slider', 'section-body-color');
+	register_setting('linkedin-posts-slider', 'section-body-font-size');
+	register_setting('linkedin-posts-slider', 'section-body-font-family');
+	register_setting('linkedin-posts-slider', 'section-body-webkit-line-clamp');
+
+	// Post interactions section
+	register_setting('linkedin-posts-slider', 'section-interactions-color');
+	register_setting('linkedin-posts-slider', 'section-interactions-font-size');
+	register_setting('linkedin-posts-slider', 'section-interactions-font-family');
+	register_setting('linkedin-posts-slider', 'section-interactions-font-weight');
+	register_setting('linkedin-posts-slider', 'section-interactions-line-height');
+}
+add_action('admin_init', 'linkedin_posts_slider_register_settings');
+
 // Add an options page for the Linkedin Posts Slider widget in the WordPress admin menu.
 function linkedin_posts_slider_options_page()
 {
@@ -13,9 +43,10 @@ function linkedin_posts_slider_options_page()
 	}
 
 	// Register and enqueue the stylesheet
-	wp_register_style('slider-style', plugins_url('../public/styles.css', __FILE__));
-	wp_enqueue_style('slider-style');
-
+	//wp_register_style('slider-style', plugins_url('../public/styles.css', __FILE__));
+	//wp_enqueue_style('slider-style');
+	wp_register_style('swiper-style', plugins_url('../public/swiperjs/swiper-bundle.css', __FILE__));
+	wp_enqueue_style('swiper-style');
 
 	// Add the jQuery code to handle the changes
 	echo <<<'EOT'
@@ -105,11 +136,30 @@ function linkedin_posts_slider_options_page()
 	// Add the CSS code to style the slider
 	echo '
 	<style>
+	body {
+		font-family: Arial, sans-serif;
+	}
+	  
+	.swiper-slide{
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		background-color: #ffffff;
+		box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
+		height: 100%;
+		margin-bottom: 4px;
+	}
+	  
 	.section-company {
 		color: ' . get_option('section-company-color', '#454545') . ';
 		font-size: ' . get_option('section-company-font-size', '16px') . ';
 		font-family: ' . get_option('section-company-font-family', '"Titillium Web"') . ';
 		line-height: ' . get_option('section-company-line-height', '21px') . ';
+
+		padding-top: 10px;
 	}
 	.section-author-date {
 		color: ' . get_option('section-author-date-color', '#454545') . ';
@@ -117,8 +167,20 @@ function linkedin_posts_slider_options_page()
 		font-family: ' . get_option('section-author-date-font-family', '"Titillium Web"') . ';
 		font-weight: ' . get_option('section-author-date-font-weight', '300') . ';
 		line-height: ' . get_option('section-author-date-line-height', '18px') . ';
+
+		padding-top: 10px;
+		gap: 3px;
+  		margin-bottom: 10px;
 	}
 	.section-body {
+
+		text-align: center;
+  		overflow: hidden;
+  		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		margin-right: 10px;
+		margin-left: 10px;
+		margin-bottom: 60px;
 		color: ' . get_option('section-body-color', '#adb5bd') . ';
 		font-size: ' . get_option('section-body-font-size', '16px') . ';
 		font-family: ' . get_option('section-body-font-family', '"Titillium Web"') . ';
@@ -130,24 +192,137 @@ function linkedin_posts_slider_options_page()
 		font-family: ' . get_option('section-interactions-font-family', '"Titillium Web"') . ';
 		font-weight: ' . get_option('section-interactions-font-weight', '300') . ';
 		line-height: ' . get_option('section-interactions-line-height', '18px') . ';
+
+		padding-right: 7px;
+  		width: 100%;
+  		position: absolute;
+  		bottom: 7px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		gap: 5px;
 	}
+	.li-icon-white {
+
+		width: 100%;
+		position: absolute;
+		top: 5px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+	.li-post-card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		background-color: #ffffff;
+		box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
+	}
+	  
+	  .img-container {
+		z-index: -1;
+		min-height: 350px;
+		display: flex;
+		flex-direction: column;
+	}
+	  
+	.info-container {
+		z-index: -1;
+		height: 40%;
+		max-height: 40%;
+		display: flex;
+		flex-direction: column;
+	}
+	.li-single-img {
+		flex-grow: 1;
+		height: 100%;
+		width: 100%;
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	.li-img-two {
+		flex-grow: 1;
+		height: 50%;
+		width: 100%;
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	.li-img-three-main {
+		flex-grow: 1;
+		height: 70%;
+		width: 100%;
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	.li-img-three-sec-container {
+		flex-grow: 1;
+		width: 100%;
+		display: grid;
+		grid-auto-flow: column;
+	}
+	  .li-img-three-sec {
+		height: 100%;
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	.li-author-img {
+		margin-top: -15px;
+		margin-right: auto;
+		margin-left: auto;
+		width: 60px;
+		height: 60px;
+		border-radius: 10000px;
+		box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	
+
+
 	.options-form {
 		float: left;
 		width: 50%;
 	}
+	.form-field{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: left;
+	}
 	.right-section {
 		float: right;
 		width: 50%;
+		height: 100%;
 		display: flex;
+		align-items: center;
+  		justify-content: center;
+		flex-direction: column;
+
+	}
+	.post-preview-class{
+		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		width: 100%;
+		height: 100%;
 	}
 	</style>
 	';
 
 	echo <<<'EOT'
 	<div class="right-section">
-		<div id="post-preview">
+		<div id="post-preview" class="post-preview-class">
 			<div class="swiper-slide">
 			<div class="li-icon-white">
 			<svg
@@ -187,6 +362,8 @@ function linkedin_posts_slider_options_page()
 			</div>
 			<p class="section-body">
 				Come see a live demo of femtosecond tube cutting today and tomorrow at MDM
+				in booth 2803! 
+				Come see a live demo of femtosecond tube cutting today and tomorrow at MDM
 				in booth 2803!
 			</p>
 			<div class="section-interactions">
@@ -224,7 +401,7 @@ function linkedin_posts_slider_options_page()
 
 	// Add the HTML code for the form fields
 	echo '
-	<form method="post" action="options.php">
+	<form method="post" action="options-page.php" class="options-form">
 	<div class="form-field">
 		<label for="section-company-color">Company info section color:</label>
 		<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
@@ -327,36 +504,7 @@ function linkedin_posts_slider_options_page()
 		<label for="section-interactions-line-height">Line height:</label>
 		<input type="text" id="section-interactions-line-height" name="section-interactions-line-height" value="' . esc_attr(get_option('section-interactions-line-height', '18px')) . '">
 		</div>
-		' . submit_button() . '
-	</form>';
+		' 
+		echo submit_button() . ' </form>';
 }
 
-function linkedin_posts_slider_register_settings()
-{
-	// Company info section
-	register_setting('linkedin-posts-slider', 'section-company-color');
-	register_setting('linkedin-posts-slider', 'section-company-font-size');
-	register_setting('linkedin-posts-slider', 'section-company-font-family');
-	register_setting('linkedin-posts-slider', 'section-company-line-height');
-
-	// Author username and date section
-	register_setting('linkedin-posts-slider', 'section-author-date-color');
-	register_setting('linkedin-posts-slider', 'section-author-date-font-size');
-	register_setting('linkedin-posts-slider', 'section-author-date-font-family');
-	register_setting('linkedin-posts-slider', 'section-author-date-font-weight');
-	register_setting('linkedin-posts-slider', 'section-author-date-line-height');
-
-	// Post text section
-	register_setting('linkedin-posts-slider', 'section-body-color');
-	register_setting('linkedin-posts-slider', 'section-body-font-size');
-	register_setting('linkedin-posts-slider', 'section-body-font-family');
-	register_setting('linkedin-posts-slider', 'section-body-webkit-line-clamp');
-
-	// Post interactions section
-	register_setting('linkedin-posts-slider', 'section-interactions-color');
-	register_setting('linkedin-posts-slider', 'section-interactions-font-size');
-	register_setting('linkedin-posts-slider', 'section-interactions-font-family');
-	register_setting('linkedin-posts-slider', 'section-interactions-font-weight');
-	register_setting('linkedin-posts-slider', 'section-interactions-line-height');
-}
-add_action('admin_init', 'linkedin_posts_slider_register_settings');
