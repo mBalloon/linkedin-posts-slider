@@ -6,7 +6,8 @@ if (!defined('ABSPATH')) {
 
 function register_slider_widget($widgets_manager)
 {
-    require_once(__DIR__ . '/widgets/slider-widget.php');
+    //require_once(__DIR__ . '/widgets/slider-widget.php');
+    require_once plugin_dir_path(__FILE__) . '/widgets/slider-widget.php';
     $widgets_manager->register(new \Elementor_Slider_Widget());
 }
 
