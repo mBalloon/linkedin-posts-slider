@@ -13,13 +13,13 @@ function sync_linkedin_posts()
     $rows = $wpdb->get_results("SELECT * FROM $table_name WHERE synced = 0");
 
     foreach ($rows as $row) {
-        $url = $row->url;
+        $urn = $row->urn;
 
         // Make the API call to scrape-js.onrender.com
         $response = wp_remote_post('https://scrape-js.onrender.com/', [
             'headers' => ['Content-Type' => 'application/json'],
             'body' => json_encode([
-                'url' => $url,
+                'urn' => $urn,
                 'secretKey' => 'PzoiJcU2ocfOeWj6AQQdkQ'
             ])
         ]);
@@ -34,18 +34,18 @@ function sync_linkedin_posts()
         $wpdb->update(
             $table_name,
             [
-                'url' => $data['url'],
+                'urn' => $data['urn'],
                 'author' => $data['author'],
                 'username' => $data['username'],
                 'age' => $data['age'],
                 'profilePicture' => $data['profilePicture'],
-                'copy' => $data['copy'],
+                'post_text' => $data['post_text'],
                 'images' => json_encode($data['images']),
                 'reactions' => $data['reactions'],
                 'comments' => $data['comments'],
                 'synced' => 1
             ],
-            ['url' => $url],
+            ['urn' => $urn],
             ['%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d'],
             ['%s']
         );

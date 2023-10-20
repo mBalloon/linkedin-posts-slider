@@ -24,7 +24,7 @@ function update_row()
 	$username = sanitize_text_field($data['username']);
 	$age = sanitize_text_field($data['age']);
 	$profilePicture = esc_url_raw($data['profilePicture']);
-	$copy = sanitize_text_field($data['copy']);
+	$post_text = sanitize_text_field($data['post_text']);
 	$images = array_map('esc_url_raw', $data['images']);
 	$reactions = intval($data['reactions']);
 	$comments = intval($data['comments']);
@@ -39,7 +39,7 @@ function update_row()
 			'username' => $username,
 			'age' => $age,
 			'profilePicture' => $profilePicture,
-			'copy' => $copy,
+			'post_text' => $post_text,
 			'images' => json_encode($images),
 			'reactions' => $reactions,
 			'comments' => $comments,

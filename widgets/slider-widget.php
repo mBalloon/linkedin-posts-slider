@@ -184,10 +184,10 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
 
     $this->end_controls_section();
 
-    // 1d. Section Copy control
+    // 1d. Section post_text control
 
     $this->start_controls_section(
-      'post_copy_section',
+      'post_text_section',
       [
         'label' => esc_html__('Section - Body', 'elementor-slider-widget'),
         'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
@@ -197,7 +197,7 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     $this->add_group_control(
       \Elementor\Group_Control_Typography::get_type(),
       [
-        'name' => 'post_copy_typography',
+        'name' => 'post_text_typography',
         'selector' => '{{WRAPPER}} .section-body',
         'fields_options' => [
           'typography' => ['default' => 'yes'],
@@ -208,7 +208,7 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
       ]
     );
     $this->add_control(
-      'post_copy_max_characters',
+      'post_text_max_characters',
       [
         'label' => __('Max Lines', 'elementor-slider-widget'),
         'type' => \Elementor\Controls_Manager::NUMBER,

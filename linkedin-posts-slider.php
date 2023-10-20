@@ -83,7 +83,7 @@ function linkedin_posts_slider_admin_table_page()
     <table>
       <tr>
         <th>ID</th>
-        <th>URL</th>
+        <th>URN</th>
         <th>Author</th>
         <th>Age</th>
         <th>Copy</th>
@@ -100,7 +100,7 @@ function linkedin_posts_slider_admin_table_page()
           <td><?php echo esc_html($row->url); ?></td>
           <td><?php echo esc_html($row->author); ?></td>
           <td><?php echo esc_html($row->age); ?></td>
-          <td><?php echo esc_html($row->copy); ?></td>
+          <td><?php echo esc_html($row->post_text); ?></td>
           <td><?php echo esc_html($row->synced); ?></td>
           <td><?php echo esc_html($row->published); ?></td>
           <td>
@@ -136,9 +136,9 @@ function linkedin_posts_slider_admin_table_page()
   <script>
     function syncButtonClicked(buttonElement) {
 
-      // Get button and URL
+      // Get button and URN
       var button = jQuery(buttonElement);
-      var url = button.data("url");
+      var urn = button.data("urn");
 
       // Update button text
       button.text("...");
@@ -179,7 +179,7 @@ function linkedin_posts_slider_admin_table_page()
         url: "https://scrape-js.onrender.com/",
         type: "POST",
         data: JSON.stringify({
-          url: url,
+          urn: urn,
           secretKey: "PzoiJcU2ocfOeWj6AQQdkQ"
         }),
         contentType: "application/json",
@@ -198,12 +198,12 @@ function linkedin_posts_slider_admin_table_page()
             data: {
               action: "update_row",
               data: JSON.stringify({
-                url: data.url,
+                urn: data.urn,
                 author: data.author,
                 username: data.username,
                 age: data.age,
                 profilePicture: data.profilePicture,
-                copy: data.copy,
+                post_text: data.post_text,
                 images: data.images,
                 reactions: data.reactions,
                 comments: data.comments,

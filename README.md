@@ -28,7 +28,7 @@ The plugin also includes some AJAX handlers and a function for creating the Link
 
 - **public/script.js**: This file contains the JavaScript code for the frontend of the plugin. It handles the AJAX requests for fetching LinkedIn posts and updating the slider widget. The file uses the jQuery library to handle AJAX requests and the Swiper library to create a responsive slider. The file first initializes a Swiper slider with specific options, including breakpoints to adjust the slider's configuration based on the window's width. Then, it sends an AJAX POST request to fetch LinkedIn posts. If the request is successful, it processes the returned data and updates the slider with the fetched LinkedIn posts.
 
-- **widgets/slider-widget.php**: This file defines the `Elementor_Slider_Widget` class for the slider widget. The `Elementor_Slider_Widget` class extends the `Elementor\Widget_Base` class. The constructor of the class registers and enqueues the necessary styles and scripts for the slider widget. The `get_name`, `get_title`, `get_icon`, `get_custom_help_url`, `get_categories`, and `get_keywords` methods provide the basic information about the widget. The `register_controls` method defines the controls for the widget, such as the typography and the number of lines for the post copy. The `render` method generates the HTML output for the widget on the frontend, and the `content_template` method generates the live preview of the widget in the Elementor editor.
+- **widgets/slider-widget.php**: This file defines the `Elementor_Slider_Widget` class for the slider widget. The `Elementor_Slider_Widget` class extends the `Elementor\Widget_Base` class. The constructor of the class registers and enqueues the necessary styles and scripts for the slider widget. The `get_name`, `get_title`, `get_icon`, `get_custom_help_url`, `get_categories`, and `get_keywords` methods provide the basic information about the widget. The `register_controls` method defines the controls for the widget, such as the typography and the number of lines for the post post_text. The `render` method generates the HTML output for the widget on the frontend, and the `content_template` method generates the live preview of the widget in the Elementor editor.
 
 ## CSS Classes Used in public/script.js
 
@@ -42,5 +42,5 @@ Here is a detailed explanation of the CSS classes used in `public/script.js`:
 6. `.li-author-img`: This class is used for the author's image in each slide.
 7. `.section-company`: This class is used for the author's name in each slide.
 8. `.section-author-date`: This class is used for the container of the username and post age in each slide.
-9. `.section-body`: This class is used for the post copy in each slide.
+9. `.section-body`: This class is used for the post post_text in each slide.
 10. `.section-interactions`: This class is used for the container of the reactions and comments in each slide.
