@@ -1,15 +1,15 @@
 <?php
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
-    exit;
+  exit;
 }
 
 function linkedin_posts_slider_create_table()
 {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'linkedin_posts';
-    $charset_collate = $wpdb->get_charset_collate();
-    $sql = "CREATE TABLE $table_name (
+  global $wpdb;
+  $table_name = $wpdb->prefix . 'linkedin_posts';
+  $charset_collate = $wpdb->get_charset_collate();
+  $sql = "CREATE TABLE $table_name (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         url text NOT NULL,
         author text NOT NULL,
@@ -25,11 +25,12 @@ function linkedin_posts_slider_create_table()
         post_order int NOT NULL,
         PRIMARY KEY (id)
     ) $charset_collate;";
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    dbDelta($sql);
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+  dbDelta($sql);
 
-    // JSON data from the file
-    $json_data = <<<'EOT'
+  // JSON data from the file
+  $json_data = <<<'EOT'
+      [
         {
           "Position": "1",
           "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
@@ -150,30 +151,30 @@ function linkedin_posts_slider_create_table()
       ]
       EOT;
 
-    // Decode JSON data into a PHP array
-    $data = json_decode($json_data, true);
+  // Decode JSON data into a PHP array
+  $data = json_decode($json_data, true);
 
-    // Iterate through the array and insert each item into the database
-    foreach ($data as $item) {
-        $wpdb->insert(
-            $table_name,
-            array(
-                'url' => $item['url'],
-                'author' => $item['author'],
-                'username' => $item['username'],
-                'age' => $item['age'],
-                'profilePicture' => $item['profilePicture'],
-                'copy' => $item['copy'],
-                'images' => json_encode($item['images']),
-                'reactions' => $item['reactions'],
-                'comments' => $item['comments'],
-                'synced' => 0,
-                'published' => 0,
-                'post_order' => $item['Position']
-            ),
-            array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d')
-        );
-    }
+  // Iterate through the array and insert each item into the database
+  foreach ($data as $item) {
+    $wpdb->insert(
+      $table_name,
+      array(
+        'url' => $item['url'],
+        'author' => $item['author'],
+        'username' => $item['username'],
+        'age' => $item['age'],
+        'profilePicture' => $item['profilePicture'],
+        'copy' => $item['copy'],
+        'images' => json_encode($item['images']),
+        'reactions' => $item['reactions'],
+        'comments' => $item['comments'],
+        'synced' => 0,
+        'published' => 0,
+        'post_order' => $item['Position']
+      ),
+      array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d')
+    );
+  }
 }
 
 register_activation_hook(__FILE__, 'linkedin_posts_slider_create_table');
