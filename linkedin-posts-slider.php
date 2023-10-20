@@ -22,7 +22,8 @@ require_once plugin_dir_path(__FILE__) . 'src/admin-menu.php';
 require_once plugin_dir_path(__FILE__) . 'src/ajax-actions.php';
 require_once plugin_dir_path(__FILE__) . 'src/linkedin-posts-syncing.php';
 
-
+// Register the activation hook for table creation
+register_activation_hook(__FILE__, 'linkedin_posts_slider_create_table');
 
 
 /**
