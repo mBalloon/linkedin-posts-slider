@@ -183,8 +183,8 @@ function linkedin_posts_slider_create_table()
         'images' => json_encode($item['images']),
         'reactions' => $item['reactions'],
         'comments' => $item['comments'],
-        'synced' => 0,
-        'published' => 0,
+        'synced' => 1,
+        'published' => 1,
         'post_order' => $item['post_order']
       ),
       array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d')
