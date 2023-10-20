@@ -114,6 +114,27 @@ function linkedin_posts_slider_options_page()
 		$(".section-interactions").css("line-height", $(this).val() + 'px');
 		}); 
 
+		jQuery(document).ready(function($) {
+			$("form").on("submit", function(event) {
+				event.preventDefault();
+		
+				var formData = $(this).serialize();
+		
+				$.ajax({
+					url: ajaxurl, // This is a variable automatically defined by WordPress that contains the URL to wp-admin/admin-ajax.php
+					type: 'POST',
+					data: {
+						action: 'save_form_data', // This should match the action hook in your PHP code
+						nonce: your_nonce, // Replace this with the actual nonce
+						form_data: $(this).serialize() // This serializes the form data
+					},
+					success: function(data) {
+						// Handle the server response here
+					}
+				});
+			});
+		});
+
 		// Handle form field changes
 		$("form input, form select").on("change", function() {
 			// Get the form data
@@ -316,6 +337,8 @@ function linkedin_posts_slider_options_page()
 		align-items: center;
 		width: 100%;
 		height: 100%;
+		max-width: 400px;
+		margin-top: 20vh;
 	}
 	</style>
 	';
@@ -503,8 +526,6 @@ function linkedin_posts_slider_options_page()
 		<div class="form-field">
 		<label for="section-interactions-line-height">Line height:</label>
 		<input type="text" id="section-interactions-line-height" name="section-interactions-line-height" value="' . esc_attr(get_option('section-interactions-line-height', '18px')) . '">
-		</div>
-		' 
-		echo submit_button() . ' </form>';
+		</div>';
+	echo submit_button() . ' </form>';
 }
-
