@@ -8,6 +8,10 @@ Author: Omar Nagy
 Author URI: https://github.com/omarnagy91
 */
 
+/**
+ * TODO: add an options page to manage the published posts's order and the syncing.
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
   exit;

@@ -128,131 +128,6 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
    */
   protected function register_controls()
   {
-
-    // 1a. Section Company control
-
-    $this->start_controls_section(
-      'author_name',
-      [
-        'label' => esc_html__('Section - Company', 'elementor-slider-widget'),
-        'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-      ]
-    );
-
-    $this->add_group_control(
-      \Elementor\Group_Control_Typography::get_type(),
-      [
-        'name' => 'author_name_typography',
-        'selector' => '{{WRAPPER}} .section-company',
-        'fields_options' => [
-          'typography' => ['default' => 'yes'],
-          'font_family' => ['default' => 'Titillium Web'],
-          'font_size' => ['default' => ['size' => 16]],
-          'line_height' => ['default' => ['size' => 21]],
-          'text_color' => ['default' => '#454545'],
-        ],
-      ]
-    );
-
-    $this->end_controls_section();
-
-    // 1b. Section Author-Date control
-
-    $this->start_controls_section(
-      'author_username',
-      [
-        'label' => esc_html__('Section - Author-Date', 'elementor-slider-widget'),
-        'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-      ]
-    );
-
-    $this->add_group_control(
-      \Elementor\Group_Control_Typography::get_type(),
-      [
-        'name' => 'author_username_typography',
-        'selector' => '{{WRAPPER}} .section-author-date',
-        'fields_options' => [
-          'typography' => ['default' => 'yes'],
-          'font_family' => ['default' => 'Titillium Web'],
-          'font_size' => ['default' => ['size' => 14]],
-          'font_weight' => ['default' => 300],
-          'line_height' => ['default' => ['size' => 18]],
-          'text_color' => ['default' => '#454545'],
-        ],
-      ]
-    );
-
-    $this->end_controls_section();
-
-    // 1d. Section post_text control
-
-    $this->start_controls_section(
-      'post_text_section',
-      [
-        'label' => esc_html__('Section - Body', 'elementor-slider-widget'),
-        'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-      ]
-    );
-
-    $this->add_group_control(
-      \Elementor\Group_Control_Typography::get_type(),
-      [
-        'name' => 'post_text_typography',
-        'selector' => '{{WRAPPER}} .section-body',
-        'fields_options' => [
-          'typography' => ['default' => 'yes'],
-          'font_family' => ['default' => 'Titillium Web'],
-          'font_size' => ['default' => ['size' => 16]],
-          'text_color' => ['default' => '#adb5bd'],
-        ],
-      ]
-    );
-    $this->add_control(
-      'post_text_max_characters',
-      [
-        'label' => __('Max Lines', 'elementor-slider-widget'),
-        'type' => \Elementor\Controls_Manager::NUMBER,
-        'min' => 1,
-        'max' => 15,
-        'step' => 1,
-        'default' => 5,
-        'selectors' => [
-          '{{WRAPPER}} .section-body' => '-webkit-line-clamp: {{VALUE}};',
-        ],
-      ]
-    );
-
-    $this->end_controls_section();
-
-    // 1e. Section Interactions control
-    $this->start_controls_section(
-      'post_reactions_section',
-      [
-        'label' => esc_html__('Section - Interactions', 'elementor-slider-widget'),
-        'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-      ]
-    );
-
-    $this->add_group_control(
-      \Elementor\Group_Control_Typography::get_type(),
-      [
-        'name' => 'post_reactions_typography',
-        'selector' => '{{WRAPPER}} .section-interactions',
-        'fields_options' => [
-          'typography' => ['default' => 'yes'],
-          'font_family' => ['default' => 'Titillium Web'],
-          'font_size' => ['default' => ['size' => 14]],
-          'font_weight' => ['default' => 300],
-          'line_height' => ['default' => ['size' => 18]],
-          'text_align' => ['default' => 'center'],
-          'text_color' => ['default' => '#454545'],
-        ],
-      ]
-    );
-
-    $this->end_controls_section();
-
-
     // 1h. Custom CSS box control
     $this->start_controls_section(
       'custom_css_section',
@@ -291,6 +166,37 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     wp_enqueue_script('swiper-script');
     wp_enqueue_script('slider-script');
     wp_enqueue_style('slider-style');
+
+    $custom_css = '
+      .section-company {
+        color: ' . get_option('section-company-color', '#454545') . ';
+        font-size: ' . get_option('section-company-font-size', '16px') . ';
+        font-family: ' . get_option('section-company-font-family', '"Titillium Web"') . ';
+        line-height: ' . get_option('section-company-line-height', '21px') . ';
+      }
+      .section-author-date {
+        color: ' . get_option('section-author-date-color', '#454545') . ';
+        font-size: ' . get_option('section-author-date-font-size', '14px') . ';
+        font-family: ' . get_option('section-author-date-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_option('section-author-date-font-weight', '300') . ';
+        line-height: ' . get_option('section-author-date-line-height', '18px') . ';
+      }
+      .section-body {
+        color: ' . get_option('section-body-color', '#adb5bd') . ';
+        font-size: ' . get_option('section-body-font-size', '16px') . ';
+        font-family: ' . get_option('section-body-font-family', '"Titillium Web"') . ';
+        -webkit-line-clamp: ' . get_option('section-body-webkit-line-clamp', '5') . ';
+      }
+      .section-interactions {
+        color: ' . get_option('section-interactions-color', '#454545') . ';
+        font-size: ' . get_option('section-interactions-font-size', '14px') . ';
+        font-family: ' . get_option('section-interactions-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_option('section-interactions-font-weight', '300') . ';
+        line-height: ' . get_option('section-interactions-line-height', '18px') . ';
+      }';
+    // Add the custom style
+    wp_add_inline_style('slider-style', $custom_css);
+
 ?>
 
     <div class="swiper">
@@ -333,6 +239,37 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     wp_enqueue_script('swiper-script');
     wp_enqueue_script('slider-script');
     wp_enqueue_style('slider-style');
+
+    $custom_css = '
+      .section-company {
+        color: ' . get_option('section-company-color', '#454545') . ';
+        font-size: ' . get_option('section-company-font-size', '16px') . ';
+        font-family: ' . get_option('section-company-font-family', '"Titillium Web"') . ';
+        line-height: ' . get_option('section-company-line-height', '21px') . ';
+      }
+      .section-author-date {
+        color: ' . get_option('section-author-date-color', '#454545') . ';
+        font-size: ' . get_option('section-author-date-font-size', '14px') . ';
+        font-family: ' . get_option('section-author-date-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_option('section-author-date-font-weight', '300') . ';
+        line-height: ' . get_option('section-author-date-line-height', '18px') . ';
+      }
+      .section-body {
+        color: ' . get_option('section-body-color', '#adb5bd') . ';
+        font-size: ' . get_option('section-body-font-size', '16px') . ';
+        font-family: ' . get_option('section-body-font-family', '"Titillium Web"') . ';
+        -webkit-line-clamp: ' . get_option('section-body-webkit-line-clamp', '5') . ';
+      }
+      .section-interactions {
+        color: ' . get_option('section-interactions-color', '#454545') . ';
+        font-size: ' . get_option('section-interactions-font-size', '14px') . ';
+        font-family: ' . get_option('section-interactions-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_option('section-interactions-font-weight', '300') . ';
+        line-height: ' . get_option('section-interactions-line-height', '18px') . ';
+      }';
+    // Add the custom style
+    wp_add_inline_style('slider-style', $custom_css);
+
   ?>
     <div class="swiper">
       <div class="swiper-wrapper">

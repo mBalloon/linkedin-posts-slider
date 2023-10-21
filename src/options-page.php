@@ -124,6 +124,7 @@ function linkedin_posts_slider_options_page()
 					url: ajaxurl, // This is a variable automatically defined by WordPress that contains the URL to wp-admin/admin-ajax.php
 					type: 'POST',
 					data: {
+						//TODO: Add the options saving logic and steps here
 						action: 'save_form_data', // This should match the action hook in your PHP code
 						nonce: your_nonce, // Replace this with the actual nonce
 						form_data: $(this).serialize() // This serializes the form data
@@ -307,9 +308,6 @@ function linkedin_posts_slider_options_page()
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
-	
-
-
 	.options-form {
 		float: left;
 		width: 50%;
@@ -342,6 +340,8 @@ function linkedin_posts_slider_options_page()
 	}
 	</style>
 	';
+
+
 
 	echo <<<'EOT'
 	<div class="right-section">
@@ -421,6 +421,15 @@ function linkedin_posts_slider_options_page()
 		</div>
 	</div>
 	EOT;
+
+	/**
+	 * TODO: Style the form fields using CSS.
+	 * TODO[]: Add gaps between the form fields.
+	 * TODO[]: edit labels and add tooltips.
+	 * TODO[]: add loader when submitting the form.
+	 * TODO[]: rearrange the small form fields 2 in each row.
+	 * TODO[]: add a reset button.
+	 */
 
 	// Add the HTML code for the form fields
 	echo '
