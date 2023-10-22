@@ -19,7 +19,7 @@ function sync_linkedin_posts()
         $response = wp_remote_post('https://scrape-js.onrender.com/', [
             'headers' => ['Content-Type' => 'application/json'],
             'body' => json_encode([
-                'urn' => $urn,
+                'url' => $urn,
                 'secretKey' => 'PzoiJcU2ocfOeWj6AQQdkQ'
             ])
         ]);
@@ -34,12 +34,12 @@ function sync_linkedin_posts()
         $wpdb->update(
             $table_name,
             [
-                'urn' => $data['urn'],
+                //'urn' => $data['urn'],
                 'author' => $data['author'],
                 'username' => $data['username'],
                 'age' => $data['age'],
                 'profilePicture' => $data['profilePicture'],
-                'post_text' => $data['post_text'],
+                'post_text' => $data['copy'],
                 'images' => json_encode($data['images']),
                 'reactions' => $data['reactions'],
                 'comments' => $data['comments'],

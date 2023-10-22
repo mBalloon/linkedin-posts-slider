@@ -22,6 +22,12 @@ function linkedin_posts_slider_add_admin_menu()
         'linkedin_posts_slider_table', // menu slug
         'linkedin_posts_slider_admin_table_page' // function to output the page content
     );
+
+    /**
+     *
+     * TODO: Add options page for ordering the selected published posts.
+     * 
+     */
 }
 
 add_action('admin_menu', 'linkedin_posts_slider_add_admin_menu');

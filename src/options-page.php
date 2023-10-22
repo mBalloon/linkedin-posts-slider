@@ -435,6 +435,9 @@ function linkedin_posts_slider_options_page()
 	echo '
 	<form method="post" action="options-page.php" class="options-form">
 	<div class="form-field">
+		<div>
+		Company 
+		</div>
 		<label for="section-company-color">Company info section color:</label>
 		<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
 		</div>
