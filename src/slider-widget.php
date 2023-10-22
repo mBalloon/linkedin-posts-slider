@@ -32,6 +32,36 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     wp_register_script('slider-script', plugins_url('../public/script.js', __FILE__), ['jquery', 'swiper-script'], false, true);
     wp_localize_script('slider-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
     wp_enqueue_style('slider-style'); // Add this line to enqueue the style
+
+    $custom_css = '
+      .section-company {
+        color: ' . get_option('section-company-color', '#454545') . ';
+        font-size: ' . get_option('section-company-font-size', '16px') . ';
+        font-family: ' . get_option('section-company-font-family', '"Titillium Web"') . ';
+        line-height: ' . get_option('section-company-line-height', '21px') . ';
+      }
+      .section-author-date {
+        color: ' . get_option('section-author-date-color', '#454545') . ';
+        font-size: ' . get_option('section-author-date-font-size', '14px') . ';
+        font-family: ' . get_option('section-author-date-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_option('section-author-date-font-weight', '300') . ';
+        line-height: ' . get_option('section-author-date-line-height', '18px') . ';
+      }
+      .section-body {
+        color: ' . get_option('section-body-color', '#adb5bd') . ';
+        font-size: ' . get_option('section-body-font-size', '16px') . ';
+        font-family: ' . get_option('section-body-font-family', '"Titillium Web"') . ';
+        -webkit-line-clamp: ' . get_option('section-body-webkit-line-clamp', '5') . ';
+      }
+      .section-interactions {
+        color: ' . get_option('section-interactions-color', '#454545') . ';
+        font-size: ' . get_option('section-interactions-font-size', '14px') . ';
+        font-family: ' . get_option('section-interactions-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_option('section-interactions-font-weight', '300') . ';
+        line-height: ' . get_option('section-interactions-line-height', '18px') . ';
+      }';
+    // Add the custom style
+    wp_add_inline_style('slider-style', $custom_css);
   }
 
   /**
@@ -167,35 +197,7 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     wp_enqueue_script('slider-script');
     wp_enqueue_style('slider-style');
 
-    $custom_css = '
-      .section-company {
-        color: ' . get_option('section-company-color', '#454545') . ';
-        font-size: ' . get_option('section-company-font-size', '16px') . ';
-        font-family: ' . get_option('section-company-font-family', '"Titillium Web"') . ';
-        line-height: ' . get_option('section-company-line-height', '21px') . ';
-      }
-      .section-author-date {
-        color: ' . get_option('section-author-date-color', '#454545') . ';
-        font-size: ' . get_option('section-author-date-font-size', '14px') . ';
-        font-family: ' . get_option('section-author-date-font-family', '"Titillium Web"') . ';
-        font-weight: ' . get_option('section-author-date-font-weight', '300') . ';
-        line-height: ' . get_option('section-author-date-line-height', '18px') . ';
-      }
-      .section-body {
-        color: ' . get_option('section-body-color', '#adb5bd') . ';
-        font-size: ' . get_option('section-body-font-size', '16px') . ';
-        font-family: ' . get_option('section-body-font-family', '"Titillium Web"') . ';
-        -webkit-line-clamp: ' . get_option('section-body-webkit-line-clamp', '5') . ';
-      }
-      .section-interactions {
-        color: ' . get_option('section-interactions-color', '#454545') . ';
-        font-size: ' . get_option('section-interactions-font-size', '14px') . ';
-        font-family: ' . get_option('section-interactions-font-family', '"Titillium Web"') . ';
-        font-weight: ' . get_option('section-interactions-font-weight', '300') . ';
-        line-height: ' . get_option('section-interactions-line-height', '18px') . ';
-      }';
-    // Add the custom style
-    wp_add_inline_style('slider-style', $custom_css);
+
 
 ?>
 
@@ -240,35 +242,7 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     wp_enqueue_script('slider-script');
     wp_enqueue_style('slider-style');
 
-    $custom_css = '
-      .section-company {
-        color: ' . get_option('section-company-color', '#454545') . ';
-        font-size: ' . get_option('section-company-font-size', '16px') . ';
-        font-family: ' . get_option('section-company-font-family', '"Titillium Web"') . ';
-        line-height: ' . get_option('section-company-line-height', '21px') . ';
-      }
-      .section-author-date {
-        color: ' . get_option('section-author-date-color', '#454545') . ';
-        font-size: ' . get_option('section-author-date-font-size', '14px') . ';
-        font-family: ' . get_option('section-author-date-font-family', '"Titillium Web"') . ';
-        font-weight: ' . get_option('section-author-date-font-weight', '300') . ';
-        line-height: ' . get_option('section-author-date-line-height', '18px') . ';
-      }
-      .section-body {
-        color: ' . get_option('section-body-color', '#adb5bd') . ';
-        font-size: ' . get_option('section-body-font-size', '16px') . ';
-        font-family: ' . get_option('section-body-font-family', '"Titillium Web"') . ';
-        -webkit-line-clamp: ' . get_option('section-body-webkit-line-clamp', '5') . ';
-      }
-      .section-interactions {
-        color: ' . get_option('section-interactions-color', '#454545') . ';
-        font-size: ' . get_option('section-interactions-font-size', '14px') . ';
-        font-family: ' . get_option('section-interactions-font-family', '"Titillium Web"') . ';
-        font-weight: ' . get_option('section-interactions-font-weight', '300') . ';
-        line-height: ' . get_option('section-interactions-line-height', '18px') . ';
-      }';
-    // Add the custom style
-    wp_add_inline_style('slider-style', $custom_css);
+
 
   ?>
     <div class="swiper">
