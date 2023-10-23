@@ -330,8 +330,7 @@ function linkedin_posts_slider_options_page()
 		margin-bottom: 10px;
 	}
 	.form-subsection-inputs-row{
-		display: flex;
-		flex-direction: row;
+		display: grid;
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 10px;
