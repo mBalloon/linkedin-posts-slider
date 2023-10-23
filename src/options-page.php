@@ -467,7 +467,7 @@ function linkedin_posts_slider_options_page()
 			</div>
 			<div class="form-subsection-inputs-row">
 				<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
-				<input type="number" class="number-input" id="section-company-font-size" name="section-company-font-size" value="' . esc_attr(get_option('section-company-font-size', '16')) . '">
+				<input type="number" class="number-input" id="section-company-font-size" name="section-company-font-size" value="' . esc_attr(get_option('section-company-font-size', '16')) . '"style="max-block-size: 60px;">
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
@@ -491,7 +491,7 @@ function linkedin_posts_slider_options_page()
 			</div>
 			<div class="form-subsection-inputs-row">
 				<input type="color" id="section-author-date-color" name="section-author-date-color" value="' . esc_attr(get_option('section-author-date-color', '#454545')) . '">
-				<input type="number" class="number-input" id="section-author-date-font-size" name="section-author-date-font-size" value="' . esc_attr(get_option('section-author-date-font-size', '14')) . '">
+				<input type="number" class="number-input" id="section-author-date-font-size" name="section-author-date-font-size" value="' . esc_attr(get_option('section-author-date-font-size', '14')) . '"style="max-block-size: 60px;">
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
