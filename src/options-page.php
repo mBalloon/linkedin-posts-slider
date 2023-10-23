@@ -331,7 +331,7 @@ function linkedin_posts_slider_options_page()
 	}
 	.form-subsection-inputs-row{
 		display: grid;
-		grid-template-columns: 100px 100px 100px;
+		grid-template-columns: 20px 20px 20px;
   		grid-template-rows: auto;
 		justify-content: space-between;
 		align-items: center;
