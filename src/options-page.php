@@ -337,7 +337,7 @@ function linkedin_posts_slider_options_page()
 		margin-bottom: 10px;
 	}
 	.number-input{
-		width: 30%;
+		max-block-size: 60px;
 	}
 	
 	.right-section {
