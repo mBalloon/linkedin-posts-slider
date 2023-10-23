@@ -320,13 +320,13 @@ function linkedin_posts_slider_options_page()
 		margin-top: 20px;
 	}
 	.form-section-title{
-		font-size: 20px;
-		font-weight: 600;
+		font-size: 15px;
+		font-weight: 500;
 		margin-bottom: 10px;
 	}
 	.form-subsection-title{
-		font-size: 20px;
-		font-weight: 300;
+		font-size: 10px;
+		font-weight: 200;
 		margin-bottom: 10px;
 	}
 	.form-subsection-inputs-row{
