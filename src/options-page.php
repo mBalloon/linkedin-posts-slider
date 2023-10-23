@@ -317,7 +317,26 @@ function linkedin_posts_slider_options_page()
 		flex-direction: column;
 		justify-content: center;
 		align-items: left;
+		margin-top: 20px;
 	}
+	.form-section-title{
+		font-size: 20px;
+		font-weight: 600;
+		margin-bottom: 10px;
+	}
+	.form-subsection-title{
+		font-size: 20px;
+		font-weight: 300;
+		margin-bottom: 10px;
+	}
+	.form-subsection-inputs-row{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+	
 	.right-section {
 		float: right;
 		width: 50%;
@@ -434,110 +453,107 @@ function linkedin_posts_slider_options_page()
 	// Add the HTML code for the form fields
 	echo '
 	<form method="post" action="options-page.php" class="options-form">
-	<div class="form-field">
-		<div>
-		Company 
-		</div>
-		<label for="section-company-color">Company info section color:</label>
-		<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
-		</div>
 
 		<div class="form-field">
-		<label for="section-company-font-size">Font size:</label>
-		<input type="number" id="section-company-font-size" name="section-company-font-size" value="' . esc_attr(get_option('section-company-font-size', '16')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-company-font-family">Font family:</label>
-		<select id="section-company-font-family" name="section-company-font-family">
-			<option value="' . esc_attr(get_option('section-company-font-family', 'Titillium Web')) . '">Titillium Web</option>
-			<!-- Add other font options here -->
-		</select>
-		</div>
-
-		<div class="form-field">
-		<label for="section-company-line-height">Line height:</label>
-		<input type="number" id="section-company-line-height" name="section-company-line-height" value="' . esc_attr(get_option('section-company-line-height', '21')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-author-date-color">Author username and date section color:</label>
-		<input type="color" id="section-author-date-color" name="section-author-date-color" value="' . esc_attr(get_option('section-author-date-color', '#454545')) . '">
-
-		<label for="section-author-date-font-size">Font size:</label>
-		<input type="number" id="section-author-date-font-size" name="section-author-date-font-size" value="' . esc_attr(get_option('section-author-date-font-size', '14')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-author-date-font-family">Font family:</label>
-		<select id="section-author-date-font-family" name="section-author-date-font-family">
-			<option value="Titillium Web" ' . (get_option('section-author-date-font-family') == 'Titillium Web' ? 'selected' : '') . '>Titillium Web</option>
-			<!-- Add other font options here -->
-		</select>
-		</div>
-
-		<div class="form-field">
-		<label for="section-author-date-font-weight">Font weight:</label>
-		<input type="number" id="section-author-date-font-weight" name="section-author-date-font-weight" value="' . esc_attr(get_option('section-author-date-font-weight', '300')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-author-date-line-height">Line height:</label>
-		<input type="text" id="section-author-date-line-height" name="section-author-date-line-height" value="' . esc_attr(get_option('section-author-date-line-height', '18px')) . '">
 		
+			<div class="form-section-title">
+				Company Name: 
+			</div>
+			<div class="form-subsection-title">
+				Color and size:
+			</div>
+			<div class="form-subsection-inputs-row">
+				<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
+				<input type="number" id="section-company-font-size" name="section-company-font-size" value="' . esc_attr(get_option('section-company-font-size', '16')) . '">
+			</div>
+			<div class="form-subsection-title">
+				Font Family:
+			</div>
+			<div class="form-subsection-inputs-row">
+				<select id="section-company-font-family" name="section-company-font-family">
+					<option value="' . esc_attr(get_option('section-company-font-family', 'Titillium Web')) . '">Titillium Web</option>
+					<!-- //TODO: Add other font options here -->
+				</select>
+			</div>
+			
 		</div>
 
 		<div class="form-field">
-		<label for="section-company-color">Company info section color:</label>
-		<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
+		
+			<div class="form-section-title">
+				Username and post date:
+			</div>
+			<div class="form-subsection-title">
+				Font color and size:
+			</div>
+			<div class="form-subsection-inputs-row">
+				<input type="color" id="section-author-date-color" name="section-author-date-color" value="' . esc_attr(get_option('section-author-date-color', '#454545')) . '">
+				<input type="number" id="section-author-date-font-size" name="section-author-date-font-size" value="' . esc_attr(get_option('section-author-date-font-size', '14')) . '">
+			</div>
+			<div class="form-subsection-title">
+				Font Family:
+			</div>
+			<div class="form-subsection-inputs-row">
+				<select id="section-author-date-font-family" name="section-author-date-font-family">
+					<option value="Titillium Web" ' . (get_option('section-author-date-font-family') == 'Titillium Web' ? 'selected' : '') . '>Titillium Web</option>
+					<!-- //TODO: Add other font options here -->
+				</select>
+			</div>
+			
 		</div>
 
 		<div class="form-field">
-		<label for="section-body-color">Post text section color:</label>
-		<input type="color" id="section-body-color" name="section-body-color" value="' . esc_attr(get_option('section-body-color', '#adb5bd')) . '">
+		
+			<div class="form-section-title">
+			Post text:
+			</div>
+			<div class="form-subsection-title">
+				Font color and size:
+			</div>
+			<div class="form-subsection-inputs-row">
+				<input type="color" id="section-body-color" name="section-body-color" value="' . esc_attr(get_option('section-body-color', '#adb5bd')) . '">
+				<input type="number" id="section-body-font-size" name="section-body-font-size" value="' . esc_attr(get_option('section-body-font-size', '16')) . '">
+			</div>
+			<div class="form-subsection-title">
+				Font Family:
+			</div>
+			<div class="form-subsection-inputs-row">
+				<select id="section-body-font-family" name="section-body-font-family">
+					<option value="Titillium Web" ' . esc_attr(get_option('section-body-font-family', 'Titillium Web')) . '>Titillium Web</option>
+					<!-- //TODO: Add other font options here -->
+				</select>
+			</div>
+			<div class="form-subsection-title">
+				Text number of lines:
+			</div>
+			<div class="form-subsection-inputs-row">
+				<input type="number" id="section-body-line-clamp" name="section-body-line-clamp" value="' . esc_attr(get_option('section-body-line-clamp', '5')) . '">
+			</div>
+			
 		</div>
 
 		<div class="form-field">
-		<label for="section-body-font-size">Post text section font size:</label>
-		<input type="number" id="section-body-font-size" name="section-body-font-size" value="' . esc_attr(get_option('section-body-font-size', '16')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-body-font-family">Post text section font family:</label>
-		<input type="text" id="section-body-font-family" name="section-body-font-family" value="' . esc_attr(get_option('section-body-font-family', 'Titillium Web')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-body-line-clamp">Post text section line clamp:</label>
-		<input type="number" id="section-body-line-clamp" name="section-body-line-clamp" value="' . esc_attr(get_option('section-body-line-clamp', '5')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-interactions-color">Post interactions section color:</label>
-		<input type="color" id="section-interactions-color" name="section-interactions-color" value="' . esc_attr(get_option('section-interactions-color', '#454545')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-interactions-font-size">Font size:</label>
-		<input type="number" id="section-interactions-font-size" name="section-interactions-font-size" value="' . esc_attr(get_option('section-interactions-font-size', '14')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-interactions-font-family">Font family:</label>
-		<select id="section-interactions-font-family" name="section-interactions-font-family">
-			<option value="Titillium Web" ' . (get_option('section-interactions-font-family') == 'Titillium Web' ? 'selected' : '') . '>Titillium Web</option>
-			// Add other font options here
-		</select>
-		</div>
-
-		<div class="form-field">
-		<label for="section-interactions-font-weight">Font weight:</label>
-		<input type="number" id="section-interactions-font-weight" name="section-interactions-font-weight" value="' . esc_attr(get_option('section-interactions-font-weight', '300')) . '">
-		</div>
-
-		<div class="form-field">
-		<label for="section-interactions-line-height">Line height:</label>
-		<input type="text" id="section-interactions-line-height" name="section-interactions-line-height" value="' . esc_attr(get_option('section-interactions-line-height', '18px')) . '">
+		
+			<div class="form-section-title">
+				Post interactions and comments:
+			</div>
+			<div class="form-subsection-title">
+				Font color and size:
+			</div>
+			<div class="form-subsection-inputs-row">
+				<input type="color" id="section-interactions-color" name="section-interactions-color" value="' . esc_attr(get_option('section-interactions-color', '#454545')) . '">
+				<input type="number" id="section-interactions-font-size" name="section-interactions-font-size" value="' . esc_attr(get_option('section-interactions-font-size', '14')) . '">
+			</div>
+			<div class="form-subsection-title">
+				Font Family:
+			</div>
+			<div class="form-subsection-inputs-row">
+				<select id="section-interactions-font-family" name="section-interactions-font-family">
+					<option value="Titillium Web" ' . (get_option('section-interactions-font-family') == 'Titillium Web' ? 'selected' : '') . '>Titillium Web</option>
+					<!-- //TODO: Add other font options here -->
+				</select>
+			</div>
+			
 		</div>';
 	echo submit_button() . ' </form>';
 }
