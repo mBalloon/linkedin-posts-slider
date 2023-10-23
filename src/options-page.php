@@ -320,12 +320,12 @@ function linkedin_posts_slider_options_page()
 		margin-top: 20px;
 	}
 	.form-section-title{
-		font-size: 15px;
+		font-size: 18px;
 		font-weight: 500;
 		margin-bottom: 10px;
 	}
 	.form-subsection-title{
-		font-size: 10px;
+		font-size: 15px;
 		font-weight: 200;
 		margin-bottom: 10px;
 	}
@@ -335,6 +335,9 @@ function linkedin_posts_slider_options_page()
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 10px;
+	}
+	.number-input{
+		width: 30px;
 	}
 	
 	.right-section {
@@ -464,7 +467,7 @@ function linkedin_posts_slider_options_page()
 			</div>
 			<div class="form-subsection-inputs-row">
 				<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
-				<input type="number" id="section-company-font-size" name="section-company-font-size" value="' . esc_attr(get_option('section-company-font-size', '16')) . '">
+				<input type="number" class="number-input" id="section-company-font-size" name="section-company-font-size" value="' . esc_attr(get_option('section-company-font-size', '16')) . '">
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
@@ -488,7 +491,7 @@ function linkedin_posts_slider_options_page()
 			</div>
 			<div class="form-subsection-inputs-row">
 				<input type="color" id="section-author-date-color" name="section-author-date-color" value="' . esc_attr(get_option('section-author-date-color', '#454545')) . '">
-				<input type="number" id="section-author-date-font-size" name="section-author-date-font-size" value="' . esc_attr(get_option('section-author-date-font-size', '14')) . '">
+				<input type="number" class="number-input" id="section-author-date-font-size" name="section-author-date-font-size" value="' . esc_attr(get_option('section-author-date-font-size', '14')) . '">
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
@@ -512,7 +515,7 @@ function linkedin_posts_slider_options_page()
 			</div>
 			<div class="form-subsection-inputs-row">
 				<input type="color" id="section-body-color" name="section-body-color" value="' . esc_attr(get_option('section-body-color', '#adb5bd')) . '">
-				<input type="number" id="section-body-font-size" name="section-body-font-size" value="' . esc_attr(get_option('section-body-font-size', '16')) . '">
+				<input type="number" class="number-input" id="section-body-font-size" name="section-body-font-size" value="' . esc_attr(get_option('section-body-font-size', '16')) . '">
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
@@ -527,7 +530,7 @@ function linkedin_posts_slider_options_page()
 				Text number of lines:
 			</div>
 			<div class="form-subsection-inputs-row">
-				<input type="number" id="section-body-line-clamp" name="section-body-line-clamp" value="' . esc_attr(get_option('section-body-line-clamp', '5')) . '">
+				<input type="number" class="number-input" id="section-body-line-clamp" name="section-body-line-clamp" value="' . esc_attr(get_option('section-body-line-clamp', '5')) . '">
 			</div>
 			
 		</div>
@@ -542,7 +545,7 @@ function linkedin_posts_slider_options_page()
 			</div>
 			<div class="form-subsection-inputs-row">
 				<input type="color" id="section-interactions-color" name="section-interactions-color" value="' . esc_attr(get_option('section-interactions-color', '#454545')) . '">
-				<input type="number" id="section-interactions-font-size" name="section-interactions-font-size" value="' . esc_attr(get_option('section-interactions-font-size', '14')) . '">
+				<input type="number" class="number-input" id="section-interactions-font-size" name="section-interactions-font-size" value="' . esc_attr(get_option('section-interactions-font-size', '14')) . '">
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
