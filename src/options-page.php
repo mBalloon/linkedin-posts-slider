@@ -474,7 +474,7 @@ function linkedin_posts_slider_options_page()
 			<div class="form-subsection-title">
 				Font Family:
 			</div>
-			<div class="form-subsection-inputs-row">
+			<div class="">
 				<select id="section-company-font-family" name="section-company-font-family">
 					<option value="' . esc_attr(get_option('section-company-font-family', 'Titillium Web')) . '">Titillium Web</option>
 					<!-- //TODO: Add other font options here -->
@@ -500,7 +500,7 @@ function linkedin_posts_slider_options_page()
 			<div class="form-subsection-title">
 				Font Family:
 			</div>
-			<div class="form-subsection-inputs-row">
+			<div class="">
 				<select id="section-author-date-font-family" name="section-author-date-font-family">
 					<option value="Titillium Web" ' . (get_option('section-author-date-font-family') == 'Titillium Web' ? 'selected' : '') . '>Titillium Web</option>
 					<!-- //TODO: Add other font options here -->
@@ -525,7 +525,7 @@ function linkedin_posts_slider_options_page()
 			<div class="form-subsection-title">
 				Font Family:
 			</div>
-			<div class="form-subsection-inputs-row">
+			<div class="">
 				<select id="section-body-font-family" name="section-body-font-family">
 					<option value="Titillium Web" ' . esc_attr(get_option('section-body-font-family', 'Titillium Web')) . '>Titillium Web</option>
 					<!-- //TODO: Add other font options here -->
@@ -552,7 +552,7 @@ function linkedin_posts_slider_options_page()
 			<div class="form-subsection-title">
 				Font Family:
 			</div>
-			<div class="form-subsection-inputs-row">
+			<div class="">
 				<select id="section-interactions-font-family" name="section-interactions-font-family">
 					<option value="Titillium Web" ' . (get_option('section-interactions-font-family') == 'Titillium Web' ? 'selected' : '') . '>Titillium Web</option>
 					<!-- //TODO: Add other font options here -->
