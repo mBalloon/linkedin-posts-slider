@@ -338,7 +338,23 @@ function linkedin_posts_slider_options_page()
 		align-items: center;
 		margin-bottom: 10px;
 	}
-
+	.vertical-form-group{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+	.vertical-form-title{
+		font-size: 15px;
+		font-weight: 200;
+		margin-bottom: 10px;
+	}
+	.vertical-form-input{
+		width: 100%;
+	}
+	.form-subsection
+	}
 	
 	.right-section {
 		float: right;
@@ -462,14 +478,45 @@ function linkedin_posts_slider_options_page()
 			<div class="form-section-title">
 				Company Name: 
 			</div>
-			<div class="form-subsection-title">
-				Color | Size | Weight | Line Height:
-			</div>
+			
 			<div class="form-subsection-inputs-row">
-				<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
-				<input type="number" class="number-input" id="section-company-font-size" name="section-company-font-size" value="' . esc_attr(get_option('section-company-font-size', '16')) . '">
-				<input type="number" class="number-input" id="section-company-font-weight" name="section-company-font-weight" value="' . esc_attr(get_option('section-company-font-weight', '400')) . '">
-				<input type="number" class="number-input" id="section-company-line-height" name="section-company-line-height" value="' . esc_attr(get_option('section-company-line-height', '18px')) . '">
+				<div class="vertical-form-group">
+        			<div class="vertical-form-title">
+						Color:
+        			</div>
+					<div class="vertical-form-field">
+						<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
+					</div>
+				</div>
+				<div class="vertical-form-group">
+					<div class="vertical-form-title">
+						Size:
+					</div>
+					<div class="vertical-form-field">
+						<input type="number" class="number-input" id="section-company-font-size" name="section-company-font-size" value="' . esc_attr(get_option('section-company-font-size', '16')) . '">
+					</div>
+				</div>
+				<div class="vertical-form-group">
+					<div class="vertical-form-title">
+						Weight:
+					</div>
+					<div class="vertical-form-field">
+						<input type="number" class="number-input" id="section-company-font-weight" name="section-company-font-weight" value="' . esc_attr(get_option('section-company-font-weight', '400')) . '">
+					</div>
+				</div>
+				<div class="vertical-form-group">
+					<div class="vertical-form-title">
+						Line Height:
+					</div>
+					<div class="vertical-form-field">
+						<input type="number" class="number-input" id="section-company-line-height" name="section-company-line-height" value="' . esc_attr(get_option('section-company-line-height', '18px')) . '">
+					</div>
+				</div>
+    		</div>
+				
+				
+				
+				
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
@@ -488,14 +535,39 @@ function linkedin_posts_slider_options_page()
 			<div class="form-section-title">
 				Username and post date:
 			</div>
-			<div class="form-subsection-title">
-				Color | Size | Weight | Line Height:
-			</div>
 			<div class="form-subsection-inputs-row">
-				<input type="color" id="section-author-date-color" name="section-author-date-color" value="' . esc_attr(get_option('section-author-date-color', '#454545')) . '">
-				<input type="number" class="number-input" id="section-author-date-font-size" name="section-author-date-font-size" value="' . esc_attr(get_option('section-author-date-font-size', '14')) . '">
-				<input type="number" class="number-input" id="section-author-date-font-weight" name="section-author-date-font-weight" value="' . esc_attr(get_option('section-author-date-font-weight', '300')) . '">
-				<input type="number" class="number-input" id="section-author-date-line-height" name="section-author-date-line-height" value="' . esc_attr(get_option('section-author-date-line-height', '18px')) . '">
+				<div class="vertical-form-group">
+				<div class="vertical-form-title">
+					Color:
+				</div>
+				<div class="vertical-form-field">
+					<input type="color" id="section-author-date-color" name="section-author-date-color" value="' . esc_attr(get_option('section-author-date-color', '#454545')) . '">
+				</div>
+			</div>
+			<div class="vertical-form-group">
+				<div class="vertical-form-title">
+					Size:
+				</div>
+				<div class="vertical-form-field">
+					<input type="number" class="number-input" id="section-author-date-font-size" name="section-author-date-font-size" value="' . esc_attr(get_option('section-author-date-font-size', '14')) . '">
+				</div>
+			</div>
+			<div class="vertical-form-group">
+				<div class="vertical-form-title">
+					Weight:
+				</div>
+				<div class="vertical-form-field">
+					<input type="number" class="number-input" id="section-author-date-font-weight" name="section-author-date-font-weight" value="' . esc_attr(get_option('section-author-date-font-weight', '300')) . '">
+				</div>
+			</div>
+			<div class="vertical-form-group">
+				<div class="vertical-form-title">
+					Line Height:
+				</div>
+				<div class="vertical-form-field">
+					<input type="number" class="number-input" id="section-author-date-line-height" name="section-author-date-line-height" value="' . esc_attr(get_option('section-author-date-line-height', '18px')) . '">
+				</div>
+			</div>
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
@@ -514,13 +586,32 @@ function linkedin_posts_slider_options_page()
 			<div class="form-section-title">
 				Post text:
 			</div>
-			<div class="form-subsection-title">
-			Color | Size | Max no. of Lines:
-			</div>
+
 			<div class="form-subsection-inputs-row">
+			<div class="vertical-form-group">
+			<div class="vertical-form-title">
+				Color:
+			</div>
+			<div class="vertical-form-field">
 				<input type="color" id="section-body-color" name="section-body-color" value="' . esc_attr(get_option('section-body-color', '#adb5bd')) . '">
-				<input type="number" class="number-input" id="section-body-font-size" name="section-body-font-size" value="' . esc_attr(get_option('section-body-font-size', '16')) . '">
-				<input type="number" class="number-input" id="section-body-line-clamp" name="section-body-line-clamp" value="' . esc_attr(get_option('section-body-line-clamp', '5')) . '">
+			</div>
+			</div>
+			<div class="vertical-form-group">
+				<div class="vertical-form-title">
+					Size:
+				</div>
+				<div class="vertical-form-field">
+					<input type="number" class="number-input" id="section-body-font-size" name="section-body-font-size" value="' . esc_attr(get_option('section-body-font-size', '16')) . '">
+				</div>
+			</div>
+			<div class="vertical-form-group">
+				<div class="vertical-form-title">
+					Max no. of Lines:
+				</div>
+				<div class="vertical-form-field">
+					<input type="number" class="number-input" id="section-body-line-clamp" name="section-body-line-clamp" value="' . esc_attr(get_option('section-body-line-clamp', '5')) . '">
+				</div>
+			</div>
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
@@ -541,13 +632,41 @@ function linkedin_posts_slider_options_page()
 				Post interactions and comments:
 			</div>
 			<div class="form-subsection-title">
-				Color | Size | Weight | Line Height:
+				 |  |  | :
 			</div>
 			<div class="form-subsection-inputs-row">
+			<div class="vertical-form-group">
+			<div class="vertical-form-title">
+				Color:
+			</div>
+			<div class="vertical-form-field">
 				<input type="color" id="section-interactions-color" name="section-interactions-color" value="' . esc_attr(get_option('section-interactions-color', '#454545')) . '">
+			</div>
+		</div>
+		<div class="vertical-form-group">
+			<div class="vertical-form-title">
+				Size:
+			</div>
+			<div class="vertical-form-field">
 				<input type="number" class="number-input" id="section-interactions-font-size" name="section-interactions-font-size" value="' . esc_attr(get_option('section-interactions-font-size', '14')) . '">
+			</div>
+		</div>
+		<div class="vertical-form-group">
+			<div class="vertical-form-title">
+				Weight:
+			</div>
+			<div class="vertical-form-field">
 				<input type="number" class="number-input" id="section-interactions-font-weight" name="section-interactions-font-weight" value="' . esc_attr(get_option('section-interactions-font-weight', '300')) . '">
-				<input type="number" class="number-input" id="section-interactions-line-height" name="section-interactions-line-height" value="' . esc_attr(get_option('section-interactions-line-height', '18px')) . '">
+			</div>
+			</div>
+			<div class="vertical-form-group">
+				<div class="vertical-form-title">
+					Line Height:
+				</div>
+				<div class="vertical-form-field">
+					<input type="number" class="number-input" id="section-interactions-line-height" name="section-interactions-line-height" value="' . esc_attr(get_option('section-interactions-line-height', '18px')) . '">
+				</div>
+			</div>
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
