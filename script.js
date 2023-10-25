@@ -141,28 +141,7 @@ jQuery(document).ready(function ($) {
 
 
 
-    jQuery(document).ready(function ($) {
-        $('#posts-table tbody').sortable({
-            update: function (event, ui) {
-                var postOrder = jQuery(this).sortable('toArray');
 
-                jQuery.ajax({
-                    url: ajaxurl,
-                    type: 'POST',
-                    data: {
-                        action: 'update_post_order',
-                        post_order: postOrder
-                    },
-                    success: function (response) {
-                        // Handle success
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        // Handle error
-                    }
-                });
-            }
-        });
-    });
 
 
 });
