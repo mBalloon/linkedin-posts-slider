@@ -76,7 +76,7 @@ function publish_unpublish()
 	// Update the row in the database
 	$result = $wpdb->update(
 		$table_name,
-		array('published' => $published),
+		array('published' => !$published),
 		array('id' => $id),
 		array('%d'),
 		array('%d')

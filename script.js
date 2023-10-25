@@ -102,7 +102,7 @@ function publishButtonClicked(buttonElement) {
         data: {
             action: "publish_unpublish",
             id: id,
-            published: !published
+            published: published
         },
         success: function (response) {
             console.log('Publish/Unpublish action response:', response);  // Debugging line
