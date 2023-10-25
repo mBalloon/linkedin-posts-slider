@@ -58,25 +58,25 @@ button.publish-button {
   color: #fff;
 }
 
-button.publish-button[data-published="true"] {
+button.publish-button[data-published=1] {
   background-color: #28a745;
   /* Green color */
   color: #fff;
 }
 
-button.publish-button[data-published="true"]:hover {
+button.publish-button[data-published=1]:hover {
   background-color: #d9534f;
   /* Red color */
   content: "Unpublish";
 }
 
-button.publish-button[data-published="false"] {
+button.publish-button[data-published=0] {
   background-color: #f0f0f0;
   /* Light grey color */
   color: #000;
 }
 
-button.publish-button[data-published="false"]:hover {
+button.publish-button[data-published=0]:hover {
   background-color: #28a745;
   /* Green color */
   content: "Publish";
