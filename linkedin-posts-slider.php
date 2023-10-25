@@ -80,7 +80,7 @@ function linkedin_posts_slider_admin_table_page()
               <?php
               $images = json_decode($row->images);
               if (!empty($images)) {
-                echo '<img src="' . esc_url($images[0]) . '" alt="" width="50" height="50" />';
+                echo '<img src="' . esc_url($images[0]) . '" alt="" width="100" height="100" />';  /* Adjust width and height as needed */
               }
               ?>
             </td>
@@ -97,6 +97,21 @@ function linkedin_posts_slider_admin_table_page()
                 <?php echo $row->published ? 'Unpublish' : 'Publish'; ?>
               </button>
 
+            </td>
+            </td>
+            <td>
+              <button class="up-button">
+                <!-- Up arrow SVG -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 5L5 12H19L12 5Z" fill="green" />
+                </svg>
+              </button>
+              <button class="down-button">
+                <!-- Down arrow SVG -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 19L5 12H19L12 19Z" fill="red" />
+                </svg>
+              </button>
             </td>
           </tr>
         <?php endforeach; ?>
