@@ -99,6 +99,24 @@ jQuery(document).ready(function ($) {
             }
         });
     }
+    jQuery('.delete-button').click(function () {
+        var postId = jQuery(this).data('id');
+        console.log('Delete button clicked for post ID:', postId);  // Debugging line
+
+        jQuery.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'delete_post',
+                id: postId
+            },
+            success: function (response) {
+                console.log('Delete action response:', response);  // Debugging line
+                jQuery('#post-' + postId).remove();
+            }
+        });
+    });
+
 
     function publishButtonClicked(buttonElement) {
         // Get button and ID
@@ -119,15 +137,12 @@ jQuery(document).ready(function ($) {
                 published: !published
             },
             success: function (response) {
-                // Update button text and data
+                console.log('Publish/Unpublish action response:', response);  // Debugging line
                 button.text(published ? 'Publish' : 'Unpublish').removeClass('loading');
                 button.data("published", !published);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                // Log error
-                console.log("Error: " + textStatus + ", " + errorThrown);
-
-                // Reset button text
+                console.log("Error: " + textStatus + ", " + errorThrown);  // Debugging line
                 button.text(published ? 'Unpublish' : 'Publish').removeClass('loading');
             }
         });
@@ -143,15 +158,17 @@ jQuery(document).ready(function ($) {
             type: 'POST',
             data: form.serialize(),
             success: function (response) {
+                console.log('Form submission response:', response);  // Debugging line
                 button.val('Delete').removeClass('loading');
                 form.closest('tr').remove();
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error:', textStatus, errorThrown);  // Debugging line
                 button.val('Delete').removeClass('loading');
-                console.error('Error:', textStatus, errorThrown);
             }
         });
     });
+
 
 
     jQuery(document).ready(function ($) {
