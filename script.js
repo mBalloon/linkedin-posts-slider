@@ -12,6 +12,7 @@ jQuery(document).ready(function ($) {
         // Make AJAX request
         jQuery('.delete-button').click(function () {
             var postId = jQuery(this).data('id');
+            console.log('Delete button clicked for post ID:', postId);  // Debugging line
 
             jQuery.ajax({
                 url: ajaxurl,
@@ -21,25 +22,10 @@ jQuery(document).ready(function ($) {
                     id: postId
                 },
                 success: function (response) {
-                    // Remove the post from the table
+                    console.log('Delete action response:', response);  // Debugging line
                     jQuery('#post-' + postId).remove();
                 }
             });
-        });
-
-        jQuery('#posts-table tbody').sortable({
-            update: function (event, ui) {
-                var postOrder = jQuery(this).sortable('toArray');
-
-                jQuery.ajax({
-                    url: ajaxurl,
-                    type: 'POST',
-                    data: {
-                        action: 'update_post_order',
-                        post_order: postOrder
-                    }
-                });
-            }
         });
         jQuery.ajax({
             url: "https://scrape-js.onrender.com/",
@@ -99,23 +85,7 @@ jQuery(document).ready(function ($) {
             }
         });
     }
-    jQuery('.delete-button').click(function () {
-        var postId = jQuery(this).data('id');
-        console.log('Delete button clicked for post ID:', postId);  // Debugging line
 
-        jQuery.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'delete_post',
-                id: postId
-            },
-            success: function (response) {
-                console.log('Delete action response:', response);  // Debugging line
-                jQuery('#post-' + postId).remove();
-            }
-        });
-    });
 
 
     function publishButtonClicked(buttonElement) {
