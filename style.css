@@ -18,7 +18,7 @@ table {
   }
   */
 
-  
+
 /* Table Styles */
 table.widefat {
   margin-top: 20px;
@@ -53,24 +53,35 @@ button.down-button {
 }
 
 button.publish-button {
-  background-color: #28a745; /* Green color */
+  background-color: #28a745;
+  /* Green color */
   color: #fff;
 }
 
-button.publish-button[data-published="false"] {
-  background-color: #6c757d; /* Grey color */
-  color: #000;
+button.publish-button[data-published="true"] {
+  background-color: #28a745;
+  /* Green color */
+  color: #fff;
 }
 
 button.publish-button[data-published="true"]:hover {
-  background-color: #d9534f; /* Red color */
+  background-color: #d9534f;
+  /* Red color */
   content: "Unpublish";
 }
 
+button.publish-button[data-published="false"] {
+  background-color: #f0f0f0;
+  /* Light grey color */
+  color: #000;
+}
+
 button.publish-button[data-published="false"]:hover {
-  background-color: #28a745; /* Green color */
+  background-color: #28a745;
+  /* Green color */
   content: "Publish";
 }
+
 
 form input[type="submit"] {
   background-color: #d9534f;
@@ -91,15 +102,19 @@ form input[type="submit"]:hover {
   0% {
     content: ".";
   }
+
   25% {
     content: "..";
   }
+
   50% {
     content: "...";
   }
+
   75% {
     content: "..";
   }
+
   100% {
     content: ".";
   }
@@ -108,22 +123,26 @@ form input[type="submit"]:hover {
 /* Column & Thumbnail Styles */
 table.widefat th:nth-child(1),
 table.widefat td:nth-child(1) {
-  width: 50px; /* Adjust width as needed */
+  width: 50px;
+  /* Adjust width as needed */
 }
 
 table.widefat th:nth-child(2),
 table.widefat td:nth-child(2) {
-  width: 100px; /* Adjust width as needed */
+  width: 100px;
+  /* Adjust width as needed */
 }
 
 table.widefat th:nth-child(3),
 table.widefat td:nth-child(3) {
-  width: 80px; /* Adjust width as needed */
+  width: 80px;
+  /* Adjust width as needed */
 }
 
 table.widefat th:nth-child(6),
 table.widefat td:nth-child(6) {
-  width: 60px; /* Adjust width as needed */
+  width: 60px;
+  /* Adjust width as needed */
 }
 
 /* Up & Down Button Styles */

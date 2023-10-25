@@ -70,6 +70,7 @@ function linkedin_posts_slider_admin_table_page()
           <th scope="col" class="manage-column">Age</th>
           <th scope="col" class="manage-column">Post Text</th>
           <th scope="col" class="manage-column">Actions</th>
+          <th scope="col" class="manage-column">Order</th>
         </tr>
       </thead>
       <tbody>
@@ -94,7 +95,7 @@ function linkedin_posts_slider_admin_table_page()
               </form>
 
               <button class="publish-button" data-id="<?php echo esc_attr($row->id); ?>" data-published="<?php echo esc_attr($row->published); ?>">
-                <?php echo $row->published ? 'Unpublish' : 'Publish'; ?>
+                <?php echo $row->published ? 'Published' : 'Unpublished'; ?> <!-- Updated text -->
               </button>
 
             </td>
