@@ -90,11 +90,13 @@ function linkedin_posts_slider_admin_table_page()
               <form method="post" style="display:inline;">
                 <?php wp_nonce_field('linkedin_delete_action', 'linkedin_delete_nonce'); ?>
                 <input type="hidden" name="id" value="<?php echo esc_attr($row->id); ?>">
-                <?php submit_button('Delete', 'delete', 'delete', false); ?>
+                <input type="submit" value="Delete" class="delete-button" data-id="<?php echo esc_attr($row->id); ?>">
               </form>
-              <button class="publish-button" data-id="<?php echo esc_attr($row->id); ?>" data-published="<?php echo esc_attr($row->published); ?>" onclick="publishButtonClicked(this)">
+
+              <button class="publish-button" data-id="<?php echo esc_attr($row->id); ?>" data-published="<?php echo esc_attr($row->published); ?>">
                 <?php echo $row->published ? 'Unpublish' : 'Publish'; ?>
               </button>
+
             </td>
           </tr>
         <?php endforeach; ?>
