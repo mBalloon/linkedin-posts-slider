@@ -153,7 +153,14 @@ jQuery(document).ready(function ($) {
         });
     });
 
+    jQuery('.publish-button').on('click', function () {
+        publishButtonClicked(this);
+    });
 
+    // Assuming there's a button with class sync-button for syncing
+    jQuery('.sync-button').on('click', function () {
+        syncButtonClicked(this);
+    });
 
     jQuery(document).ready(function ($) {
         $('#posts-table tbody').sortable({
