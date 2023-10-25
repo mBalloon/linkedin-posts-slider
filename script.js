@@ -10,25 +10,7 @@ function syncButtonClicked(buttonElement) {
     button.text("...");
 
     // Make AJAX request
-    $('.delete-button').on('click', function (e) {
-        e.preventDefault();  // Prevent the form from submitting the traditional way
-        var button = $(this);
-        var postId = button.data('id');
-        console.log('Delete button clicked for post ID:', postId);  // Debugging line
 
-        jQuery.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'delete_post',
-                id: postId
-            },
-            success: function (response) {
-                console.log('Delete action response:', response);  // Debugging line
-                $('#post-' + postId).remove();
-            }
-        });
-    });
     jQuery('#posts-table tbody').sortable({
         update: function (event, ui) {
             var postOrder = jQuery(this).sortable('toArray');
@@ -136,7 +118,25 @@ function publishButtonClicked(buttonElement) {
 
 jQuery(document).ready(function ($) {
 
+    $('.delete-button').on('click', function (e) {
+        e.preventDefault();  // Prevent the form from submitting the traditional way
+        var button = $(this);
+        var postId = button.data('id');
+        console.log('Delete button clicked for post ID:', postId);  // Debugging line
 
+        jQuery.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'delete_post',
+                id: postId
+            },
+            success: function (response) {
+                console.log('Delete action response:', response);  // Debugging line
+                $('#post-' + postId).remove();
+            }
+        });
+    });
 
     $('form input[type=submit]').on('click', function (e) {
         e.preventDefault();
