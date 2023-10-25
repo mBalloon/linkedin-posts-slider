@@ -143,3 +143,33 @@ function update_post_order()
 	wp_send_json_success();
 }
 add_action('wp_ajax_update_post_order', 'update_post_order');
+
+
+function delete_post()
+{
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'linkedin_posts';
+
+	// Check if necessary data is set in the AJAX request
+	if (!isset($_POST['id'])) {
+		wp_send_json_error('No data received');
+		return;
+	}
+
+	// Sanitize and validate the data
+	$id = intval($_POST['id']);
+
+	// Delete the row from the database
+	$result = $wpdb->delete(
+		$table_name,
+		array('id' => $id),
+		array('%d')
+	);
+
+	if ($result === false) {
+		wp_send_json_error('Failed to delete row');
+	} else {
+		wp_send_json_success('Row deleted successfully');
+	}
+}
+add_action('wp_ajax_delete_post', 'delete_post');
