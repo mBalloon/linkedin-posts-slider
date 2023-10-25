@@ -95,7 +95,7 @@ function linkedin_posts_slider_admin_table_page()
               </form>
 
               <button class="publish-button" data-id="<?php echo esc_attr($row->id); ?>" data-published="<?php echo esc_attr($row->published); ?>">
-                <?php echo $row->published ? 'Published' : 'Unpublished'; ?> <!-- Updated text -->
+                <?php echo $row->published ? 'Published' : 'Unpublished'; ?>
               </button>
 
             </td>

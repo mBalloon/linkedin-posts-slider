@@ -163,6 +163,24 @@ jQuery(document).ready(function ($) {
         publishButtonClicked(this);
     });
 
+    jQuery('.publish-button').hover(function () {
+        var button = jQuery(this);
+        var published = button.data("published");
+        if (published == 1) {
+            button.text('Unpublish');
+        } else {
+            button.text('Publish');
+        }
+    }, function () {
+        var button = jQuery(this);
+        var published = button.data("published");
+        if (published == 1) {
+            button.text('Published');
+        } else {
+            button.text('Unpublished');
+        }
+    });
+
     // Assuming there's a button with class sync-button for syncing
     jQuery('.sync-button').on('click', function () {
         syncButtonClicked(this);
