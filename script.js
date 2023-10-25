@@ -128,7 +128,7 @@ jQuery(document).ready(function ($) {
             url: ajaxurl,
             type: 'POST',
             data: {
-                action: 'wp_ajax_delete_post',
+                action: 'delete_post',
                 id: postId
             },
             success: function (response) {
