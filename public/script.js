@@ -81,8 +81,8 @@ jQuery(function ($) {
                     var slide = document.createElement('div');
                     slide.className = 'swiper-slide';
                     slide.addEventListener('click', function () {
-                        //TODO: Add the URN to URL for the post
-                        //window.open(post.urn, '_blank');
+                        //DONE: Add the URN to URL for the post
+                        window.open('https://www.linkedin.com/feed/update/' + post.urn, '_blank');
                     });
                     slide.innerHTML = `
                         <div class="li-icon-white">
