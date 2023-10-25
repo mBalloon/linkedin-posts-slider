@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 function enqueue_custom_scripts_and_styles()
 {
   wp_enqueue_style('custom-style', plugins_url('style.css', __FILE__));
-  wp_enqueue_script('custom-script', plugins_url('script.js', __FILE__), array('jquery'), null, true);
+  wp_enqueue_script('custom-script', plugins_url('script.js', __FILE__), array('jquery', 'jquery-ui-sortable'), null, true);
 }
 add_action('admin_enqueue_scripts', 'enqueue_custom_scripts_and_styles');
 
