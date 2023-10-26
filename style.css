@@ -140,14 +140,24 @@ table.widefat td:nth-child(6) {
 }
 
 /* Up & Down Button Styles */
+/* Up & Down Button Styles */
 button.up-button {
-  background-color: #28a745;
-  padding: 7px;
-  margin: auto;
+	background-color: #28a745;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+  margin: 2px;
 }
 
 button.down-button {
   background-color: #d9534f;
   padding: 7px;
   margin: auto;
+}
+
+.up-down-wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
