@@ -104,13 +104,13 @@ function linkedin_posts_slider_admin_table_page()
               <button class="up-button">
                 <!-- Up arrow SVG -->
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 5L5 12H19L12 5Z" fill="green" />
+                  <path d="M12 5L5 12H19L12 5Z" fill="white" />
                 </svg>
               </button>
               <button class="down-button">
                 <!-- Down arrow SVG -->
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 19L5 12H19L12 19Z" fill="red" />
+                  <path d="M12 19L5 12H19L12 19Z" fill="white" />
                 </svg>
               </button>
             </td>
