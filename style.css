@@ -142,8 +142,12 @@ table.widefat td:nth-child(6) {
 /* Up & Down Button Styles */
 button.up-button {
   background-color: #28a745;
+  padding: 7px;
+  margin: auto;
 }
 
 button.down-button {
   background-color: #d9534f;
+  padding: 7px;
+  margin: auto;
 }
