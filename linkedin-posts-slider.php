@@ -76,6 +76,10 @@ function linkedin_posts_slider_admin_table_page()
       <tbody>
         <?php foreach ($rows as $row) : ?>
           <tr>
+            <td>
+              <span class="row-id" hidden><?php echo esc_html($row->id); ?></span>
+              <!-- ... existing code ... -->
+            </td>
             <td><?php echo esc_html($row->id); ?></td>
             <td>
               <?php
