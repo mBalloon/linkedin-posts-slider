@@ -3,6 +3,7 @@ body {
 }
 
 .swiper-slide {
+    z-index: -2;
     position: relative;
     display: flex;
     flex-direction: column;
