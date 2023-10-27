@@ -170,9 +170,10 @@ body {
 .form-field {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: left;
     align-items: left;
     margin-top: 20px;
+    border-bottom: 1px;
 }
 
 .form-section-title {

@@ -185,6 +185,8 @@ form input[type="submit"]:hover {
 /* Table Row Styles */
 .table-row-class {
   display: flex;
+  flex-direction: row;
+
   align-items: center;
 }
 
