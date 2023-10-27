@@ -70,7 +70,7 @@ function linkedin_posts_slider_admin_table_page()
       </thead>
       <tbody>
         <?php foreach ($rows as $row) : ?>
-          <tr class="table-row">
+          <tr class="table-row-class">
 
             <td><?php echo esc_html($row->id); ?></td>
             <td class="thumbnail-cell">
