@@ -33,6 +33,8 @@ table {
 
 
 .custom-table td {
+  display: flex;
+  align-items: center;
   padding-left: 12px;
   padding-right: 12px;
   padding-top: 0px;
@@ -52,8 +54,14 @@ table {
   color: #fff;
 }
 
+.custom-table tbody tr {
+  display: flex;
+  align-items: center;
+  /* Add hover effect */
+}
+
 .custom-table tbody tr:hover {
-  background-color: #f9f9f9;
+  background-color: #cde2ff;
   /* Add hover effect */
 }
 
