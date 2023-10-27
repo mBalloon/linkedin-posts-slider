@@ -59,21 +59,25 @@ button.publish-button {
 }
 
 button.publish-button[data-published="1"] {
-  background-color: #28a745; /* Green color */
+  background-color: #28a745;
+  /* Green color */
   color: #fff;
 }
 
 button.publish-button[data-published="1"]:hover {
-  background-color: #d9534f; /* Red color */
+  background-color: #d9534f;
+  /* Red color */
 }
 
 button.publish-button[data-published="0"] {
-  background-color: #f0f0f0; /* Light grey color */
+  background-color: #f0f0f0;
+  /* Light grey color */
   color: #000;
 }
 
 button.publish-button[data-published="0"]:hover {
-  background-color: #28a745; /* Green color */
+  background-color: #28a745;
+  /* Green color */
 }
 
 
@@ -142,12 +146,9 @@ table.widefat td:nth-child(6) {
 /* Up & Down Button Styles */
 /* Up & Down Button Styles */
 button.up-button {
-	background-color: #28a745;
-	padding-left: 4px;
-	padding-right: 4px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-  margin: 2px;
+  background-color: #28a745;
+  padding: 7px;
+  margin: auto;
 }
 
 button.down-button {
@@ -156,7 +157,7 @@ button.down-button {
   margin: auto;
 }
 
-.up-down-wrapper{
+.up-down-wrapper {
   display: flex;
   flex-direction: column;
   gap: 4px;

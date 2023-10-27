@@ -25,6 +25,7 @@ body {
   justify-content: center;
   text-align: center;
 }
+
 [type="button"]:focus,
 [type="button"]:hover,
 [type="submit"]:focus,
@@ -37,6 +38,7 @@ button:hover {
   border: 0;
   outline: 0px;
 }
+
 .pre-left-arrow {
   display: flex;
   flex-direction: column;
@@ -49,10 +51,12 @@ button:hover {
   justify-content: center;
   text-align: center;
 }
+
 .slick-prev {
   background-color: transparent;
   border: 0;
 }
+
 .next-right-arrow {
   display: flex;
   flex-direction: column;
@@ -65,10 +69,12 @@ button:hover {
   justify-content: center;
   text-align: center;
 }
+
 .slick-next {
   background-color: transparent;
   border: 0;
 }
+
 .li-post-card {
   display: flex;
   flex-direction: column;
@@ -94,6 +100,7 @@ button:hover {
   display: flex;
   flex-direction: column;
 }
+
 .li-single-img {
   flex-grow: 1;
   height: 100%;
@@ -102,6 +109,7 @@ button:hover {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .li-img-two {
   flex-grow: 1;
   height: 50%;
@@ -110,6 +118,7 @@ button:hover {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .li-img-three-main {
   flex-grow: 1;
   height: 70%;
@@ -118,18 +127,21 @@ button:hover {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .li-img-three-sec-container {
   flex-grow: 1;
   width: 100%;
   display: grid;
   grid-auto-flow: column;
 }
+
 .li-img-three-sec {
   height: 100%;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .li-author-img {
   margin-top: -15px;
   margin-right: auto;
@@ -144,26 +156,28 @@ button:hover {
 }
 
 .section-company {
-  // color: #454545;
-  //font-size: 16px;
-  //font-family: "Titillium Web";
+  color: #454545;
+  font-size: 16px;
+  font-family: "Titillium Web";
   padding-top: 10px;
-  //line-height: 21px;
+  line-height: 21px;
 }
+
 .section-author-date {
-  // color: #454545;
-  // font-size: 14px;
-  // font-family: "Titillium Web";
-  // font-weight: 300;
+  color: #454545;
+  font-size: 14px;
+  font-family: "Titillium Web";
+  font-weight: 300;
   padding-top: 10px;
-  // line-height: 18px;
+  line-height: 18px;
   gap: 3px;
   margin-bottom: 10px;
 }
+
 .section-body {
-  //color: #adb5bd;
-  //font-size: 16px;
-  //font-family: "Titillium Web";
+  color: #adb5bd;
+  font-size: 16px;
+  font-family: "Titillium Web";
   text-align: center;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -173,6 +187,7 @@ button:hover {
   margin-left: 10px;
   margin-bottom: 60px;
 }
+
 .section-interactions {
   padding-right: 7px;
   width: 100%;

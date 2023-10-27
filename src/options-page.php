@@ -4,6 +4,19 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+function enqueue_custom_styles()
+{
+	wp_enqueue_style('custom-styles', plugin_dir_url(__FILE__) . 'preview.css');
+}
+add_action('admin_enqueue_scripts', 'enqueue_custom_styles');
+
+function enqueue_custom_scripts()
+{
+	wp_enqueue_script('custom-scripts', plugin_dir_url(__FILE__) . 'preview.js', array('jquery'), null, true);
+}
+add_action('admin_enqueue_scripts', 'enqueue_custom_scripts');
+
+
 function linkedin_posts_slider_register_settings()
 {
 	// Company info section
@@ -42,342 +55,7 @@ function linkedin_posts_slider_options_page()
 		return;
 	}
 
-	// Register and enqueue the stylesheet
-	//wp_register_style('slider-style', plugins_url('../public/styles.css', __FILE__));
-	//wp_enqueue_style('slider-style');
-	wp_register_style('swiper-style', plugins_url('../public/swiperjs/swiper-bundle.css', __FILE__));
-	wp_enqueue_style('swiper-style');
 
-	// Add the jQuery code to handle the changes
-	echo <<<'EOT'
-	<script>
-	jQuery(document).ready(function($) {
-		// Company info section
-		$("#section-company-color").on("change", function() {
-			$(".section-company").css("color", $(this).val());
-		});
-		$("#section-company-font-size").on("change", function() {
-			$(".section-company").css("font-size", $(this).val() + 'px');
-		});
-		$("#section-company-font-family").on("change", function() {
-			$(".section-company").css("font-family", $(this).val());
-		});
-		$("#section-company-line-height").on("change", function() {
-			$(".section-company").css("line-height", $(this).val() + 'px');
-		});
-
-		// Author username and date section
-		$("#section-author-date-color").on("change", function() {
-			$(".section-author-date").css("color", $(this).val());
-		});
-		$("#section-author-date-font-size").on("change", function() {
-			$(".section-author-date").css("font-size", $(this).val() + 'px');
-		});
-		$("#section-author-date-font-family").on("change", function() {
-			$(".section-author-date").css("font-family", $(this).val());
-		});
-		$("#section-author-date-font-weight").on("change", function() {
-			$(".section-author-date").css("font-weight", $(this).val());
-		});
-		$("#section-author-date-line-height").on("change", function() {
-			$(".section-author-date").css("line-height", $(this).val() + 'px');
-		});
-
-		// Post text section
-		$("#section-body-color").on("change", function() {
-			$(".section-body").css("color", $(this).val());
-		});
-		$("#section-body-font-size").on("change", function() {
-			$(".section-body").css("font-size", $(this).val() + 'px');
-		});
-		$("#section-body-font-family").on("change", function() {
-			$(".section-body").css("font-family", $(this).val());
-		});
-		$("#section-body-webkit-line-clamp").on("change", function() {
-			$(".section-body").css("-webkit-line-clamp", $(this).val());
-		});
-
-		// Post interactions section
-		$("#section-interactions-color").on("change", function() {
-			$(".section-interactions").css("color", $(this).val());
-		});
-		$("#section-interactions-font-size").on("change", function() {
-			$(".section-interactions").css("font-size", $(this).val() + 'px');
-		});
-		$("#section-interactions-font-family").on("change", function() {
-			$(".section-interactions").css("font-family", $(this).val());
-		});
-		$("#section-interactions-font-weight").on("change", function() {
-			$(".section-interactions").css("font-weight", $(this).val());
-		});
-		$("#section-interactions-line-height").on("change", function() {
-		$(".section-interactions").css("line-height", $(this).val() + 'px');
-		}); 
-
-		jQuery(document).ready(function($) {
-			$("form").on("submit", function(event) {
-				event.preventDefault();
-		
-				var formData = $(this).serialize();
-		
-				$.ajax({
-					url: ajaxurl, // This is a variable automatically defined by WordPress that contains the URL to wp-admin/admin-ajax.php
-					type: 'POST',
-					data: {
-						//TODO: Add the options saving logic and steps here
-						action: 'save_form_data', // This should match the action hook in your PHP code
-						nonce: your_nonce, // Replace this with the actual nonce
-						form_data: $(this).serialize() // This serializes the form data
-					},
-					success: function(data) {
-						// Handle the server response here
-					}
-				});
-			});
-		});
-
-		// Handle form field changes
-		$("form input, form select").on("change", function() {
-			// Get the form data
-			var formData = $("form").serialize();
-
-			// Send an AJAX request to the server
-			$.ajax({
-				url: "path/to/your/server/script.php",
-				type: "POST",
-				data: formData,
-				success: function(data) {
-					// Update the post preview
-					$("#post-preview").html(data);
-				}
-			});
-		});
-	});
-	</script>
-	EOT;
-	// Add the CSS code to style the slider
-	echo '
-	<style>
-	body {
-		font-family: Arial, sans-serif;
-	}
-	  
-	.swiper-slide{
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		background-color: #ffffff;
-		box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
-		height: 100%;
-		margin-bottom: 4px;
-	}
-	  
-	.section-company {
-		color: ' . get_option('section-company-color', '#454545') . ';
-		font-size: ' . get_option('section-company-font-size', '16px') . ';
-		font-family: ' . get_option('section-company-font-family', '"Titillium Web"') . ';
-		line-height: ' . get_option('section-company-line-height', '21px') . ';
-		font-weight: ' . get_option('section-company-font-weight', '400') . ';
-		padding-top: 10px;
-	}
-	.section-author-date {
-		color: ' . get_option('section-author-date-color', '#454545') . ';
-		font-size: ' . get_option('section-author-date-font-size', '14px') . ';
-		font-family: ' . get_option('section-author-date-font-family', '"Titillium Web"') . ';
-		font-weight: ' . get_option('section-author-date-font-weight', '300') . ';
-		line-height: ' . get_option('section-author-date-line-height', '18px') . ';
-
-		padding-top: 10px;
-		gap: 3px;
-  		margin-bottom: 10px;
-	}
-	.section-body {
-
-		text-align: center;
-  		overflow: hidden;
-  		-webkit-box-orient: vertical;
-		display: -webkit-box;
-		margin-right: 10px;
-		margin-left: 10px;
-		margin-bottom: 60px;
-		color: ' . get_option('section-body-color', '#adb5bd') . ';
-		font-size: ' . get_option('section-body-font-size', '16px') . ';
-		font-family: ' . get_option('section-body-font-family', '"Titillium Web"') . ';
-		-webkit-line-clamp: ' . get_option('section-body-webkit-line-clamp', '5') . ';
-	}
-	.section-interactions {
-		color: ' . get_option('section-interactions-color', '#454545') . ';
-		font-size: ' . get_option('section-interactions-font-size', '14px') . ';
-		font-family: ' . get_option('section-interactions-font-family', '"Titillium Web"') . ';
-		font-weight: ' . get_option('section-interactions-font-weight', '300') . ';
-		line-height: ' . get_option('section-interactions-line-height', '18px') . ';
-
-		padding-right: 7px;
-  		width: 100%;
-  		position: absolute;
-  		bottom: 7px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		gap: 5px;
-	}
-	.li-icon-white {
-
-		width: 100%;
-		position: absolute;
-		top: 5px;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-	}
-	.li-post-card {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		background-color: #ffffff;
-		box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
-	}
-	  
-	  .img-container {
-		z-index: -1;
-		min-height: 350px;
-		display: flex;
-		flex-direction: column;
-	}
-	  
-	.info-container {
-		z-index: -1;
-		height: 40%;
-		max-height: 40%;
-		display: flex;
-		flex-direction: column;
-	}
-	.li-single-img {
-		flex-grow: 1;
-		height: 100%;
-		width: 100%;
-		background-position: center center;
-		background-size: cover;
-		background-repeat: no-repeat;
-	}
-	.li-img-two {
-		flex-grow: 1;
-		height: 50%;
-		width: 100%;
-		background-position: center center;
-		background-size: cover;
-		background-repeat: no-repeat;
-	}
-	.li-img-three-main {
-		flex-grow: 1;
-		height: 70%;
-		width: 100%;
-		background-position: center center;
-		background-size: cover;
-		background-repeat: no-repeat;
-	}
-	.li-img-three-sec-container {
-		flex-grow: 1;
-		width: 100%;
-		display: grid;
-		grid-auto-flow: column;
-	}
-	  .li-img-three-sec {
-		height: 100%;
-		background-position: center center;
-		background-size: cover;
-		background-repeat: no-repeat;
-	}
-	.li-author-img {
-		margin-top: -15px;
-		margin-right: auto;
-		margin-left: auto;
-		width: 60px;
-		height: 60px;
-		border-radius: 10000px;
-		box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
-		background-position: center center;
-		background-size: cover;
-		background-repeat: no-repeat;
-	}
-	.options-form {
-		float: left;
-		width: 50%;
-	}
-	.form-field{
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: left;
-		margin-top: 20px;
-	}
-	.form-section-title{
-		font-size: 18px;
-		font-weight: 500;
-		margin-bottom: 10px;
-	}
-	.form-subsection-title{
-		font-size: 15px;
-		font-weight: 200;
-		margin-bottom: 10px;
-	}
-	.form-subsection-inputs-row{
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		justify-items: center;
-		align-content: space-evenly;
-		align-items: center;
-		margin-bottom: 10px;
-	}
-	.vertical-form-group{
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		margin-bottom: 10px;
-	}
-	.vertical-form-title{
-		font-size: 15px;
-		font-weight: 200;
-		margin-bottom: 10px;
-	}
-	.vertical-form-input{
-		width: 100%;
-	}
-	.form-subsection
-	}
-	
-	.right-section {
-		float: right;
-		width: 50%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-  		justify-content: center;
-		flex-direction: column;
-
-	}
-	.post-preview-class{
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-		max-width: 400px;
-		margin-top: 20vh;
-	}
-	</style>
-	';
 
 
 
@@ -470,78 +148,83 @@ function linkedin_posts_slider_options_page()
 	 */
 
 	// Add the HTML code for the form fields
-	echo '
-	<form method="post" action="options-page.php" class="options-form">
 
-		<div class="form-field">
-		
-			<div class="form-section-title">
-				Company Name: 
-			</div>
-			
-			<div class="form-subsection-inputs-row">
-				<div class="vertical-form-group">
-        			<div class="vertical-form-title">
-						Color:
-        			</div>
-					<div class="vertical-form-field">
-						<input type="color" id="section-company-color" name="section-company-color" value="' . esc_attr(get_option('section-company-color', '#454545')) . '">
+?>
+	<div class="wrap">
+		<h1>ٍStyle Live Editor</h1>
+		<form method="post" action="options.php" class="options-form">
+			<?php settings_fields('linkedin-posts-slider'); ?>
+			<?php do_settings_sections('linkedin-posts-slider'); ?>
+
+			<div class="form-field">
+
+				<div class="form-section-title">
+					Company Name:
+				</div>
+
+				<div class="form-subsection-inputs-row">
+					<div class="vertical-form-group">
+						<div class="vertical-form-title">
+							Color:
+						</div>
+						<div class="vertical-form-field">
+							<input type="color" id="section-company-color" name="section-company-color" value="<?php echo esc_attr(get_option('section-company-color', '#454545')); ?>">
+						</div>
+					</div>
+					<div class="vertical-form-group">
+						<div class="vertical-form-title">
+							Size:
+						</div>
+						<div class="vertical-form-field">
+							<input type="number" class="number-input" id="section-company-font-size" name="section-company-font-size" value="<?php echo esc_attr(get_option('section-company-font-size', '16')); ?>">
+						</div>
+					</div>
+					<div class="vertical-form-group">
+						<div class="vertical-form-title">
+							Weight:
+						</div>
+						<div class="vertical-form-field">
+							<input type="number" class="number-input" id="section-company-font-weight" name="section-company-font-weight" value="<?php echo esc_attr(get_option('section-company-font-weight', '400')); ?>">
+						</div>
+					</div>
+					<div class="vertical-form-group">
+						<div class="vertical-form-title">
+							Line Height:
+						</div>
+						<div class="vertical-form-field">
+							<input type="number" class="number-input" id="section-company-line-height" name="section-company-line-height" value="<?php echo esc_attr(get_option('section-company-line-height', '18px')); ?>">
+						</div>
 					</div>
 				</div>
-				<div class="vertical-form-group">
-					<div class="vertical-form-title">
-						Size:
-					</div>
-					<div class="vertical-form-field">
-						<input type="number" class="number-input" id="section-company-font-size" name="section-company-font-size" value="' . esc_attr(get_option('section-company-font-size', '16')) . '">
-					</div>
-				</div>
-				<div class="vertical-form-group">
-					<div class="vertical-form-title">
-						Weight:
-					</div>
-					<div class="vertical-form-field">
-						<input type="number" class="number-input" id="section-company-font-weight" name="section-company-font-weight" value="' . esc_attr(get_option('section-company-font-weight', '400')) . '">
-					</div>
-				</div>
-				<div class="vertical-form-group">
-					<div class="vertical-form-title">
-						Line Height:
-					</div>
-					<div class="vertical-form-field">
-						<input type="number" class="number-input" id="section-company-line-height" name="section-company-line-height" value="' . esc_attr(get_option('section-company-line-height', '18px')) . '">
-					</div>
-				</div>
-    		</div>
-				
-				
-				
-				
+
+
+
+
 			</div>
 			<div class="form-subsection-title">
 				Font Family:
 			</div>
 			<div class="">
 				<select id="section-company-font-family" name="section-company-font-family">
-					<option value="' . esc_attr(get_option('section-company-font-family', 'Titillium Web')) . '">Titillium Web</option>
+					<option value="<?php echo esc_attr(get_option('section-company-font-family', 'Titillium Web')); ?>">Titillium Web</option>
 					<!-- //TODO: Add other font options here -->
 				</select>
 			</div>
-			
-		</div>
 
-		<div class="form-field">
-		
-			<div class="form-section-title">
-				Username and post date:
-			</div>
-			<div class="form-subsection-inputs-row">
-				<div class="vertical-form-group">
+	</div>
+
+	<div class="form-field">
+
+		<div class="form-section-title">
+			Username and post date:
+		</div>
+		<div class="form-subsection-inputs-row">
+			<div class="vertical-form-group">
 				<div class="vertical-form-title">
 					Color:
 				</div>
 				<div class="vertical-form-field">
-					<input type="color" id="section-author-date-color" name="section-author-date-color" value="' . esc_attr(get_option('section-author-date-color', '#454545')) . '">
+					<input type="color" id="section-author-date-color" name="section-author-date-color" value="<?php echo esc_attr(get_option('section-author-date-color', '#454545')); ?>">
 				</div>
 			</div>
 			<div class="vertical-form-group">
@@ -549,7 +232,7 @@ function linkedin_posts_slider_options_page()
 					Size:
 				</div>
 				<div class="vertical-form-field">
-					<input type="number" class="number-input" id="section-author-date-font-size" name="section-author-date-font-size" value="' . esc_attr(get_option('section-author-date-font-size', '14')) . '">
+					<input type="number" class="number-input" id="section-author-date-font-size" name="section-author-date-font-size" value="<?php echo esc_attr(get_option('section-author-date-font-size', '14')); ?>">
 				</div>
 			</div>
 			<div class="vertical-form-group">
@@ -557,7 +240,7 @@ function linkedin_posts_slider_options_page()
 					Weight:
 				</div>
 				<div class="vertical-form-field">
-					<input type="number" class="number-input" id="section-author-date-font-weight" name="section-author-date-font-weight" value="' . esc_attr(get_option('section-author-date-font-weight', '300')) . '">
+					<input type="number" class="number-input" id="section-author-date-font-weight" name="section-author-date-font-weight" value="<?php echo esc_attr(get_option('section-author-date-font-weight', '300')); ?>">
 				</div>
 			</div>
 			<div class="vertical-form-group">
@@ -565,43 +248,43 @@ function linkedin_posts_slider_options_page()
 					Line Height:
 				</div>
 				<div class="vertical-form-field">
-					<input type="number" class="number-input" id="section-author-date-line-height" name="section-author-date-line-height" value="' . esc_attr(get_option('section-author-date-line-height', '18px')) . '">
+					<input type="number" class="number-input" id="section-author-date-line-height" name="section-author-date-line-height" value="<?php echo esc_attr(get_option('section-author-date-line-height', '18px')); ?>">
 				</div>
 			</div>
-			</div>
-			<div class="form-subsection-title">
-				Font Family:
-			</div>
-			<div class="">
-				<select id="section-author-date-font-family" name="section-author-date-font-family">
-					<option value="Titillium Web" ' . (get_option('section-author-date-font-family') == 'Titillium Web' ? 'selected' : '') . '>Titillium Web</option>
-					<!-- //TODO: Add other font options here -->
-				</select>
-			</div>
-			
+		</div>
+		<div class="form-subsection-title">
+			Font Family:
+		</div>
+		<div class="">
+			<select id="section-author-date-font-family" name="section-author-date-font-family">
+				<option value="Titillium Web" <?php echo esc_attr(get_option('section-author-date-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
+				<!-- //TODO: Add other font options here -->
+			</select>
 		</div>
 
-		<div class="form-field">
-		
-			<div class="form-section-title">
-				Post text:
-			</div>
+	</div>
 
-			<div class="form-subsection-inputs-row">
+	<div class="form-field">
+
+		<div class="form-section-title">
+			Post text:
+		</div>
+
+		<div class="form-subsection-inputs-row">
 			<div class="vertical-form-group">
-			<div class="vertical-form-title">
-				Color:
-			</div>
-			<div class="vertical-form-field">
-				<input type="color" id="section-body-color" name="section-body-color" value="' . esc_attr(get_option('section-body-color', '#adb5bd')) . '">
-			</div>
+				<div class="vertical-form-title">
+					Color:
+				</div>
+				<div class="vertical-form-field">
+					<input type="color" id="section-body-color" name="section-body-color" value="<?php echo esc_attr(get_option('section-body-color', '#adb5bd')); ?>">
+				</div>
 			</div>
 			<div class="vertical-form-group">
 				<div class="vertical-form-title">
 					Size:
 				</div>
 				<div class="vertical-form-field">
-					<input type="number" class="number-input" id="section-body-font-size" name="section-body-font-size" value="' . esc_attr(get_option('section-body-font-size', '16')) . '">
+					<input type="number" class="number-input" id="section-body-font-size" name="section-body-font-size" value="<?php echo esc_attr(get_option('section-body-font-size', '16')); ?>">
 				</div>
 			</div>
 			<div class="vertical-form-group">
@@ -609,75 +292,84 @@ function linkedin_posts_slider_options_page()
 					Max no. of Lines:
 				</div>
 				<div class="vertical-form-field">
-					<input type="number" class="number-input" id="section-body-line-clamp" name="section-body-line-clamp" value="' . esc_attr(get_option('section-body-line-clamp', '5')) . '">
+					<input type="number" class="number-input" id="section-body-line-clamp" name="section-body-line-clamp" value="<?php echo esc_attr(get_option('section-body-line-clamp', '5')); ?>">
 				</div>
 			</div>
-			</div>
-			<div class="form-subsection-title">
-				Font Family:
-			</div>
-			<div class="">
-				<select id="section-body-font-family" name="section-body-font-family">
-					<option value="Titillium Web" ' . esc_attr(get_option('section-body-font-family', 'Titillium Web')) . '>Titillium Web</option>
-					<!-- //TODO: Add other font options here -->
-				</select>
-			</div>
-			
-			
+		</div>
+		<div class="form-subsection-title">
+			Font Family:
+		</div>
+		<div class="">
+			<select id="section-body-font-family" name="section-body-font-family">
+				<option value="Titillium Web" <?php echo esc_attr(get_option('section-body-font-family', 'Titillium Web')); ?>>Titillium Web</option>
+				<!-- //TODO: Add other font options here -->
+			</select>
 		</div>
 
-		<div class="form-field">
-		
-			<div class="form-section-title">
-				Post interactions and comments:
-			</div>
-			<div class="form-subsection-title">
-				 |  |  | :
-			</div>
-			<div class="form-subsection-inputs-row">
+
+	</div>
+
+	<div class="form-field">
+
+		<div class="form-section-title">
+			Post interactions and comments:
+		</div>
+		<div class="form-subsection-title">
+			| | | :
+		</div>
+		<div class="form-subsection-inputs-row">
 			<div class="vertical-form-group">
-			<div class="vertical-form-title">
-				Color:
+				<div class="vertical-form-title">
+					Color:
+				</div>
+				<div class="vertical-form-field">
+					<input type="color" id="section-interactions-color" name="section-interactions-color" value="<?php echo esc_attr(get_option('section-interactions-color', '#454545')); ?>">
+				</div>
 			</div>
-			<div class="vertical-form-field">
-				<input type="color" id="section-interactions-color" name="section-interactions-color" value="' . esc_attr(get_option('section-interactions-color', '#454545')) . '">
+			<div class="vertical-form-group">
+				<div class="vertical-form-title">
+					Size:
+				</div>
+				<div class="vertical-form-field">
+					<input type="number" class="number-input" id="section-interactions-font-size" name="section-interactions-font-size" value="<?php echo esc_attr(get_option('section-interactions-font-size', '14')); ?>">
+				</div>
 			</div>
-		</div>
-		<div class="vertical-form-group">
-			<div class="vertical-form-title">
-				Size:
-			</div>
-			<div class="vertical-form-field">
-				<input type="number" class="number-input" id="section-interactions-font-size" name="section-interactions-font-size" value="' . esc_attr(get_option('section-interactions-font-size', '14')) . '">
-			</div>
-		</div>
-		<div class="vertical-form-group">
-			<div class="vertical-form-title">
-				Weight:
-			</div>
-			<div class="vertical-form-field">
-				<input type="number" class="number-input" id="section-interactions-font-weight" name="section-interactions-font-weight" value="' . esc_attr(get_option('section-interactions-font-weight', '300')) . '">
-			</div>
+			<div class="vertical-form-group">
+				<div class="vertical-form-title">
+					Weight:
+				</div>
+				<div class="vertical-form-field">
+					<input type="number" class="number-input" id="section-interactions-font-weight" name="section-interactions-font-weight" value="<?php echo esc_attr(get_option('section-interactions-font-weight', '300')); ?>">
+				</div>
 			</div>
 			<div class="vertical-form-group">
 				<div class="vertical-form-title">
 					Line Height:
 				</div>
 				<div class="vertical-form-field">
-					<input type="number" class="number-input" id="section-interactions-line-height" name="section-interactions-line-height" value="' . esc_attr(get_option('section-interactions-line-height', '18px')) . '">
+					<input type="number" class="number-input" id="section-interactions-line-height" name="section-interactions-line-height" value="<?php echo esc_attr(get_option('section-interactions-line-height', '18px')); ?>">
 				</div>
 			</div>
-			</div>
-			<div class="form-subsection-title">
-				Font Family:
-			</div>
-			<div class="">
-				<select id="section-interactions-font-family" name="section-interactions-font-family">
-					<option value="Titillium Web" ' . (get_option('section-interactions-font-family') == 'Titillium Web' ? 'selected' : '') . '>Titillium Web</option>
-					<!-- //TODO: Add other font options here -->
-				</select>
-			</div>
-			
-		</div>';
-	echo submit_button() . ' </form>';
+		</div>
+		<div class="form-subsection-title">
+			Font Family:
+		</div>
+		<div class="">
+			<select id="section-interactions-font-family" name="section-interactions-font-family">
+				<option value="Titillium Web" <?php echo esc_attr(get_option('section-interactions-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
+				<!-- //TODO: Add other font options here -->
+			</select>
+		</div>
+
+	</div>
+	<!-- For example: -->
+	<input type="text" name="section-company-color" value="<?php echo esc_attr(get_option('section-company-color', '#default-color')); ?>">
+
+	<?php submit_button(); ?>
+	</form>
+	</div>
+<?php
 }
+add_action('admin_menu', function () {
+	add_options_page('LinkedIn Post Slider', 'LinkedIn Post Slider', 'manage_options', 'linkedin-posts-slider', 'linkedin_posts_slider_options_page');
+});
