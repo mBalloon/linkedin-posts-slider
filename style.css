@@ -134,6 +134,24 @@ form input[type="submit"]:hover {
   /* Use percentage for more responsive design */
 }
 
+.custom-table th:nth-child(1),
+.custom-table td:nth-child(1) {
+  width: 5%;
+  /* Use percentage for more responsive design */
+}
+
+.custom-table th:nth-child(5),
+.custom-table td:nth-child(5) {
+  width: 13%;
+  /* Use percentage for more responsive design */
+}
+
+.custom-table th:nth-child(6),
+.custom-table td:nth-child(6) {
+  width: 7%;
+  /* Use percentage for more responsive design */
+}
+
 /* ... rest of the column styles ... */
 
 /* Up & Down Button Styles */
@@ -141,6 +159,7 @@ form input[type="submit"]:hover {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  padding: 7px;
 }
 
 .up-button svg,
@@ -152,4 +171,28 @@ form input[type="submit"]:hover {
   display: flex;
   flex-direction: row;
   gap: 4px;
+}
+
+/* Table Row Styles */
+.table-row {
+  display: flex;
+  align-items: center;
+}
+
+/* Thumbnail Cell Styles */
+.thumbnail-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Ensure the cell grows to accommodate the image */
+  flex-grow: 1;
+}
+
+/* Thumbnail Image Styles */
+.thumbnail-image {
+  /* If you want to control the image size, you can set a max-width and max-height */
+  max-width: 100px;
+  max-height: 100px;
+  /* Ensure the image retains its aspect ratio */
+  object-fit: cover;
 }

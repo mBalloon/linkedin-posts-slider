@@ -70,10 +70,10 @@ function linkedin_posts_slider_admin_table_page()
       </thead>
       <tbody>
         <?php foreach ($rows as $row) : ?>
-          <tr>
+          <tr class="table-row">
 
             <td><?php echo esc_html($row->id); ?></td>
-            <td>
+            <td class="thumbnail-cell">
               <?php
               $images = json_decode($row->images);
               if (!empty($images)) {
