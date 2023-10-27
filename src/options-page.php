@@ -8,6 +8,7 @@ if (!defined('ABSPATH')) {
 function enqueue_preview_styles()
 {
 	wp_enqueue_style('preview-styles', plugin_dir_url(dirname(__FILE__)) . 'preview.css');
+	wp_enqueue_style('swiper-style');
 }
 add_action('admin_enqueue_scripts', 'enqueue_preview_styles');
 

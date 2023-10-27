@@ -189,17 +189,17 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    justify-items: center;
+    justify-items: left;
     align-content: space-evenly;
-    align-items: center;
+    align-items: left;
     margin-bottom: 10px;
 }
 
 .vertical-form-group {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     margin-bottom: 10px;
 }
 
