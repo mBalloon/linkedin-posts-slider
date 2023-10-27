@@ -4,17 +4,20 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-function enqueue_custom_styles()
-{
-	wp_enqueue_style('custom-styles', plugin_dir_url(__FILE__) . 'preview.css');
-}
-add_action('admin_enqueue_scripts', 'enqueue_custom_styles');
 
-function enqueue_custom_scripts()
+// Enqueue styles for the preview section in the admin area
+function enqueue_preview_styles()
 {
-	wp_enqueue_script('custom-scripts', plugin_dir_url(__FILE__) . 'preview.js', array('jquery'), null, true);
+	wp_enqueue_style('preview-styles', plugin_dir_url(__FILE__) . 'preview.css');
 }
-add_action('admin_enqueue_scripts', 'enqueue_custom_scripts');
+add_action('admin_enqueue_scripts', 'enqueue_preview_styles');
+
+// Enqueue scripts for the preview section in the admin area
+function enqueue_preview_scripts()
+{
+	wp_enqueue_script('preview-scripts', plugin_dir_url(__FILE__) . 'preview.js', array('jquery'), null, true);
+}
+add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
 
 
 function linkedin_posts_slider_register_settings()
@@ -292,7 +295,7 @@ function linkedin_posts_slider_options_page()
 					Max no. of Lines:
 				</div>
 				<div class="vertical-form-field">
-					<input type="number" class="number-input" id="section-body-line-clamp" name="section-body-line-clamp" value="<?php echo esc_attr(get_option('section-body-line-clamp', '5')); ?>">
+					<input type="number" class="number-input" id="section-body-webkit-line-clamp" name="section-body-webkit-line-clamp" value="<?php echo esc_attr(get_option('section-body-webkit-line-clamp', '5')); ?>">
 				</div>
 			</div>
 		</div>
