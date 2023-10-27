@@ -148,17 +148,18 @@ table.widefat td:nth-child(6) {
 button.up-button {
   background-color: #28a745;
   padding: 7px;
-  margin: auto;
+
 }
 
 button.down-button {
   background-color: #d9534f;
   padding: 7px;
-  margin: auto;
+
 }
 
 .up-down-wrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
   gap: 4px;
 }
