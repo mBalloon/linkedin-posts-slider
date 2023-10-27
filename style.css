@@ -20,25 +20,34 @@ table {
 
 
 /* Table Styles */
-table.widefat {
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
   margin-top: 20px;
-  border-collapse: separate;
-  border-spacing: 0;
   border: 1px solid #ccd0d4;
   border-radius: 4px;
+  overflow: hidden;
+  /* Add overflow property */
 }
 
-table.widefat th,
-table.widefat td {
+.custom-table th,
+.custom-table td {
   padding: 12px;
   border-bottom: 1px solid #ccd0d4;
-}
-
-table.widefat th {
-  background-color: #007cba;
-  color: #fff;
   text-align: left;
 }
+
+.custom-table th {
+  background-color: #007cba;
+  color: #fff;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f9f9f9;
+  /* Add hover effect */
+}
+
 
 /* Button Styles */
 button.publish-button,
@@ -119,47 +128,28 @@ form input[type="submit"]:hover {
 }
 
 /* Column & Thumbnail Styles */
-table.widefat th:nth-child(1),
-table.widefat td:nth-child(1) {
-  width: 50px;
-  /* Adjust width as needed */
+.custom-table th:nth-child(1),
+.custom-table td:nth-child(1) {
+  width: 5%;
+  /* Use percentage for more responsive design */
 }
 
-table.widefat th:nth-child(2),
-table.widefat td:nth-child(2) {
-  width: 100px;
-  /* Adjust width as needed */
-}
-
-table.widefat th:nth-child(3),
-table.widefat td:nth-child(3) {
-  width: 80px;
-  /* Adjust width as needed */
-}
-
-table.widefat th:nth-child(6),
-table.widefat td:nth-child(6) {
-  width: 60px;
-  /* Adjust width as needed */
-}
+/* ... rest of the column styles ... */
 
 /* Up & Down Button Styles */
-/* Up & Down Button Styles */
-button.up-button {
-  background-color: #28a745;
-  padding: 7px;
-
+.up-down-wrapper button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
-button.down-button {
-  background-color: #d9534f;
-  padding: 7px;
-
+.up-button svg,
+.down-button svg {
+  fill: #007cba;
 }
 
 .up-down-wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   gap: 4px;
 }
