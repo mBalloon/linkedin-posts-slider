@@ -189,16 +189,19 @@ function linkedin_posts_slider_options_page()
 							<input type="number" class="number-input" id="section-company-line-height" name="section-company-line-height" value="<?php echo esc_attr(get_option('section-company-line-height', '18px')); ?>">
 						</div>
 					</div>
+					<div class="vertical-form-group">
+						<div class="vertical-form-title">
+							Font Family:
+						</div>
+						<div class="vertical-form-field">
+							<select id="section-company-font-family" name="section-company-font-family">
+								<option value="<?php echo esc_attr(get_option('section-company-font-family', 'Titillium Web')); ?>">Titillium Web</option>
+								<!-- //TODO: Add other font options here -->
+							</select>
+						</div>
+					</div>
 				</div>
-				<div class="form-subsection-title">
-					Font Family:
-				</div>
-				<div class="">
-					<select id="section-company-font-family" name="section-company-font-family">
-						<option value="<?php echo esc_attr(get_option('section-company-font-family', 'Titillium Web')); ?>">Titillium Web</option>
-						<!-- //TODO: Add other font options here -->
-					</select>
-				</div>
+
 
 			</div>
 			<div class="form-field">
@@ -239,16 +242,19 @@ function linkedin_posts_slider_options_page()
 							<input type="number" class="number-input" id="section-author-date-line-height" name="section-author-date-line-height" value="<?php echo esc_attr(get_option('section-author-date-line-height', '18px')); ?>">
 						</div>
 					</div>
+					<div class="vertical-form-group">
+						<div class="vertical-form-title">
+							Font Family:
+						</div>
+						<div class="vertical-form-field">
+							<select id="section-author-date-font-family" name="section-author-date-font-family">
+								<option value="Titillium Web" <?php echo esc_attr(get_option('section-author-date-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
+								<!-- //TODO: Add other font options here -->
+							</select>
+						</div>
+					</div>
 				</div>
-				<div class="form-subsection-title">
-					Font Family:
-				</div>
-				<div class="">
-					<select id="section-author-date-font-family" name="section-author-date-font-family">
-						<option value="Titillium Web" <?php echo esc_attr(get_option('section-author-date-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
-						<!-- //TODO: Add other font options here -->
-					</select>
-				</div>
+
 
 			</div>
 
@@ -283,16 +289,19 @@ function linkedin_posts_slider_options_page()
 							<input type="number" class="number-input" id="section-body-webkit-line-clamp" name="section-body-webkit-line-clamp" value="<?php echo esc_attr(get_option('section-body-webkit-line-clamp', '5')); ?>">
 						</div>
 					</div>
+					<div class="vertical-form-group">
+						<div class="vertical-form-title">
+							Font Family:
+						</div>
+						<div class="vertical-form-field">
+							<select id="section-body-font-family" name="section-body-font-family">
+								<option value="Titillium Web" <?php echo esc_attr(get_option('section-body-font-family', 'Titillium Web')); ?>>Titillium Web</option>
+								<!-- //TODO: Add other font options here -->
+							</select>
+						</div>
+					</div>
 				</div>
-				<div class="form-subsection-title">
-					Font Family:
-				</div>
-				<div class="">
-					<select id="section-body-font-family" name="section-body-font-family">
-						<option value="Titillium Web" <?php echo esc_attr(get_option('section-body-font-family', 'Titillium Web')); ?>>Titillium Web</option>
-						<!-- //TODO: Add other font options here -->
-					</select>
-				</div>
+
 
 
 			</div>
@@ -335,16 +344,19 @@ function linkedin_posts_slider_options_page()
 							<input type="number" class="number-input" id="section-interactions-line-height" name="section-interactions-line-height" value="<?php echo esc_attr(get_option('section-interactions-line-height', '18px')); ?>">
 						</div>
 					</div>
+					<div class="vertical-form-group">
+						<div class="vertical-form-title">
+							Font Family:
+						</div>
+						<div class="vertical-form-field">
+							<select id="section-interactions-font-family" name="section-interactions-font-family">
+								<option value="Titillium Web" <?php echo esc_attr(get_option('section-interactions-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
+								<!-- //TODO: Add other font options here -->
+							</select>
+						</div>
+					</div>
 				</div>
-				<div class="form-subsection-title">
-					Font Family:
-				</div>
-				<div class="">
-					<select id="section-interactions-font-family" name="section-interactions-font-family">
-						<option value="Titillium Web" <?php echo esc_attr(get_option('section-interactions-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
-						<!-- //TODO: Add other font options here -->
-					</select>
-				</div>
+
 
 			</div>
 
