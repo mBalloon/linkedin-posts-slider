@@ -5,17 +5,15 @@ if (!defined('ABSPATH')) {
 }
 
 
-// Enqueue styles for the preview section in the admin area
 function enqueue_preview_styles()
 {
-	wp_enqueue_style('preview-styles', plugin_dir_url(__FILE__) . 'preview.css');
+	wp_enqueue_style('preview-styles', plugin_dir_url(dirname(__FILE__)) . 'preview.css');
 }
 add_action('admin_enqueue_scripts', 'enqueue_preview_styles');
 
-// Enqueue scripts for the preview section in the admin area
 function enqueue_preview_scripts()
 {
-	wp_enqueue_script('preview-scripts', plugin_dir_url(__FILE__) . 'preview.js', array('jquery'), null, true);
+	wp_enqueue_script('preview-scripts', plugin_dir_url(dirname(__FILE__)) . 'preview.js', array('jquery'), null, true);
 }
 add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
 
@@ -316,9 +314,6 @@ function linkedin_posts_slider_options_page()
 
 		<div class="form-section-title">
 			Post interactions and comments:
-		</div>
-		<div class="form-subsection-title">
-			| | | :
 		</div>
 		<div class="form-subsection-inputs-row">
 			<div class="vertical-form-group">
