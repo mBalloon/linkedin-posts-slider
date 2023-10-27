@@ -31,8 +31,17 @@ table {
   /* Add overflow property */
 }
 
-.custom-table th,
+
 .custom-table td {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-bottom: 1px solid #ccd0d4;
+  text-align: left;
+}
+
+.custom-table th {
   padding: 12px;
   border-bottom: 1px solid #ccd0d4;
   text-align: left;
@@ -142,7 +151,7 @@ form input[type="submit"]:hover {
 
 .custom-table th:nth-child(5),
 .custom-table td:nth-child(5) {
-  width: 13%;
+  width: 10%;
   /* Use percentage for more responsive design */
 }
 
