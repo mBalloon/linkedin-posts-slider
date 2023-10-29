@@ -86,6 +86,7 @@
 .up-button svg,
 .down-button svg {
   width: 20px;
+  min-inline-size: fit-content;
   height: 20px;
   fill: white;
 }
