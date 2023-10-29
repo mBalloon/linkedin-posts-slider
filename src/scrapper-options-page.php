@@ -42,7 +42,7 @@ function linkedin_posts_scrapper_settings_page()
 	$published_posts = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE published = true");
 	$synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE synced = true");
 	$last_update = get_option('linkedin_scrapper_last_update', 'Not available');
-	$status = get_option('linkedin_scrapper_status', 'ERROR');
+	$status = get_option('linkedin_scrapper_status', 'OK');
 ?>
 
 	<div class="wrap">
@@ -80,7 +80,7 @@ function linkedin_posts_scrapper_settings_page()
 			<table class="form-table">
 				<tr valign="top">
 					<th scope="row">Company Profile URL</th>
-					<td><input type="text" name="linkedin_company_url" value="<?php echo esc_attr(get_option('linkedin_company_url', '')); ?>" /></td>
+					<td><input type="text" name="linkedin_company_url" value="<?php echo esc_attr(get_option('linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/')); ?>" /></td>
 				</tr>
 
 				<tr valign="top">
@@ -91,6 +91,10 @@ function linkedin_posts_scrapper_settings_page()
 				<tr valign="top">
 					<th scope="row">Scrapping Frequency (in seconds)</th>
 					<td><input type="number" name="linkedin_update_frequency" value="<?php echo esc_attr(get_option('linkedin_update_frequency', 60 * 60 * 24)); ?>" /></td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">Scrapper Endpoint</th>
+					<td><input type="text" name="linkedin_update_frequency" value="<?php echo esc_attr(get_option('linkedin_scrapper_endpoint', 'https://scrape-js.onrender.com/scrape')); ?>" /></td>
 				</tr>
 			</table>
 

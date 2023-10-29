@@ -61,7 +61,7 @@ function linkedin_posts_slider_admin_table_page()
     <table class="widefat fixed custom-table" cellspacing="0">
       <thead>
         <tr>
-          <th scope="col" class="manage-column" hidden>ID</th>
+          <th scope="col" class="manage-column column-id" hidden>ID</th>
           <th scope="col" class="manage-column">ID</th>
           <th scope="col" class="manage-column">Thumbnail</th>
           <th scope="col" class="manage-column">Age</th>
@@ -73,9 +73,8 @@ function linkedin_posts_slider_admin_table_page()
       <tbody>
         <?php foreach ($rows as $row) : ?>
           <tr class="table-row-class">
-            <td>
+            <td class="column-id" hidden>
               <span class="row-id" hidden><?php echo esc_html($row->id); ?></span>
-              <!-- ... existing code ... -->
             </td>
             <td><?php echo esc_html($row->id); ?></td>
             <td class="thumbnail-cell">
