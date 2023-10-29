@@ -241,3 +241,7 @@ form input[type="submit"]:hover {
   gap: 5px;
   /* Adjust gap size as needed */
 }
+
+.widefat td {
+  vertical-align: middle;
+}
