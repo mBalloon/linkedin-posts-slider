@@ -199,7 +199,7 @@ h1 {
 
 .options-form {
 
-    flex-grow: 1;
+    width: 40%;
     background-color: #fff;
     border-radius: 8px;
     padding: 20px;
@@ -282,7 +282,8 @@ h1 {
 
 
 .right-section {
-
+    float: right;
+    width: 40%;
     height: 100%;
     display: flex;
     align-items: center;
