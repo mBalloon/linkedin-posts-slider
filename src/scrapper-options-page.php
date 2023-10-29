@@ -19,7 +19,7 @@ function enqueue_preview_scripts()
 //add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
 */
 
-function linkedin_posts_slider_register_settings()
+function linkedin_posts_scrapper_register_settings()
 {
 	// scrapper settings
 	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_company_url');
@@ -29,7 +29,7 @@ function linkedin_posts_slider_register_settings()
 	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_scrapper_last_update');
 	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_scrapper_endpoint');
 }
-add_action('admin_init', 'linkedin_posts_slider_register_settings');
+add_action('admin_init', 'linkedin_posts_scrapper_register_settings');
 
 // Add an options page for the Linkedin Posts Slider widget in the WordPress admin menu.
 function linkedin_posts_scrapper_settings_page()
