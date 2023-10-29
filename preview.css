@@ -16,19 +16,6 @@ body {
     margin-bottom: 4px;
 }
 
-.swiper-slide {
-    position: relative;
-    width: 100%;
-    /* Ensures width is 100% of the container */
-}
-
-.swiper-slide::before {
-    content: "";
-    display: block;
-    padding-top: 175%;
-    /* This value sets the 4:7 aspect ratio */
-}
-
 
 .section-company {
     color: #454545;
