@@ -184,7 +184,7 @@ h1 {
 }
 
 .options-form {
-    float: left;
+
     width: 40%;
     background-color: #fff;
     border-radius: 8px;
@@ -268,7 +268,7 @@ h1 {
 
 
 .right-section {
-    float: right;
+
     width: 40%;
     height: 100%;
     display: flex;
