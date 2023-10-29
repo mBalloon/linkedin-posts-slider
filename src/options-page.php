@@ -144,7 +144,7 @@ function linkedin_posts_slider_options_page()
 	// Add the HTML code for the form fields
 
 ?>
-	<div class="options-form-wrap">
+	<div class="wrap">
 		<h1>Style Live Editor</h1>
 		<form method="post" action="options.php" class="options-form">
 			<?php settings_fields('linkedin-posts-slider'); ?>
