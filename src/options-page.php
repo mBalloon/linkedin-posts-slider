@@ -330,16 +330,12 @@ function linkedin_posts_slider_options_page()
 
 
 			</div>
-
+			<?php submit_button(); ?>
+		</form>
 	</div>
 
 
-	<!-- For example: 
-	<input type="text" name="section-company-color" value="php echo esc_attr(get_option('section-company-color', '#default-color')); ?>">
-	-->
-	<?php submit_button(); ?>
-	</form>
-	</div>
+
 <?php
 }
 add_action('admin_menu', function () {
