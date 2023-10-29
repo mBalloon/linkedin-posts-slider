@@ -88,15 +88,18 @@ function linkedin_posts_slider_admin_table_page()
             <td><?php echo esc_html($row->age); ?></td>
             <td><?php echo wp_trim_words(esc_html($row->post_text), 10, '...'); ?></td>
             <td>
-              <form method="post" style="display:inline;">
-                <?php wp_nonce_field('linkedin_delete_action', 'linkedin_delete_nonce'); ?>
-                <input type="hidden" name="id" value="<?php echo esc_attr($row->id); ?>">
-                <input type="submit" value="Delete" class="delete-button" data-id="<?php echo esc_attr($row->id); ?>">
-              </form>
+              <div class="action-buttons">
+                <form method="post" style="display:inline;">
+                  <?php wp_nonce_field('linkedin_delete_action', 'linkedin_delete_nonce'); ?>
+                  <input type="hidden" name="id" value="<?php echo esc_attr($row->id); ?>">
+                  <input type="submit" value="Delete" class="delete-button" data-id="<?php echo esc_attr($row->id); ?>">
+                </form>
 
-              <button class="publish-button" data-id="<?php echo esc_attr($row->id); ?>" data-published="<?php echo esc_attr($row->published); ?>">
-                <?php echo $row->published ? 'Published' : 'Unpublished'; ?>
-              </button>
+                <button class="publish-button" data-id="<?php echo esc_attr($row->id); ?>" data-published="<?php echo esc_attr($row->published); ?>">
+                  <?php echo $row->published ? 'Published' : 'Unpublished'; ?>
+                </button>
+              </div>
+
 
             </td>
             </td>
