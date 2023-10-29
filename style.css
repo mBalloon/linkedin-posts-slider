@@ -180,23 +180,9 @@ form input[type="submit"]:hover {
 /* ... rest of the column styles ... */
 
 /* Up & Down Button Styles */
-.up-down-wrapper button {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  padding: 7px;
-}
 
-.up-button svg,
-.down-button svg {
-  fill: #007cba;
-}
 
-.up-down-wrapper {
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-}
+
 
 /* Table Row Styles */
 .table-row-class {
@@ -236,6 +222,7 @@ form input[type="submit"]:hover {
 
 .up-down-wrapper button {
   background-color: #007cba;
+  cursor: pointer;
   padding: 0;
   width: 30px;
   /* Adjust size as needed */
@@ -249,6 +236,7 @@ form input[type="submit"]:hover {
 }
 
 .up-down-wrapper {
+  display: flex;
   flex-direction: column;
   gap: 5px;
   /* Adjust gap size as needed */
