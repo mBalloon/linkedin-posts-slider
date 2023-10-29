@@ -7,16 +7,16 @@ if (!defined('ABSPATH')) {
 
 function enqueue_preview_styles()
 {
-	wp_enqueue_style('preview-styles', plugin_dir_url(dirname(__FILE__)) . 'preview.css');
-	wp_enqueue_style('swiper-style');
+	//wp_enqueue_style('preview-styles', plugin_dir_url(dirname(__FILE__)) . 'preview.css');
+	//wp_enqueue_style('swiper-style');
 }
-add_action('admin_enqueue_scripts', 'enqueue_preview_styles');
+//add_action('admin_enqueue_scripts', 'enqueue_preview_styles');
 
 function enqueue_preview_scripts()
 {
 	wp_enqueue_script('preview-scripts', plugin_dir_url(dirname(__FILE__)) . 'preview.js', array('jquery'), null, true);
 }
-add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
+//add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
 
 
 function linkedin_posts_slider_register_settings()
