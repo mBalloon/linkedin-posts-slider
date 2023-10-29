@@ -1,3 +1,7 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
 .swiper-slide {
     z-index: -2;
     position: relative;
@@ -10,10 +14,6 @@
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
     height: 100%;
     margin-bottom: 4px;
-    width: 100%;
-    /* Full width */
-    box-sizing: border-box;
-    /* Include padding and border in dimensions */
 }
 
 
@@ -165,7 +165,19 @@
 
 /* Global Styles */
 
-
+.li-form-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* Add this line to vertically center */
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
 
 h1 {
     color: #333;
@@ -174,7 +186,18 @@ h1 {
     margin-bottom: 20px;
 }
 
-
+.options-form {
+    flex: 1;
+    /* Add this line to take half space */
+    margin-right: 1%;
+    /* Add some margin to separate */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    /* Add this line to horizontally center the content */
+}
 
 /* Form Fields Styles */
 .form-field {
@@ -251,66 +274,34 @@ h1 {
 
 
 
-
-
-
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    /* Enable flexbox */
-    flex-direction: row;
-    /* Arrange children horizontally */
-    height: 100vh;
-    /* Full height */
-    margin: 0;
-    /* Remove margin */
-    overflow: hidden;
-    /* Hide overflow */
-}
-
-/* Form Styles */
-.li-form-wrap {
-    flex: 1;
-    /* Take up half the width */
-    padding: 20px;
-    box-sizing: border-box;
-    /* Include padding in dimensions */
-    overflow-y: auto;
-    /* Allow scrolling if content overflows */
-}
-
-.options-form {
-    width: 100%;
-    /* Full width */
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* ... rest of your form styles ... */
-
-/* Post Preview Styles */
 .right-section {
     flex: 1;
-    /* Take up half the width */
+    /* Add this line to take half space */
+    margin-left: 1%;
+    /* Add some margin to separate */
     height: 100%;
-    /* Full height */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-    /* Include padding in dimensions */
-    overflow-y: auto;
-    /* Allow scrolling if content overflows */
+    flex-direction: column;
+    text-align: center;
+    /* Add this line to horizontally center the content */
+
 }
 
 .post-preview-class {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    /* Full width */
+    height: fit-content;
     max-width: 400px;
+    margin-top: 20vh;
 }
 
-/* ... rest of your post preview styles ... */
+
+/* Existing Styles */
+/* ... */
+
+/* Updated Styles for Layout */
