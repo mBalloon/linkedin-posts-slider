@@ -61,7 +61,7 @@ function linkedin_posts_slider_options_page()
 	// Add the HTML code for the form fields
 
 ?>
-	<div class="wrap">
+	<div class="li-form-wrap">
 		<h1>Style Live Editor</h1>
 		<div class="right-section">
 			<div id="post-preview" class="post-preview-class">
