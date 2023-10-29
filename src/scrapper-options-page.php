@@ -45,7 +45,7 @@ function linkedin_posts_scrapper_settings_page()
 	$status = get_option('linkedin_scrapper_status', 'OK');
 ?>
 
-	<div class="wrap">
+	<div class="options-form-wrap">
 		<h1>LinkedIn Posts Scrapper Settings</h1>
 
 		<!-- Stats Section -->
