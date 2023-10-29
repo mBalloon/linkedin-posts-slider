@@ -24,6 +24,7 @@ add_action('admin_enqueue_scripts', 'enqueue_custom_scripts_and_styles');
 // Include the new files
 require_once plugin_dir_path(__FILE__) . 'src/widget-registration.php';
 require_once plugin_dir_path(__FILE__) . 'src/options-page.php';
+require_once plugin_dir_path(__FILE__) . 'src/scrapper-options-page.php';
 require_once plugin_dir_path(__FILE__) . 'src/db-table-creation.php';
 require_once plugin_dir_path(__FILE__) . 'src/cron-event.php';
 require_once plugin_dir_path(__FILE__) . 'src/admin-menu.php';
@@ -60,6 +61,7 @@ function linkedin_posts_slider_admin_table_page()
     <table class="widefat fixed custom-table" cellspacing="0">
       <thead>
         <tr>
+          <th scope="col" class="manage-column" hidden>ID</th>
           <th scope="col" class="manage-column">ID</th>
           <th scope="col" class="manage-column">Thumbnail</th>
           <th scope="col" class="manage-column">Age</th>
@@ -71,7 +73,10 @@ function linkedin_posts_slider_admin_table_page()
       <tbody>
         <?php foreach ($rows as $row) : ?>
           <tr class="table-row-class">
-
+            <td>
+              <span class="row-id" hidden><?php echo esc_html($row->id); ?></span>
+              <!-- ... existing code ... -->
+            </td>
             <td><?php echo esc_html($row->id); ?></td>
             <td class="thumbnail-cell">
               <?php

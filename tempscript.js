@@ -1,24 +1,5 @@
 /* script.js */
 
-// Function to update post order
-function updatePostOrder(postOrder) {
-    jQuery.ajax({
-        url: ajaxurl,
-        type: 'POST',
-        data: {
-            action: 'update_post_order',
-            post_order: postOrder
-        },
-        success: function (response) {
-            // Handle success
-            console.log('Post order updated:', response);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            // Handle error
-            console.error('Error updating post order:', textStatus, errorThrown);
-        }
-    });
-}
 
 function syncButtonClicked(buttonElement) {
     // Get button and URN
@@ -29,15 +10,81 @@ function syncButtonClicked(buttonElement) {
     button.text("...");
 
     // Make AJAX request
+
     jQuery('#posts-table tbody').sortable({
         update: function (event, ui) {
             var postOrder = jQuery(this).sortable('toArray');
-            updatePostOrder(postOrder);
+
+            jQuery.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'update_post_order',
+                    post_order: postOrder
+                }
+            });
         }
     });
+    jQuery.ajax({
+        url: "https://scrape-js.onrender.com/",
+        type: "POST",
+        data: JSON.stringify({
+            urn: urn,
+            secretKey: "PzoiJcU2ocfOeWj6AQQdkQ"
+        }),
+        contentType: "application/json",
+        success: function (response) {
 
-    // ... rest of the existing code in syncButtonClicked ...
+            // Update button text
+            button.text("Sync");
+
+            // Get data
+            var data = response;
+
+            // Make update AJAX request
+            jQuery.ajax({
+                url: ajaxurl,
+                type: "POST",
+                data: {
+                    action: "update_row",
+                    data: JSON.stringify({
+                        urn: data.urn,
+                        author: data.author,
+                        username: data.username,
+                        age: data.age,
+                        profilePicture: data.profilePicture,
+                        post_text: data.post_text,
+                        images: data.images,
+                        reactions: data.reactions,
+                        comments: data.comments,
+                        synced: true
+                    })
+                },
+                success: function (response) {
+
+                    // Update button text
+                    button.text("Sync");
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                    // Update button text
+                    button.text("Sync");
+
+                }
+            });
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+
+            // Update button text
+            button.text("Sync");
+
+        }
+    });
 }
+
+
 
 function publishButtonClicked(buttonElement) {
     // Get button and ID
@@ -69,10 +116,11 @@ function publishButtonClicked(buttonElement) {
     });
 }
 
+
+
 jQuery(document).ready(function ($) {
 
     $('.delete-button').on('click', function (e) {
-
         e.preventDefault();  // Prevent the form from submitting the traditional way
         var button = $(this);
         var postId = button.data('id');
@@ -93,7 +141,6 @@ jQuery(document).ready(function ($) {
     });
 
     $('form input[type=submit]').on('click', function (e) {
-
         e.preventDefault();
         const form = $(this).closest('form');
         const button = $(this);
@@ -141,11 +188,27 @@ jQuery(document).ready(function ($) {
         syncButtonClicked(this);
     });
 
-    jQuery('#posts-table tbody').sortable({
-        update: function (event, ui) {
-            var postOrder = jQuery(this).sortable('toArray');
-            updatePostOrder(postOrder);
-        }
+    jQuery(document).ready(function ($) {
+        $('#posts-table tbody').sortable({
+            update: function (event, ui) {
+                var postOrder = jQuery(this).sortable('toArray');
+
+                jQuery.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'update_post_order',
+                        post_order: postOrder
+                    },
+                    success: function (response) {
+                        // Handle success
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Handle error
+                    }
+                });
+            }
+        });
     });
 
     jQuery('.up-button, .down-button').on('click', function () {
@@ -170,4 +233,8 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+
 });
+
+

@@ -147,24 +147,26 @@ form input[type="submit"]:hover {
 /* Column & Thumbnail Styles */
 .custom-table th:nth-child(1),
 .custom-table td:nth-child(1) {
+  width: 0%;
+  /* Use percentage for more responsive design */
+}
+
+.custom-table th:nth-child(2),
+.custom-table td:nth-child(2) {
   width: 5%;
   /* Use percentage for more responsive design */
 }
 
-.custom-table th:nth-child(1),
-.custom-table td:nth-child(1) {
-  width: 5%;
-  /* Use percentage for more responsive design */
-}
 
-.custom-table th:nth-child(5),
-.custom-table td:nth-child(5) {
+
+.custom-table th:nth-child(6),
+.custom-table td:nth-child(6) {
   width: 10%;
   /* Use percentage for more responsive design */
 }
 
-.custom-table th:nth-child(6),
-.custom-table td:nth-child(6) {
+.custom-table th:nth-child(7),
+.custom-table td:nth-child(7) {
   width: 7%;
   /* Use percentage for more responsive design */
 }
@@ -214,4 +216,28 @@ form input[type="submit"]:hover {
   max-height: 100px;
   /* Ensure the image retains its aspect ratio */
   object-fit: cover;
+}
+
+.scrapper-options-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+
+}
+
+scrapper-stats-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: 30px;
+  background-color: aliceblue;
+
+}
+
+.scrapper-options-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }

@@ -95,6 +95,7 @@ button:hover {
 
 .info-container {
   z-index: -1;
+  flex-grow: 1;
   height: 40%;
   max-height: 40%;
   display: flex;
@@ -176,6 +177,7 @@ button:hover {
 
 .section-body {
   color: #adb5bd;
+  flex-grow: 1;
   font-size: 16px;
   font-family: "Titillium Web";
   text-align: center;

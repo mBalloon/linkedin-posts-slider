@@ -19,7 +19,7 @@ function linkedin_posts_slider_create_table()
         post_text text NOT NULL,
         images text NOT NULL,
         reactions int NOT NULL,
-        comments int NOT NULL,
+        comments text NOT NULL,
         synced boolean NOT NULL,
         published boolean NOT NULL,
         post_order int NOT NULL,
