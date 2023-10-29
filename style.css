@@ -1,48 +1,25 @@
-/* style.css 
-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
-  }
-  */
-
-
 /* Table Styles */
+
+.wrap {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 .custom-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-top: 20px;
-  border: 1px solid #ccd0d4;
-  border-radius: 4px;
+  border: 1px solid #007cba;
+  border-radius: 8px;
   overflow: hidden;
-  /* Add overflow property */
 }
 
-
+.custom-table th,
 .custom-table td {
-  /* Removed display: flex; */
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  border-bottom: 1px solid #ccd0d4;
-  text-align: left;
-}
-
-.custom-table th {
+  vertical-align: middle;
   padding: 12px;
   border-bottom: 1px solid #ccd0d4;
   text-align: left;
@@ -54,71 +31,84 @@ table {
 }
 
 .custom-table tbody tr {
-  width: 100%;
-  /* Removed display: flex; */
-
-  /* Add hover effect */
-}
-
-.custom-table td,
-.custom-table th {
-  vertical-align: middle;
+  transition: background-color 0.3s;
 }
 
 .custom-table tbody tr:hover {
   background-color: #cde2ff;
-  /* Add hover effect */
 }
 
-
 /* Button Styles */
-button.publish-button,
-form input[type="submit"],
-button.up-button,
-button.down-button {
+
+.action-buttons form input[type="submit"],
+.action-buttons button,
+.up-down-wrapper button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
+  width: 100%;
 }
 
-button.publish-button {
-  background-color: #28a745;
-  /* Green color */
-  color: #fff;
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-button.publish-button[data-published="1"] {
-  background-color: #28a745;
-  /* Green color */
-  color: #fff;
-}
-
-button.publish-button[data-published="1"]:hover {
-  background-color: #d9534f;
-  /* Red color */
-}
-
-button.publish-button[data-published="0"] {
-  background-color: #f0f0f0;
-  /* Light grey color */
-  color: #000;
-}
-
-button.publish-button[data-published="0"]:hover {
-  background-color: #28a745;
-  /* Green color */
-}
-
-
-form input[type="submit"] {
+.action-buttons form input[type="submit"] {
   background-color: #d9534f;
   color: #fff;
 }
 
-form input[type="submit"]:hover {
-  background-color: darken(#d9534f, 10%);
+.action-buttons button {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.up-down-wrapper button {
+  background-color: #007cba;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.up-down-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Column & Thumbnail Styles */
+
+.custom-table .column-id {
+  display: none;
+}
+
+.custom-table th:nth-child(2),
+.custom-table td:nth-child(2) {
+  width: 5%;
+}
+
+.custom-table th:nth-child(3),
+.custom-table td:nth-child(3) {
+  width: 100px;
+}
+
+.custom-table th:nth-child(4),
+.custom-table td:nth-child(4) {
+  width: 7%;
+}
+
+.thumbnail-cell img {
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  object-fit: cover;
 }
 
 /* Loading Animation */
@@ -147,101 +137,4 @@ form input[type="submit"]:hover {
   100% {
     content: ".";
   }
-}
-
-/* Column & Thumbnail Styles */
-.custom-table th:nth-child(1),
-.custom-table td:nth-child(1) {
-  display: none;
-  /* Hide both header and cell */
-  /* Use percentage for more responsive design */
-}
-
-.custom-table th:nth-child(2),
-.custom-table td:nth-child(2) {
-  width: 5%;
-  /* Use percentage for more responsive design */
-}
-
-
-
-.custom-table th:nth-child(6),
-.custom-table td:nth-child(6) {
-  width: 10%;
-  /* Use percentage for more responsive design */
-}
-
-.custom-table th:nth-child(7),
-.custom-table td:nth-child(7) {
-  width: 7%;
-  /* Use percentage for more responsive design */
-}
-
-/* ... rest of the column styles ... */
-
-/* Up & Down Button Styles */
-
-
-
-
-/* Table Row Styles */
-.table-row-class {
-  /* Removed display: flex; 
-  flex-direction: row;*/
-
-
-}
-
-/* Thumbnail Cell Styles */
-.thumbnail-cell {
-  align-items: center;
-  justify-content: center;
-  /* Ensure the cell grows to accommodate the image */
-  flex-grow: 1;
-}
-
-/* Thumbnail Image Styles */
-.thumbnail-image {
-  /* If you want to control the image size, you can set a max-width and max-height */
-  max-width: 100px;
-  max-height: 100px;
-  /* Ensure the image retains its aspect ratio */
-  object-fit: cover;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  /* Adjust gap size as needed */
-}
-
-.action-buttons form,
-.action-buttons button {
-  flex: 1;
-}
-
-.up-down-wrapper button {
-  background-color: #007cba;
-  cursor: pointer;
-  padding: 0;
-  width: 30px;
-  /* Adjust size as needed */
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 5px;
-  /* Adjust gap size as needed */
-  border-radius: 4px;
-}
-
-.up-down-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  /* Adjust gap size as needed */
-}
-
-.widefat td {
-  vertical-align: middle;
 }
