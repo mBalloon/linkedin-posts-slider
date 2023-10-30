@@ -329,55 +329,37 @@ if (!wp_next_scheduled('scrape_data_cron_job')) {
 add_action('scrape_data_cron_job', 'scrape_data');
 
 
-// AJAX handler function for LinkedIn Posts Scrapper form
-function handle_scrapper_form_submission()
+add_action('wp_ajax_update_linkedin_settings', 'update_linkedin_settings');
+
+function update_linkedin_settings()
 {
-	// Parse the serialized form data into an associative array
-	parse_str($_POST['form_data'], $form_data);
-
-	// Validate and Update Company URL
-	if (isset($form_data['linkedin_company_url'])) {
-		$company_url = sanitize_text_field($form_data['linkedin_company_url']);
-		if (filter_var($company_url, FILTER_VALIDATE_URL)) {
-			update_option('linkedin_company_url', $company_url);
-		} else {
-			wp_send_json_error(array('message' => 'Invalid Company URL.'));
-			return;
-		}
+	// Verify nonce for security
+	if (!isset($_POST['linkedin_settings_nonce']) || !wp_verify_nonce($_POST['linkedin_settings_nonce'], 'update_linkedin_settings')) {
+		wp_send_json_error('Invalid nonce');
+		wp_die();
 	}
 
-	// Validate and Update Post Links Behavior
-	$open_link = isset($form_data['linkedin_slider_open_link']) ? 1 : 0;
-	update_option('linkedin_slider_open_link', $open_link);
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'linkedin_slider_settings'; // Replace with your table name
 
-	// Validate and Update Scrapping Frequency
-	if (isset($form_data['linkedin_update_frequency'])) {
-		$frequency = intval($form_data['linkedin_update_frequency']);
-		if ($frequency > 0) {
-			update_option('linkedin_update_frequency', $frequency);
-		} else {
-			wp_send_json_error(array('message' => 'Invalid Scrapping Frequency.'));
-			return;
-		}
+	// Sanitize and update the settings
+	$settings_to_update = [
+		'linkedin_company_url' => sanitize_text_field($_POST['linkedin_company_url']),
+		'linkedin_slider_open_link' => intval($_POST['linkedin_slider_open_link']),
+		'linkedin_update_frequency' => intval($_POST['linkedin_update_frequency']),
+		'linkedin_scrapper_status' => sanitize_text_field($_POST['linkedin_scrapper_status']),
+		'linkedin_scrapper_last_update' => sanitize_text_field($_POST['linkedin_scrapper_last_update']),
+		'linkedin_scrapper_endpoint' => sanitize_text_field($_POST['linkedin_scrapper_endpoint'])
+	];
+
+	foreach ($settings_to_update as $setting_name => $new_value) {
+		$wpdb->update(
+			$table_name,
+			['setting_value' => $new_value], // Data to update
+			['setting_name' => $setting_name] // Where condition
+		);
 	}
 
-	// Validate and Update Scrapper Endpoint
-	if (isset($form_data['linkedin_scrapper_endpoint'])) {
-		$endpoint = sanitize_text_field($form_data['linkedin_scrapper_endpoint']);
-		if (filter_var($endpoint, FILTER_VALIDATE_URL)) {
-			update_option('linkedin_scrapper_endpoint', $endpoint);
-		} else {
-			wp_send_json_error(array('message' => 'Invalid Scrapper Endpoint URL.'));
-			return;
-		}
-	}
-
-	// If everything is fine, send a success message
-	wp_send_json_success(array('message' => 'Settings saved successfully.'));
+	wp_send_json_success('Settings updated successfully');
+	wp_die();
 }
-
-// Register the AJAX handler function for logged-in users
-add_action('wp_ajax_handle_scrapper_form_submission', 'handle_scrapper_form_submission');
-
-// Register the AJAX handler function for guests (if needed)
-//add_action('wp_ajax_nopriv_handle_form_submission', 'ajax_handle_scrapper_form_submission');

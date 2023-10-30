@@ -191,5 +191,67 @@ function linkedin_posts_slider_create_table()
     );
   }
 }
+// Function to create the 'linkedin_slider_settings' table
+function linkedin_slider_settings_create_table()
+{
+  global $wpdb;
+  $table_name = $wpdb->prefix . 'linkedin_slider_settings';
+  $charset_collate = $wpdb->get_charset_collate();
+
+  $sql = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        setting_name text NOT NULL,
+        default_value text NOT NULL,
+        setting_value text NOT NULL,
+        PRIMARY KEY (id)
+    ) $charset_collate;";
+
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+  dbDelta($sql);
+
+  // Default values to insert
+  $default_values = [
+    ['section-company-color', '#454545', '#454545'],
+    ['section-company-font-size', '16', '16'],
+    ['section-company-font-family', '400', '400'],
+    ['section-company-line-height', '18', '18'],
+    ['section-company-font-weight', 'Titillium Web', 'Titillium Web'],
+    ['section-author-date-color', '#454545', '#454545'],
+    ['section-author-date-font-size', '14', '14'],
+    ['section-author-date-font-family', 'Titillium Web', 'Titillium Web'],
+    ['section-author-date-font-weight', '300', '300'],
+    ['section-author-date-line-height', '18', '18'],
+    ['section-body-color', '#adb5bd', '#adb5bd'],
+    ['section-body-font-size', '16', '16'],
+    ['section-body-font-family', 'Titillium Web', 'Titillium Web'],
+    ['section-body-webkit-line-clamp', '5', '5'],
+    ['section-body-font-weight', ' ', ' '],
+    ['section-interactions-color', '#454545', '#454545'],
+    ['section-interactions-font-size', '14', '14'],
+    ['section-interactions-font-family', 'Titillium Web', 'Titillium Web'],
+    ['section-interactions-font-weight', '300', '300'],
+    ['section-interactions-line-height', '18', '18'],
+    ['linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/', 'https://www.linkedin.com/company/alpine-laser/'],
+    ['linkedin_slider_open_link', '1', '1'],
+    ['linkedin_update_frequency', '86400', '86400'], // 60 * 60 * 24 (24 hours in seconds)
+    ['linkedin_scrapper_status', 'OK', 'OK'],
+    ['linkedin_scrapper_last_update', 'Not available', 'Not available'],
+    ['linkedin_scrapper_endpoint', 'https://scrape-js.onrender.com/scrape', 'https://scrape-js.onrender.com/scrape']
+  ];
+
+
+  foreach ($default_values as $item) {
+    $wpdb->insert(
+      $table_name,
+      array(
+        'setting_name' => $item[0],
+        'default_value' => $item[1],
+        'setting_value' => $item[2]
+      ),
+      array('%s', '%s', '%s')
+    );
+  }
+}
 
 register_activation_hook(__FILE__, 'linkedin_posts_slider_create_table');
+register_activation_hook(__FILE__, 'linkedin_slider_settings_create_table');

@@ -11,33 +11,7 @@ function enqueue_scrapper_scripts_and_styles()
 }
 add_action('admin_enqueue_scripts', 'enqueue_scrapper_scripts_and_styles');
 
-function linkedin_posts_scrapper_register_settings()
-{
-	// Default values
-	$defaults = [
-		'linkedin_company_url' => 'https://www.linkedin.com/company/alpine-laser/',
-		'linkedin_slider_open_link' => 1, // true by default
-		'linkedin_update_frequency' => 60 * 60 * 24, // 24 hours in seconds
-		'linkedin_scrapper_status' => 'OK',
-		'linkedin_scrapper_last_update' => 'Not available',
-		'linkedin_scrapper_endpoint' => 'https://scrape-js.onrender.com/scrape'
-	];
 
-	foreach ($defaults as $key => $value) {
-		if (get_option($key) === false) {
-			update_option($key, $value);
-		}
-	}
-
-	// Register settings
-	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_company_url');
-	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_slider_open_link');
-	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_update_frequency');
-	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_scrapper_status');
-	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_scrapper_last_update');
-	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_scrapper_endpoint');
-}
-add_action('admin_init', 'linkedin_posts_scrapper_register_settings');
 
 // Add an options page for the Linkedin Posts Slider widget in the WordPress admin menu.
 function linkedin_posts_scrapper_settings_page()
@@ -45,13 +19,20 @@ function linkedin_posts_scrapper_settings_page()
 
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_posts';
+	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
+	$settings = $wpdb->get_results("SELECT * FROM $settings_table");
+
+	$settings_map = [];
+	foreach ($settings as $setting) {
+		$settings_map[$setting->setting_name] = $setting->value;
+	}
 
 	// Fetch statistics
 	$total_posts = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
 	$published_posts = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE published = true");
 	$synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE synced = true");
-	$last_update = get_option('linkedin_scrapper_last_update', 'Not available');
-	$status = get_option('linkedin_scrapper_status', 'OK');
+	$last_update = $settings_map['linkedin_scrapper_last_update'];
+	$status = $settings_map['linkedin_scrapper_status'];
 ?>
 
 	<div class="wrap">
@@ -84,26 +65,26 @@ function linkedin_posts_scrapper_settings_page()
 
 		<!-- Settings Form Section -->
 		<form id="my-ajax-form">
-
+			<?php wp_nonce_field('update_linkedin_settings', 'linkedin_settings_nonce'); ?>
 
 			<table class="form-table">
 				<tr valign="top">
 					<th scope="row">Company Profile URL</th>
-					<td><input type="text" name="linkedin_company_url" value="<?php echo esc_attr(get_option('linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/')); ?>" /></td>
+					<td><input type="text" name="linkedin_company_url" value="<?php echo esc_attr($settings_map['linkedin_company_url']); ?>" /></td>
 				</tr>
 
 				<tr valign="top">
 					<th scope="row">Post Links Behavior</th>
-					<td><input type="checkbox" name="linkedin_slider_open_link" value="1" <?php checked(1, get_option('linkedin_slider_open_link', true), true); ?> /></td>
+					<td><input type="checkbox" name="linkedin_slider_open_link" value="1" <?php checked(1, $settings_map['linkedin_slider_open_link'], true); ?> /></td>
 				</tr>
 
 				<tr valign="top">
 					<th scope="row">Scrapping Frequency (in seconds)</th>
-					<td><input type="number" name="linkedin_update_frequency" value="<?php echo esc_attr(get_option('linkedin_update_frequency', 60 * 60 * 24)); ?>" /></td>
+					<td><input type="number" name="linkedin_update_frequency" value="<?php echo esc_attr($settings_map['linkedin_update_frequency']); ?>" /></td>
 				</tr>
 				<tr valign="top">
 					<th scope="row">Scrapper Endpoint</th>
-					<td><input type="text" name="linkedin_scrapper_endpoint" value="<?php echo esc_attr(get_option('linkedin_scrapper_endpoint', 'https://scrape-js.onrender.com/scrape')); ?>" /></td>
+					<td><input type="text" name="linkedin_scrapper_endpoint" value="<?php echo esc_attr($settings_map['linkedin_scrapper_endpoint']); ?>" /></td>
 				</tr>
 			</table>
 
