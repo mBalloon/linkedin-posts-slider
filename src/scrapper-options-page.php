@@ -35,8 +35,7 @@ add_action('admin_init', 'linkedin_posts_scrapper_register_settings');
 // Add an options page for the Linkedin Posts Slider widget in the WordPress admin menu.
 function linkedin_posts_scrapper_settings_page()
 {
-	// Handle form submission
-	handle_scrapper_form_submission();
+
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_posts';
 
