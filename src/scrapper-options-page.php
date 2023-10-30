@@ -4,21 +4,6 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-/*
-function enqueue_preview_styles()
-{
-	//wp_enqueue_style('preview-styles', plugin_dir_url(dirname(__FILE__)) . 'preview.css');
-	//wp_enqueue_style('swiper-style');
-}
-//add_action('admin_enqueue_scripts', 'enqueue_preview_styles');
-
-function enqueue_preview_scripts()
-{
-	wp_enqueue_script('preview-scripts', plugin_dir_url(dirname(__FILE__)) . 'preview.js', array('jquery'), null, true);
-}
-//add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
-*/
-
 function linkedin_posts_scrapper_register_settings()
 {
 	// Default values
@@ -153,57 +138,28 @@ function linkedin_posts_scrapper_settings_page()
 			font-weight: bold;
 		}
 	</style>
+	<script>
+		jQuery(document).ready(function($) {
+			$('form').on('submit', function(e) {
+				e.preventDefault();
+
+				var formData = $(this).serialize();
+
+				$.ajax({
+					url: ajaxurl, // 'ajaxurl' is automatically defined by WordPress and points to 'admin-ajax.php'
+					type: 'POST',
+					data: {
+						action: 'handle_form_submission',
+						form_data: formData
+					},
+					success: function(response) {
+						if (response.success) {
+							alert(response.data.message);
+						}
+					}
+				});
+			});
+		});
+	</script>
 <?php
 }
-
-function handle_scrapper_form_submission()
-{
-	// Check if our nonce is set and valid
-	if (isset($_POST['linkedin_scrapper_options_nonce']) && wp_verify_nonce($_POST['linkedin_scrapper_options_nonce'], 'update_linkedin_scrapper_options')) {
-
-		// Validate and Update Company URL
-		if (isset($_POST['linkedin_company_url'])) {
-			$company_url = sanitize_text_field($_POST['linkedin_company_url']);
-			if (filter_var($company_url, FILTER_VALIDATE_URL)) {
-				update_option('linkedin_company_url', $company_url);
-			} else {
-				add_settings_error('linkedin_scrapper_settings', 'invalid_url', 'Invalid Company URL.', 'error');
-			}
-		}
-
-		// Validate and Update Post Links Behavior
-		$open_link = isset($_POST['linkedin_slider_open_link']) ? 1 : 0;
-		update_option('linkedin_slider_open_link', $open_link);
-
-		// Validate and Update Scrapping Frequency
-		if (isset($_POST['linkedin_update_frequency'])) {
-			$frequency = intval($_POST['linkedin_update_frequency']);
-			if ($frequency > 0) {
-				update_option('linkedin_update_frequency', $frequency);
-			} else {
-				add_settings_error('linkedin_scrapper_settings', 'invalid_frequency', 'Invalid Scrapping Frequency.', 'error');
-			}
-		}
-
-		// Validate and Update Scrapper Endpoint
-		if (isset($_POST['linkedin_scrapper_endpoint'])) {
-			$endpoint = sanitize_text_field($_POST['linkedin_scrapper_endpoint']);
-			if (filter_var($endpoint, FILTER_VALIDATE_URL)) {
-				update_option('linkedin_scrapper_endpoint', $endpoint);
-			} else {
-				add_settings_error('linkedin_scrapper_settings', 'invalid_endpoint', 'Invalid Scrapper Endpoint URL.', 'error');
-			}
-		}
-
-		// Optionally, add a message to show that the update was successful
-		if (!get_settings_errors('linkedin_scrapper_settings')) {
-			add_settings_error('linkedin_scrapper_settings', 'settings_updated', 'Settings saved.', 'updated');
-		}
-	}
-}
-
-
-
-add_action('admin_menu', function () {
-	add_options_page('Linkedin Posts Scrapper Settings', 'Linkedin Posts Scrapper Settings', 'manage_options', 'linkedin-posts-scrapper', 'linkedin_posts_scrapper_settings_page');
-});

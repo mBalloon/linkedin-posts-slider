@@ -327,3 +327,60 @@ if (!wp_next_scheduled('scrape_data_cron_job')) {
 	wp_schedule_event(time(), 'daily', 'scrape_data_cron_job');
 }
 add_action('scrape_data_cron_job', 'scrape_data');
+
+
+// AJAX handler function for LinkedIn Posts Scrapper form
+function ajax_handle_scrapper_form_submission()
+{
+	// Check if nonce is set and valid
+	if (isset($_POST['linkedin_scrapper_options_nonce']) && wp_verify_nonce($_POST['linkedin_scrapper_options_nonce'], 'update_linkedin_scrapper_options')) {
+
+		// Validate and Update Company URL
+		if (isset($_POST['linkedin_company_url'])) {
+			$company_url = sanitize_text_field($_POST['linkedin_company_url']);
+			if (filter_var($company_url, FILTER_VALIDATE_URL)) {
+				update_option('linkedin_company_url', $company_url);
+			} else {
+				wp_send_json_error(array('message' => 'Invalid Company URL.'));
+				return;
+			}
+		}
+
+		// Validate and Update Post Links Behavior
+		$open_link = isset($_POST['linkedin_slider_open_link']) ? 1 : 0;
+		update_option('linkedin_slider_open_link', $open_link);
+
+		// Validate and Update Scrapping Frequency
+		if (isset($_POST['linkedin_update_frequency'])) {
+			$frequency = intval($_POST['linkedin_update_frequency']);
+			if ($frequency > 0) {
+				update_option('linkedin_update_frequency', $frequency);
+			} else {
+				wp_send_json_error(array('message' => 'Invalid Scrapping Frequency.'));
+				return;
+			}
+		}
+
+		// Validate and Update Scrapper Endpoint
+		if (isset($_POST['linkedin_scrapper_endpoint'])) {
+			$endpoint = sanitize_text_field($_POST['linkedin_scrapper_endpoint']);
+			if (filter_var($endpoint, FILTER_VALIDATE_URL)) {
+				update_option('linkedin_scrapper_endpoint', $endpoint);
+			} else {
+				wp_send_json_error(array('message' => 'Invalid Scrapper Endpoint URL.'));
+				return;
+			}
+		}
+
+		// If everything is fine, send a success message
+		wp_send_json_success(array('message' => 'Settings saved successfully.'));
+	} else {
+		wp_send_json_error(array('message' => 'Invalid request.'));
+	}
+}
+
+// Register the AJAX handler function for logged-in users
+add_action('wp_ajax_handle_form_submission', 'ajax_handle_scrapper_form_submission');
+
+// Register the AJAX handler function for guests (if needed)
+// add_action('wp_ajax_nopriv_handle_form_submission', 'ajax_handle_scrapper_form_submission');
