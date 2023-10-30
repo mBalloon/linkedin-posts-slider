@@ -1,6 +1,59 @@
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
 }
+
+h1 {
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.li-form-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styles */
+.options-form {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+    margin-right: 10px;
+}
+
+/* Post Preview Styles */
+.right-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.post-preview-class {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    max-width: 400px;
+    margin-top: 20vh;
+}
+
 
 .swiper-slide {
     z-index: -2;
@@ -165,39 +218,9 @@ body {
 
 /* Global Styles */
 
-.li-form-wrap {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    /* Add this line to vertically center */
-    width: 100%;
-    margin: auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-}
 
-h1 {
-    color: #333;
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    margin-bottom: 20px;
-}
 
-.options-form {
-    flex: 1;
-    /* Add this line to take half space */
-    margin-right: 1%;
-    /* Add some margin to separate */
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
-    text-align: center;
-    /* Add this line to horizontally center the content */
-}
+
 
 /* Form Fields Styles */
 .form-field {
@@ -270,38 +293,3 @@ h1 {
 .options-form input[type="submit"]:hover {
     background-color: #005a87;
 }
-
-
-
-
-.right-section {
-    flex: 1;
-    /* Add this line to take half space */
-    margin-left: 1%;
-    /* Add some margin to separate */
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    /* Add this line to horizontally center the content */
-
-}
-
-.post-preview-class {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: fit-content;
-    max-width: 400px;
-    margin-top: 20vh;
-}
-
-
-/* Existing Styles */
-/* ... */
-
-/* Updated Styles for Layout */
