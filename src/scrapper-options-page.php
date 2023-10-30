@@ -4,6 +4,13 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+function enqueue_scrapper_scripts_and_styles()
+{
+	wp_enqueue_script('scrapper-script', plugin_dir_url(dirname(__FILE__)) . 'scrapper-settings-form.js', array('jquery'), null, true);
+	wp_localize_script('scrapper-script', 'my_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+}
+add_action('admin_enqueue_scripts', 'enqueue_scrapper_scripts_and_styles');
+
 function linkedin_posts_scrapper_register_settings()
 {
 	// Default values
@@ -138,27 +145,7 @@ function linkedin_posts_scrapper_settings_page()
 		}
 	</style>
 	<script>
-		jQuery(document).ready(function($) {
-			$('#my-ajax-form').on('submit', function(e) {
-				e.preventDefault();
 
-				var formData = $(this).serialize();
-
-				$.ajax({
-					url: ajaxurl, // 'ajaxurl' is automatically defined by WordPress and points to 'admin-ajax.php'
-					type: 'POST',
-					data: {
-						action: 'handle_scrapper_form_submission',
-						form_data: formData
-					},
-					success: function(response) {
-						if (response.success) {
-							alert(response.data.message);
-						}
-					}
-				});
-			});
-		});
 	</script>
 <?php
 }

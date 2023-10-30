@@ -380,7 +380,7 @@ function ajax_handle_scrapper_form_submission()
 }
 
 // Register the AJAX handler function for logged-in users
-add_action('wp_ajax_handle_form_submission', 'ajax_handle_scrapper_form_submission');
+add_action('wp_ajax_handle_scrapper_form_submission', 'handle_scrapper_form_submission');
 
 // Register the AJAX handler function for guests (if needed)
-add_action('wp_ajax_nopriv_handle_form_submission', 'ajax_handle_scrapper_form_submission');
+//add_action('wp_ajax_nopriv_handle_form_submission', 'ajax_handle_scrapper_form_submission');
