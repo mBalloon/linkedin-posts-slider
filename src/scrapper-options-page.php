@@ -76,7 +76,7 @@ function linkedin_posts_scrapper_settings_page()
 		</div>
 
 		<!-- Settings Form Section -->
-		<form method="post" action="">
+		<form id="my-ajax-form">
 			<?php wp_nonce_field('update_linkedin_scrapper_options', 'linkedin_scrapper_options_nonce'); ?>
 
 			<table class="form-table">
@@ -139,7 +139,7 @@ function linkedin_posts_scrapper_settings_page()
 	</style>
 	<script>
 		jQuery(document).ready(function($) {
-			$('form').on('submit', function(e) {
+			$('#my-ajax-form').on('submit', function(e) {
 				e.preventDefault();
 
 				var formData = $(this).serialize();
