@@ -363,7 +363,7 @@ function handle_scrapper_form_submission()
 
 	// Validate and Update Scrapper Endpoint
 	if (isset($form_data['linkedin_scrapper_endpoint'])) {
-		$endpoint = sanitize_text_field($ form_data['linkedin_scrapper_endpoint']);
+		$endpoint = sanitize_text_field($form_data['linkedin_scrapper_endpoint']);
 		if (filter_var($endpoint, FILTER_VALIDATE_URL)) {
 			update_option('linkedin_scrapper_endpoint', $endpoint);
 		} else {
