@@ -1,96 +1,47 @@
-/* Main container styles */
-div {
-    box-sizing: border-box;
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
 }
 
-/* Flex container for the whole layout */
-div[style*='display: flex;'] {
-    height: 100vh;
-    /* Take full viewport height */
-    width: 100%;
-    /* Take full width */
-}
-
-/* Left-half: Form */
-div[style*='flex: 1;'] {
-    padding: 20px;
-    border-right: 1px solid #ccc;
-    /* Add a border to separate the two halves */
-    overflow-y: auto;
-    /* Enable scrolling if content overflows */
-}
-
-/* Form title */
 h1 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-}
-
-/* Form section styles */
-.wp-ui-form-section {
-    margin-bottom: 30px;
-}
-
-/* Form section title */
-.wp-ui-form-section-title {
-    font-size: 1.2em;
-    margin-bottom: 15px;
-}
-
-/* Form subsection */
-.wp-ui-form-subsection {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* Two columns */
-    gap: 15px;
-    /* Gap between rows and columns */
-}
-
-/* Form group */
-.wp-ui-form-group {
-    margin-bottom: 20px;
-}
-
-/* Form label */
-.wp-ui-form-label {
-    display: inline-block;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-/* Form input */
-.wp-ui-form-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Right-half: Preview Pane */
-div[style*='flex: 1; display: flex;'] {
-    align-items: center;
-    /* Center vertically */
-    justify-content: center;
-    /* Center horizontally */
-    background-color: #f9f9f9;
-    /* Light grey background */
-    padding: 20px;
-}
-
-/* Preview post styles */
-#post-preview {
+    color: #333;
+    font-family: 'Arial', sans-serif;
     text-align: center;
-    width: 100%;
-    max-width: 600px;
-    /* Maximum width */
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    /* White background */
+    margin-bottom: 20px;
 }
 
 
+
+/* Form Styles */
+.options-form {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+    margin-right: 10px;
+}
+
+/* Post Preview Styles */
+.right-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.post-preview-class {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    max-width: 400px;
+    margin-top: 20vh;
+}
 
 
 .swiper-slide {
@@ -253,4 +204,58 @@ div[style*='flex: 1; display: flex;'] {
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+
+/* Wrapper styles */
+.li-form-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Options Form Container */
+.options-form-container {
+    width: 48%;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.options-form .form-field {
+    margin-bottom: 20px;
+}
+
+/* Post Preview Container */
+.post-preview-container {
+    width: 48%;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+
+
+
+/* Modern Font and Responsive Typography */
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+}
+
+input[type="number"],
+input[type="color"],
+select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* WordPress Admin-Friendly Styles */
+.wp-core-ui .button-primary {
+    background: #0073aa;
+    border-color: #0073aa;
+    color: #fff;
+    text-shadow: none;
+    box-shadow: none;
 }

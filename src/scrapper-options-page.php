@@ -21,7 +21,23 @@ function enqueue_preview_scripts()
 
 function linkedin_posts_scrapper_register_settings()
 {
-	// scrapper settings
+	// Default values
+	$defaults = [
+		'linkedin_company_url' => 'https://www.linkedin.com/company/alpine-laser/',
+		'linkedin_slider_open_link' => 1, // true by default
+		'linkedin_update_frequency' => 60 * 60 * 24, // 24 hours in seconds
+		'linkedin_scrapper_status' => 'OK',
+		'linkedin_scrapper_last_update' => 'Not available',
+		'linkedin_scrapper_endpoint' => 'https://scrape-js.onrender.com/scrape'
+	];
+
+	foreach ($defaults as $key => $value) {
+		if (get_option($key) === false) {
+			update_option($key, $value);
+		}
+	}
+
+	// Register settings
 	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_company_url');
 	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_slider_open_link');
 	register_setting('linkedin-posts-scrapper-settings-group', 'linkedin_update_frequency');
@@ -34,6 +50,8 @@ add_action('admin_init', 'linkedin_posts_scrapper_register_settings');
 // Add an options page for the Linkedin Posts Slider widget in the WordPress admin menu.
 function linkedin_posts_scrapper_settings_page()
 {
+	// Handle form submission
+	handle_scrapper_form_submission();
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_posts';
 
@@ -47,6 +65,7 @@ function linkedin_posts_scrapper_settings_page()
 
 	<div class="wrap">
 		<h1>LinkedIn Posts Scrapper Settings</h1>
+		<?php settings_errors('linkedin_scrapper_settings'); ?>
 
 		<!-- Stats Section -->
 		<div class="stats-wrapper">
@@ -73,9 +92,8 @@ function linkedin_posts_scrapper_settings_page()
 		</div>
 
 		<!-- Settings Form Section -->
-		<form method="post" action="options.php">
-			<?php settings_fields('linkedin-posts-scrapper-settings-group'); ?>
-			<?php do_settings_sections('linkedin-posts-scrapper-settings-group'); ?>
+		<form method="post">
+			<?php wp_nonce_field('update_linkedin_scrapper_options', 'linkedin_scrapper_options_nonce'); ?>
 
 			<table class="form-table">
 				<tr valign="top">
@@ -94,7 +112,7 @@ function linkedin_posts_scrapper_settings_page()
 				</tr>
 				<tr valign="top">
 					<th scope="row">Scrapper Endpoint</th>
-					<td><input type="text" name="linkedin_update_frequency" value="<?php echo esc_attr(get_option('linkedin_scrapper_endpoint', 'https://scrape-js.onrender.com/scrape')); ?>" /></td>
+					<td><input type="text" name="linkedin_scrapper_endpoint" value="<?php echo esc_attr(get_option('linkedin_scrapper_endpoint', 'https://scrape-js.onrender.com/scrape')); ?>" /></td>
 				</tr>
 			</table>
 
@@ -137,6 +155,54 @@ function linkedin_posts_scrapper_settings_page()
 	</style>
 <?php
 }
+
+function handle_scrapper_form_submission()
+{
+	// Check if our nonce is set and valid
+	if (isset($_POST['linkedin_scrapper_options_nonce']) && wp_verify_nonce($_POST['linkedin_scrapper_options_nonce'], 'update_linkedin_scrapper_options')) {
+
+		// Validate and Update Company URL
+		if (isset($_POST['linkedin_company_url'])) {
+			$company_url = sanitize_text_field($_POST['linkedin_company_url']);
+			if (filter_var($company_url, FILTER_VALIDATE_URL)) {
+				update_option('linkedin_company_url', $company_url);
+			} else {
+				add_settings_error('linkedin_scrapper_settings', 'invalid_url', 'Invalid Company URL.', 'error');
+			}
+		}
+
+		// Validate and Update Post Links Behavior
+		$open_link = isset($_POST['linkedin_slider_open_link']) ? 1 : 0;
+		update_option('linkedin_slider_open_link', $open_link);
+
+		// Validate and Update Scrapping Frequency
+		if (isset($_POST['linkedin_update_frequency'])) {
+			$frequency = intval($_POST['linkedin_update_frequency']);
+			if ($frequency > 0) {
+				update_option('linkedin_update_frequency', $frequency);
+			} else {
+				add_settings_error('linkedin_scrapper_settings', 'invalid_frequency', 'Invalid Scrapping Frequency.', 'error');
+			}
+		}
+
+		// Validate and Update Scrapper Endpoint
+		if (isset($_POST['linkedin_scrapper_endpoint'])) {
+			$endpoint = sanitize_text_field($_POST['linkedin_scrapper_endpoint']);
+			if (filter_var($endpoint, FILTER_VALIDATE_URL)) {
+				update_option('linkedin_scrapper_endpoint', $endpoint);
+			} else {
+				add_settings_error('linkedin_scrapper_settings', 'invalid_endpoint', 'Invalid Scrapper Endpoint URL.', 'error');
+			}
+		}
+
+		// Optionally, add a message to show that the update was successful
+		if (!get_settings_errors('linkedin_scrapper_settings')) {
+			add_settings_error('linkedin_scrapper_settings', 'settings_updated', 'Settings saved.', 'updated');
+		}
+	}
+}
+
+
 
 add_action('admin_menu', function () {
 	add_options_page('Linkedin Posts Scrapper Settings', 'Linkedin Posts Scrapper Settings', 'manage_options', 'linkedin-posts-scrapper', 'linkedin_posts_scrapper_settings_page');
