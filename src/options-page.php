@@ -64,7 +64,7 @@ function linkedin_posts_slider_options_page()
 	<h1>Style Live Editor</h1>
 	<div class="li-form-wrap">
 
-		<div class="right-section">
+		<div class="post-preview-container">
 			<div id="post-preview" class="post-preview-class">
 				<div class="swiper-slide">
 					<div class="li-icon-white">
@@ -118,221 +118,224 @@ function linkedin_posts_slider_options_page()
 
 			</div>
 		</div>
-		<form method="post" action="options.php" class="options-form">
-			<?php settings_fields('linkedin-posts-slider'); ?>
-			<?php do_settings_sections('linkedin-posts-slider'); ?>
+		<div class="options-form-container">
+			<form method="post" action="options.php" class="options-form">
+				<?php settings_fields('linkedin-posts-slider'); ?>
+				<?php do_settings_sections('linkedin-posts-slider'); ?>
 
-			<div class="form-field">
+				<div class="form-field">
 
-				<div class="form-section-title">
-					Company Name:
+					<div class="form-section-title">
+						Company Name:
+					</div>
+
+					<div class="form-subsection-inputs-row">
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Color:
+							</div>
+							<div class="vertical-form-field">
+								<input type="color" id="section-company-color" name="section-company-color" value="<?php echo esc_attr(get_option('section-company-color', '#454545')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Size:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-company-font-size" name="section-company-font-size" value="<?php echo esc_attr(get_option('section-company-font-size', '16')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Weight:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-company-font-weight" name="section-company-font-weight" value="<?php echo esc_attr(get_option('section-company-font-weight', '400')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Line Height:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-company-line-height" name="section-company-line-height" value="<?php echo esc_attr(get_option('section-company-line-height', '18px')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Font Family:
+							</div>
+							<div class="vertical-form-field">
+								<select id="section-company-font-family" name="section-company-font-family">
+									<option value="<?php echo esc_attr(get_option('section-company-font-family', 'Titillium Web')); ?>">Titillium Web</option>
+									<!-- //TODO: Add other font options here -->
+								</select>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="form-field">
+
+					<div class="form-section-title">
+						Username and post date:
+					</div>
+					<div class="form-subsection-inputs-row">
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Color:
+							</div>
+							<div class="vertical-form-field">
+								<input type="color" id="section-author-date-color" name="section-author-date-color" value="<?php echo esc_attr(get_option('section-author-date-color', '#454545')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Size:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-author-date-font-size" name="section-author-date-font-size" value="<?php echo esc_attr(get_option('section-author-date-font-size', '14')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Weight:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-author-date-font-weight" name="section-author-date-font-weight" value="<?php echo esc_attr(get_option('section-author-date-font-weight', '300')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Line Height:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-author-date-line-height" name="section-author-date-line-height" value="<?php echo esc_attr(get_option('section-author-date-line-height', '18px')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Font Family:
+							</div>
+							<div class="vertical-form-field">
+								<select id="section-author-date-font-family" name="section-author-date-font-family">
+									<option value="Titillium Web" <?php echo esc_attr(get_option('section-author-date-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
+									<!-- //TODO: Add other font options here -->
+								</select>
+							</div>
+						</div>
+					</div>
+
+
 				</div>
 
-				<div class="form-subsection-inputs-row">
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Color:
+				<div class="form-field">
+
+					<div class="form-section-title">
+						Post text:
+					</div>
+
+					<div class="form-subsection-inputs-row">
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Color:
+							</div>
+							<div class="vertical-form-field">
+								<input type="color" id="section-body-color" name="section-body-color" value="<?php echo esc_attr(get_option('section-body-color', '#adb5bd')); ?>">
+							</div>
 						</div>
-						<div class="vertical-form-field">
-							<input type="color" id="section-company-color" name="section-company-color" value="<?php echo esc_attr(get_option('section-company-color', '#454545')); ?>">
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Size:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-body-font-size" name="section-body-font-size" value="<?php echo esc_attr(get_option('section-body-font-size', '16')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Max no. of Lines:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-body-webkit-line-clamp" name="section-body-webkit-line-clamp" value="<?php echo esc_attr(get_option('section-body-webkit-line-clamp', '5')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Font Family:
+							</div>
+							<div class="vertical-form-field">
+								<select id="section-body-font-family" name="section-body-font-family">
+									<option value="Titillium Web" <?php echo esc_attr(get_option('section-body-font-family', 'Titillium Web')); ?>>Titillium Web</option>
+									<!-- //TODO: Add other font options here -->
+								</select>
+							</div>
 						</div>
 					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Size:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-company-font-size" name="section-company-font-size" value="<?php echo esc_attr(get_option('section-company-font-size', '16')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Weight:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-company-font-weight" name="section-company-font-weight" value="<?php echo esc_attr(get_option('section-company-font-weight', '400')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Line Height:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-company-line-height" name="section-company-line-height" value="<?php echo esc_attr(get_option('section-company-line-height', '18px')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Font Family:
-						</div>
-						<div class="vertical-form-field">
-							<select id="section-company-font-family" name="section-company-font-family">
-								<option value="<?php echo esc_attr(get_option('section-company-font-family', 'Titillium Web')); ?>">Titillium Web</option>
-								<!-- //TODO: Add other font options here -->
-							</select>
-						</div>
-					</div>
+
+
+
 				</div>
 
+				<div class="form-field">
 
-			</div>
-			<div class="form-field">
+					<div class="form-section-title">
+						Post interactions and comments:
+					</div>
+					<div class="form-subsection-inputs-row">
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Color:
+							</div>
+							<div class="vertical-form-field">
+								<input type="color" id="section-interactions-color" name="section-interactions-color" value="<?php echo esc_attr(get_option('section-interactions-color', '#454545')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Size:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-interactions-font-size" name="section-interactions-font-size" value="<?php echo esc_attr(get_option('section-interactions-font-size', '14')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Weight:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-interactions-font-weight" name="section-interactions-font-weight" value="<?php echo esc_attr(get_option('section-interactions-font-weight', '300')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Line Height:
+							</div>
+							<div class="vertical-form-field">
+								<input type="number" class="number-input" id="section-interactions-line-height" name="section-interactions-line-height" value="<?php echo esc_attr(get_option('section-interactions-line-height', '18px')); ?>">
+							</div>
+						</div>
+						<div class="vertical-form-group">
+							<div class="vertical-form-title">
+								Font Family:
+							</div>
+							<div class="vertical-form-field">
+								<select id="section-interactions-font-family" name="section-interactions-font-family">
+									<option value="Titillium Web" <?php echo esc_attr(get_option('section-interactions-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
+									<!-- //TODO: Add other font options here -->
+								</select>
+							</div>
+						</div>
+					</div>
 
-				<div class="form-section-title">
-					Username and post date:
+
 				</div>
-				<div class="form-subsection-inputs-row">
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Color:
-						</div>
-						<div class="vertical-form-field">
-							<input type="color" id="section-author-date-color" name="section-author-date-color" value="<?php echo esc_attr(get_option('section-author-date-color', '#454545')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Size:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-author-date-font-size" name="section-author-date-font-size" value="<?php echo esc_attr(get_option('section-author-date-font-size', '14')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Weight:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-author-date-font-weight" name="section-author-date-font-weight" value="<?php echo esc_attr(get_option('section-author-date-font-weight', '300')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Line Height:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-author-date-line-height" name="section-author-date-line-height" value="<?php echo esc_attr(get_option('section-author-date-line-height', '18px')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Font Family:
-						</div>
-						<div class="vertical-form-field">
-							<select id="section-author-date-font-family" name="section-author-date-font-family">
-								<option value="Titillium Web" <?php echo esc_attr(get_option('section-author-date-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
-								<!-- //TODO: Add other font options here -->
-							</select>
-						</div>
-					</div>
-				</div>
+				<?php submit_button(); ?>
+			</form>
+		</div>
 
-
-			</div>
-
-			<div class="form-field">
-
-				<div class="form-section-title">
-					Post text:
-				</div>
-
-				<div class="form-subsection-inputs-row">
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Color:
-						</div>
-						<div class="vertical-form-field">
-							<input type="color" id="section-body-color" name="section-body-color" value="<?php echo esc_attr(get_option('section-body-color', '#adb5bd')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Size:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-body-font-size" name="section-body-font-size" value="<?php echo esc_attr(get_option('section-body-font-size', '16')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Max no. of Lines:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-body-webkit-line-clamp" name="section-body-webkit-line-clamp" value="<?php echo esc_attr(get_option('section-body-webkit-line-clamp', '5')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Font Family:
-						</div>
-						<div class="vertical-form-field">
-							<select id="section-body-font-family" name="section-body-font-family">
-								<option value="Titillium Web" <?php echo esc_attr(get_option('section-body-font-family', 'Titillium Web')); ?>>Titillium Web</option>
-								<!-- //TODO: Add other font options here -->
-							</select>
-						</div>
-					</div>
-				</div>
-
-
-
-			</div>
-
-			<div class="form-field">
-
-				<div class="form-section-title">
-					Post interactions and comments:
-				</div>
-				<div class="form-subsection-inputs-row">
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Color:
-						</div>
-						<div class="vertical-form-field">
-							<input type="color" id="section-interactions-color" name="section-interactions-color" value="<?php echo esc_attr(get_option('section-interactions-color', '#454545')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Size:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-interactions-font-size" name="section-interactions-font-size" value="<?php echo esc_attr(get_option('section-interactions-font-size', '14')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Weight:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-interactions-font-weight" name="section-interactions-font-weight" value="<?php echo esc_attr(get_option('section-interactions-font-weight', '300')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Line Height:
-						</div>
-						<div class="vertical-form-field">
-							<input type="number" class="number-input" id="section-interactions-line-height" name="section-interactions-line-height" value="<?php echo esc_attr(get_option('section-interactions-line-height', '18px')); ?>">
-						</div>
-					</div>
-					<div class="vertical-form-group">
-						<div class="vertical-form-title">
-							Font Family:
-						</div>
-						<div class="vertical-form-field">
-							<select id="section-interactions-font-family" name="section-interactions-font-family">
-								<option value="Titillium Web" <?php echo esc_attr(get_option('section-interactions-font-family') == 'Titillium Web' ? 'selected' : ''); ?>>Titillium Web</option>
-								<!-- //TODO: Add other font options here -->
-							</select>
-						</div>
-					</div>
-				</div>
-
-
-			</div>
-			<?php submit_button(); ?>
-		</form>
 	</div>
 
 
