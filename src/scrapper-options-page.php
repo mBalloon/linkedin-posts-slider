@@ -148,7 +148,7 @@ function linkedin_posts_scrapper_settings_page()
 					url: ajaxurl, // 'ajaxurl' is automatically defined by WordPress and points to 'admin-ajax.php'
 					type: 'POST',
 					data: {
-						action: 'handle_form_submission',
+						action: 'wp_ajax_handle_form_submission',
 						form_data: formData
 					},
 					success: function(response) {
