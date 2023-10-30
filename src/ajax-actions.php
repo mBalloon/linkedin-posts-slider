@@ -333,7 +333,7 @@ add_action('scrape_data_cron_job', 'scrape_data');
 function ajax_handle_scrapper_form_submission()
 {
 	// Check if nonce is set and valid
-	if (isset($_POST['linkedin_scrapper_options_nonce']) && wp_verify_nonce($_POST['linkedin_scrapper_options_nonce'], 'update_linkedin_scrapper_options')) {
+	if (isset($_POST['linkedin_scrapper_options_nonce'])) {
 
 		// Validate and Update Company URL
 		if (isset($_POST['linkedin_company_url'])) {
