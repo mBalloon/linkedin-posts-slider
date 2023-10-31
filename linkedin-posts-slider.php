@@ -180,3 +180,38 @@ function move_row()
 }
 add_action('wp_ajax_move_up', 'move_row');
 add_action('wp_ajax_move_down', 'move_row');
+
+
+function update_linkedin_settings()
+{
+  // Verify nonce for security
+  //if (!isset($_POST['linkedin_settings_nonce']) || !wp_verify_nonce($_POST['linkedin_settings_nonce'], 'update_linkedin_settings')) {
+  //	wp_send_json_error('Invalid nonce');
+  //	wp_die();
+  //}
+
+  global $wpdb;
+  $table_name = $wpdb->prefix . 'linkedin_slider_settings'; // Replace with your table name
+
+  // Sanitize and update the settings
+  $settings_to_update = [
+    'linkedin_company_url' => sanitize_text_field($_POST['linkedin_company_url']),
+    'linkedin_slider_open_link' => intval($_POST['linkedin_slider_open_link']),
+    'linkedin_update_frequency' => intval($_POST['linkedin_update_frequency']),
+    'linkedin_scrapper_status' => sanitize_text_field($_POST['linkedin_scrapper_status']),
+    'linkedin_scrapper_last_update' => sanitize_text_field($_POST['linkedin_scrapper_last_update']),
+    'linkedin_scrapper_endpoint' => sanitize_text_field($_POST['linkedin_scrapper_endpoint'])
+  ];
+
+  foreach ($settings_to_update as $setting_name => $new_value) {
+    $wpdb->update(
+      $table_name,
+      ['setting_value' => $new_value], // Data to update
+      ['setting_name' => $setting_name] // Where condition
+    );
+  }
+
+  wp_send_json_success('Settings updated successfully');
+  wp_die();
+}
+add_action('wp_ajax_update_linkedin_settings', 'update_linkedin_settings');
