@@ -349,7 +349,6 @@ function update_linkedin_settings()
 
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_slider_settings'; // Replace with your table name
-	error_log(print_r($_POST, true));
 
 	// Sanitize and update the settings
 	$settings_to_update = [
@@ -360,12 +359,14 @@ function update_linkedin_settings()
 	];
 
 	foreach ($settings_to_update as $setting_name => $new_value) {
-		if (false === $wpdb->update(
+
+		$wpdb->update(
 			$table_name,
 			['setting_value' => $new_value], // Data to update
 			['setting_name' => $setting_name] // Where condition
-		)) {
-			wp_send_json_error('Database update failed');
+		);
+		if ($wpdb->last_error) {
+			wp_send_json_error($wpdb->last_error);
 			wp_die();
 		}
 	}
