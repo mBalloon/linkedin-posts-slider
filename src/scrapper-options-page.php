@@ -4,12 +4,32 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-function enqueue_scrapper_scripts_and_styles()
-{
-	wp_enqueue_script('scrapper-script', plugin_dir_url(dirname(__FILE__)) . 'scrapper-settings-form.js', array('jquery'), null, true);
-	wp_localize_script('scrapper-script', 'my_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+// Handle the POST request here
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'linkedin_slider_settings'; // Your table name
+
+	// Collect and sanitize data from POST request
+	$settings_to_update = [
+		'linkedin_company_url' => sanitize_text_field($_POST['linkedin_company_url']),
+		'linkedin_slider_open_link' => intval($_POST['linkedin_slider_open_link']),
+		'linkedin_update_frequency' => intval($_POST['linkedin_update_frequency']),
+		'linkedin_scrapper_endpoint' => sanitize_text_field($_POST['linkedin_scrapper_endpoint'])
+	];
+
+	// Update the settings in the database
+	foreach ($settings_to_update as $setting_name => $new_value) {
+		$wpdb->update(
+			$table_name,
+			['setting_value' => $new_value],
+			['setting_name' => $setting_name]
+		);
+	}
+
+	// Redirect back to settings page with a message
+	header("Location: " . $_SERVER['REQUEST_URI'] . "?settings-updated=true");
+	exit;
 }
-add_action('admin_enqueue_scripts', 'enqueue_scrapper_scripts_and_styles');
 
 
 
@@ -64,7 +84,7 @@ function linkedin_posts_scrapper_settings_page()
 		</div>
 
 		<!-- Settings Form Section -->
-		<form id="my-ajax-form" action="">
+		<form method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 			<?php wp_nonce_field('update_linkedin_settings', 'linkedin_settings_nonce');
 			?>
 			<table class="form-table">
@@ -88,7 +108,7 @@ function linkedin_posts_scrapper_settings_page()
 				</tr>
 			</table>
 
-			<?php submit_button(); ?>
+			<button type="submit">Update Settings</button>
 		</form>
 	</div>
 

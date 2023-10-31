@@ -338,7 +338,7 @@ add_action('scrape_data_cron_job', 'scrape_data');
 
 
 
-
+/*
 function update_linkedin_settings()
 {
 	//Verify nonce for security
@@ -375,3 +375,4 @@ function update_linkedin_settings()
 	wp_die();
 }
 add_action('wp_ajax_update_linkedin_settings', 'update_linkedin_settings');
+*/
