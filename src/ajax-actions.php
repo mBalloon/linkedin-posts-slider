@@ -334,10 +334,10 @@ add_action('wp_ajax_update_linkedin_settings', 'update_linkedin_settings');
 function update_linkedin_settings()
 {
 	// Verify nonce for security
-	if (!isset($_POST['linkedin_settings_nonce']) || !wp_verify_nonce($_POST['linkedin_settings_nonce'], 'update_linkedin_settings')) {
-		wp_send_json_error('Invalid nonce');
-		wp_die();
-	}
+	//if (!isset($_POST['linkedin_settings_nonce']) || !wp_verify_nonce($_POST['linkedin_settings_nonce'], 'update_linkedin_settings')) {
+	//	wp_send_json_error('Invalid nonce');
+	//	wp_die();
+	//}
 
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_slider_settings'; // Replace with your table name
