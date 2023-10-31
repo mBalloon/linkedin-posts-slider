@@ -19,8 +19,10 @@ jQuery(document).ready(function ($) {
                 linkedin_scrapper_endpoint: linkedinScrapperEndpoint,
             },
             success: function (response) {
-                console.log('Update Form action response:', response);  // Debugging line
-
+                console.log('Success:', response);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('Error:', textStatus, errorThrown);
             }
         });
     });

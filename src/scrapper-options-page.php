@@ -65,7 +65,7 @@ function linkedin_posts_scrapper_settings_page()
 
 		<!-- Settings Form Section -->
 		<form id="my-ajax-form" action="">
-			<?php //wp_nonce_field('update_linkedin_settings', 'linkedin_settings_nonce'); 
+			<?php wp_nonce_field('update_linkedin_settings', 'linkedin_settings_nonce');
 			?>
 			<table class="form-table">
 				<tr valign="top">
