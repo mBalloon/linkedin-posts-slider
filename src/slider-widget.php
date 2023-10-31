@@ -11,6 +11,18 @@ if (!defined('ABSPATH')) {
  * @since 1.0.0
  */
 // This class defines the Elementor Slider Widget
+
+global $wpdb;
+$table_name = $wpdb->prefix . 'linkedin_slider_settings'; // Your custom table name
+
+// Function to get setting value from the custom table
+function get_custom_setting($setting_name, $default_value)
+{
+  global $wpdb, $settings_table;
+  $value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM $settings_table WHERE setting_name = %s", $setting_name));
+  return ($value !== null) ? $value : $default_value;
+}
+
 class Elementor_Slider_Widget extends \Elementor\Widget_Base
 {
   /**
@@ -35,31 +47,32 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
 
     $custom_css = '
       .section-company {
-        color: ' . get_option('section-company-color', '#454545') . ';
-        font-size: ' . get_option('section-company-font-size', '16px') . ';
-        font-family: ' . get_option('section-company-font-family', '"Titillium Web"') . ';
-        line-height: ' . get_option('section-company-line-height', '21px') . ';
+        color: ' . get_custom_setting('section-company-color', '#454545') . ';
+        font-size: ' . get_custom_setting('section-company-font-size', '16px') . ';
+        font-family: ' . get_custom_setting('section-company-font-family', '"Titillium Web"') . ';
+        line-height: ' . get_custom_setting('section-company-line-height', '21px') . ';
       }
       .section-author-date {
-        color: ' . get_option('section-author-date-color', '#454545') . ';
-        font-size: ' . get_option('section-author-date-font-size', '14px') . ';
-        font-family: ' . get_option('section-author-date-font-family', '"Titillium Web"') . ';
-        font-weight: ' . get_option('section-author-date-font-weight', '300') . ';
-        line-height: ' . get_option('section-author-date-line-height', '18px') . ';
+        color: ' . get_custom_setting('section-author-date-color', '#454545') . ';
+        font-size: ' . get_custom_setting('section-author-date-font-size', '14px') . ';
+        font-family: ' . get_custom_setting('section-author-date-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_custom_setting('section-author-date-font-weight', '300') . ';
+        line-height: ' . get_custom_setting('section-author-date-line-height', '18px') . ';
       }
       .section-body {
-        color: ' . get_option('section-body-color', '#adb5bd') . ';
-        font-size: ' . get_option('section-body-font-size', '16px') . ';
-        font-family: ' . get_option('section-body-font-family', '"Titillium Web"') . ';
-        -webkit-line-clamp: ' . get_option('section-body-webkit-line-clamp', '5') . ';
+        color: ' . get_custom_setting('section-body-color', '#adb5bd') . ';
+        font-size: ' . get_custom_setting('section-body-font-size', '16px') . ';
+        font-family: ' . get_custom_setting('section-body-font-family', '"Titillium Web"') . ';
+        -webkit-line-clamp: ' . get_custom_setting('section-body-webkit-line-clamp', '5') . ';
       }
       .section-interactions {
-        color: ' . get_option('section-interactions-color', '#454545') . ';
-        font-size: ' . get_option('section-interactions-font-size', '14px') . ';
-        font-family: ' . get_option('section-interactions-font-family', '"Titillium Web"') . ';
-        font-weight: ' . get_option('section-interactions-font-weight', '300') . ';
-        line-height: ' . get_option('section-interactions-line-height', '18px') . ';
+        color: ' . get_custom_setting('section-interactions-color', '#454545') . ';
+        font-size: ' . get_custom_setting('section-interactions-font-size', '14px') . ';
+        font-family: ' . get_custom_setting('section-interactions-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_custom_setting('section-interactions-font-weight', '300') . ';
+        line-height: ' . get_custom_setting('section-interactions-line-height', '18px') . ';
       }';
+
     // Add the custom style
     wp_add_inline_style('slider-style', $custom_css);
   }

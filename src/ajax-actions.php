@@ -4,12 +4,6 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-$linkedin_company_url = get_option('linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/');
-$linkedin_slider_open_link = get_option('linkedin_slider_open_link', 'https://scrape-js.onrender.com/scrape');
-$linkedin_update_frequency = get_option('linkedin_update_frequency', '86400');
-$linkedin_scrapper_status = get_option('linkedin_scrapper_status', 'OK');
-$linkedin_scrapper_last_update = get_option('linkedin_scrapper_last_update', '');
-$linkedin_scrapper_endpoint = get_option('linkedin_scrapper_endpoint', 'https://scrape-js.onrender.com/scrape');
 
 
 function publish_unpublish()
@@ -185,7 +179,7 @@ function sync_unsynced_posts()
 {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_posts';
-
+	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
 	while (true) {
 		// Find first unsynced post
 		$unsynced_post = $wpdb->get_row("SELECT * FROM $table_name WHERE synced = false LIMIT 1");
@@ -241,8 +235,11 @@ function sync_unsynced_posts()
 		$wpdb->update($table_name, $updated_data, array('id' => $unsynced_post->id));
 	}
 
-	// Update the 'linkedin_scrapper_last_update' option
-	update_option('linkedin_scrapper_last_update', current_time('mysql'));
+	$wpdb->update(
+		$settings_table,
+		['setting_value' => current_time('mysql')],  // Data to update
+		['setting_name' => 'linkedin_scrapper_last_update']  // Where condition
+	);
 }
 
 
@@ -265,10 +262,21 @@ function extract_company_name($url)
 // Function to scrape data
 function scrape_data()
 {
+	global $wpdb;
+	$settings_table = $wpdb->prefix . 'linkedin_slider_settings'; // Your custom table name
+
+	// Function to get setting value from the custom table
+	function get_custom_setting($setting_name, $default_value)
+	{
+		global $wpdb, $settings_table;
+		$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM $settings_table WHERE setting_name = %s", $setting_name));
+		return ($value !== null) ? $value : $default_value;
+	}
+
 	$url = "http://localhost:3001/scrape";
 	$data = array(
 		"secret_key" => "test",
-		"url" => get_option('linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/'),
+		"url" => get_custom_setting('linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/'),
 		"postSelector" => 'li[class="mb-1"]',
 		"selectorsArray" => array(
 			'li[class="mb-1"] article',
