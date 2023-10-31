@@ -4,38 +4,7 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-function linkedin_posts_slider_register_settings()
-{
-	// Company info section
-	register_setting('linkedin-posts-slider', 'section-company-color');
-	register_setting('linkedin-posts-slider', 'section-company-font-size');
-	register_setting('linkedin-posts-slider', 'section-company-font-family');
-	register_setting('linkedin-posts-slider', 'section-company-line-height');
-	register_setting('linkedin-posts-slider', 'section-company-font-weight');
 
-	// Author username and date section
-	register_setting('linkedin-posts-slider', 'section-author-date-color');
-	register_setting('linkedin-posts-slider', 'section-author-date-font-size');
-	register_setting('linkedin-posts-slider', 'section-author-date-font-family');
-	register_setting('linkedin-posts-slider', 'section-author-date-font-weight');
-	register_setting('linkedin-posts-slider', 'section-author-date-line-height');
-
-	// Post text section
-	register_setting('linkedin-posts-slider', 'section-body-color');
-	register_setting('linkedin-posts-slider', 'section-body-font-size');
-	register_setting('linkedin-posts-slider', 'section-body-font-family');
-	register_setting('linkedin-posts-slider', 'section-body-webkit-line-clamp');
-	register_setting('linkedin-posts-slider', 'section-body-font-weight');
-
-
-	// Post interactions section
-	register_setting('linkedin-posts-slider', 'section-interactions-color');
-	register_setting('linkedin-posts-slider', 'section-interactions-font-size');
-	register_setting('linkedin-posts-slider', 'section-interactions-font-family');
-	register_setting('linkedin-posts-slider', 'section-interactions-font-weight');
-	register_setting('linkedin-posts-slider', 'section-interactions-line-height');
-}
-add_action('admin_init', 'linkedin_posts_slider_register_settings');
 
 function enqueue_preview_styles()
 {
@@ -51,6 +20,32 @@ function enqueue_preview_scripts()
 add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
 
 
+global $wpdb; // Global WordPress database variable
+
+// Function to get setting value from custom table
+function get_custom_setting($setting_name, $default = '')
+{
+	global $wpdb;
+	$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM linkedin_slider_settings WHERE setting_name = %s", $setting_name));
+	return ($value !== null) ? $value : $default;
+}
+
+// Function to update setting value in custom table
+function update_custom_setting($setting_name, $setting_value)
+{
+	global $wpdb;
+	$wpdb->replace(
+		'linkedin_slider_settings',
+		array(
+			'setting_name' => $setting_name,
+			'setting_value' => $setting_value,
+		),
+		array(
+			'%s',
+			'%s',
+		)
+	);
+}
 // Add an options page for the Linkedin Posts Slider widget in the WordPress admin menu.
 function linkedin_posts_slider_options_page()
 {
@@ -71,6 +66,7 @@ function linkedin_posts_slider_options_page()
 			<!-- TODO: Add form fields here -->
 			<form method="post" action="<?php echo admin_url('admin-post.php'); ?>">
 				<input type="hidden" name="action" value="handle_form_submission">
+
 				<!-- Section: Company Name -->
 				<div class="wp-ui-form-section">
 
@@ -82,25 +78,25 @@ function linkedin_posts_slider_options_page()
 						<!-- Field: Color -->
 						<div class="wp-ui-form-group">
 							<label for="section-company-color" class="wp-ui-form-label">Color:</label>
-							<input type="color" id="section-company-color" name="section-company-color" value="<?php echo esc_attr(get_option('section-company-color', '#454545')); ?>" class="wp-ui-form-input">
+							<input type="color" id="section-company-color" name="section-company-color" value="<?php echo esc_attr(get_custom_setting('section-company-color', '#454545')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Size -->
 						<div class="wp-ui-form-group">
 							<label for="section-company-font-size" class="wp-ui-form-label">Size:</label>
-							<input type="number" id="section-company-font-size" name="section-company-font-size" value="<?php echo esc_attr(get_option('section-company-font-size', '16')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-company-font-size" name="section-company-font-size" value="<?php echo esc_attr(get_custom_setting('section-company-font-size', '16')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Weight -->
 						<div class="wp-ui-form-group">
 							<label for="section-company-font-weight" class="wp-ui-form-label">Weight:</label>
-							<input type="number" id="section-company-font-weight" name="section-company-font-weight" value="<?php echo esc_attr(get_option('section-company-font-weight', '400')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-company-font-weight" name="section-company-font-weight" value="<?php echo esc_attr(get_custom_setting('section-company-font-weight', '400')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Line Height -->
 						<div class="wp-ui-form-group">
 							<label for="section-company-line-height" class="wp-ui-form-label">Line Height:</label>
-							<input type="number" id="section-company-line-height" name="section-company-line-height" value="<?php echo esc_attr(get_option('section-company-line-height', '18')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-company-line-height" name="section-company-line-height" value="<?php echo esc_attr(get_custom_setting('section-company-line-height', '18')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Font Family -->
@@ -108,15 +104,14 @@ function linkedin_posts_slider_options_page()
 							<label for="section-company-font-family" class="wp-ui-form-label">Font Family:</label>
 							<select id="section-company-font-family" name="section-company-font-family" class="wp-ui-form-input">
 								<?php
-								$current_font = get_option('section-company-font-family');
+								$current_font = get_custom_setting('section-company-font-family');
 								$allowed_fonts = array(
 									'Arial', 'Verdana', 'Times New Roman', 'Titillium Web',
 									'Georgia', 'Palatino Linotype', 'Tahoma', 'Courier New',
 									'Comic Sans MS', 'Trebuchet MS', 'Lucida Console', 'Impact'
 								);
-								// Define allowed fonts
 								foreach ($allowed_fonts as $font) {
-									$selected = selected($current_font, $font, false); // Set selected attribute
+									$selected = selected($current_font, $font, false);
 									echo "<option value='{$font}' {$selected}>{$font}</option>";
 								}
 								?>
@@ -137,25 +132,25 @@ function linkedin_posts_slider_options_page()
 						<!-- Field: Color -->
 						<div class="wp-ui-form-group">
 							<label for="section-author-date-color" class="wp-ui-form-label">Color:</label>
-							<input type="color" id="section-author-date-color" name="section-author-date-color" value="<?php echo esc_attr(get_option('section-author-date-color', '#454545')); ?>" class="wp-ui-form-input">
+							<input type="color" id="section-author-date-color" name="section-author-date-color" value="<?php echo esc_attr(get_custom_setting('section-author-date-color', '#454545')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Size -->
 						<div class="wp-ui-form-group">
 							<label for="section-author-date-font-size" class="wp-ui-form-label">Size:</label>
-							<input type="number" id="section-author-date-font-size" name="section-author-date-font-size" value="<?php echo esc_attr(get_option('section-author-date-font-size', '14')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-author-date-font-size" name="section-author-date-font-size" value="<?php echo esc_attr(get_custom_setting('section-author-date-font-size', '14')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Weight -->
 						<div class="wp-ui-form-group">
 							<label for="section-author-date-font-weight" class="wp-ui-form-label">Weight:</label>
-							<input type="number" id="section-author-date-font-weight" name="section-author-date-font-weight" value="<?php echo esc_attr(get_option('section-author-date-font-weight', '300')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-author-date-font-weight" name="section-author-date-font-weight" value="<?php echo esc_attr(get_custom_setting('section-author-date-font-weight', '300')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Line Height -->
 						<div class="wp-ui-form-group">
 							<label for="section-author-date-line-height" class="wp-ui-form-label">Line Height:</label>
-							<input type="number" id="section-author-date-line-height" name="section-author-date-line-height" value="<?php echo esc_attr(get_option('section-author-date-line-height', '18')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-author-date-line-height" name="section-author-date-line-height" value="<?php echo esc_attr(get_custom_setting('section-author-date-line-height', '18')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Font Family -->
@@ -163,15 +158,14 @@ function linkedin_posts_slider_options_page()
 							<label for="section-author-date-font-family" class="wp-ui-form-label">Font Family:</label>
 							<select id="section-author-date-font-family" name="section-author-date-font-family" class="wp-ui-form-input">
 								<?php
-								$current_font = get_option('section-author-date-font-family');
+								$current_font = get_custom_setting('section-author-date-font-family');
 								$allowed_fonts = array(
 									'Arial', 'Verdana', 'Times New Roman', 'Titillium Web',
 									'Georgia', 'Palatino Linotype', 'Tahoma', 'Courier New',
 									'Comic Sans MS', 'Trebuchet MS', 'Lucida Console', 'Impact'
 								);
-								// Define allowed fonts
 								foreach ($allowed_fonts as $font) {
-									$selected = selected($current_font, $font, false); // Set selected attribute
+									$selected = selected($current_font, $font, false);
 									echo "<option value='{$font}' {$selected}>{$font}</option>";
 								}
 								?>
@@ -193,19 +187,19 @@ function linkedin_posts_slider_options_page()
 						<!-- Field: Color -->
 						<div class="wp-ui-form-group">
 							<label for="section-body-color" class="wp-ui-form-label">Color:</label>
-							<input type="color" id="section-body-color" name="section-body-color" value="<?php echo esc_attr(get_option('section-body-color', '#adb5bd')); ?>" class="wp-ui-form-input">
+							<input type="color" id="section-body-color" name="section-body-color" value="<?php echo esc_attr(get_custom_setting('section-body-color', '#adb5bd')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Size -->
 						<div class="wp-ui-form-group">
 							<label for="section-body-font-size" class="wp-ui-form-label">Size:</label>
-							<input type="number" id="section-body-font-size" name="section-body-font-size" value="<?php echo esc_attr(get_option('section-body-font-size', '16')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-body-font-size" name="section-body-font-size" value="<?php echo esc_attr(get_custom_setting('section-body-font-size', '16')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Max Number of Lines -->
 						<div class="wp-ui-form-group">
 							<label for="section-body-webkit-line-clamp" class="wp-ui-form-label">Max Number of Lines:</label>
-							<input type="number" id="section-body-webkit-line-clamp" name="section-body-webkit-line-clamp" value="<?php echo esc_attr(get_option('section-body-webkit-line-clamp', '5')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-body-webkit-line-clamp" name="section-body-webkit-line-clamp" value="<?php echo esc_attr(get_custom_setting('section-body-webkit-line-clamp', '5')); ?>" class="wp-ui-form-input">
 						</div>
 
 						<!-- Field: Font Family -->
@@ -213,21 +207,19 @@ function linkedin_posts_slider_options_page()
 							<label for="section-body-font-family" class="wp-ui-form-label">Font Family:</label>
 							<select id="section-body-font-family" name="section-body-font-family" class="wp-ui-form-input">
 								<?php
-								$current_font = get_option('section-body-font-family');
+								$current_font = get_custom_setting('section-body-font-family');
 								$allowed_fonts = array(
 									'Arial', 'Verdana', 'Times New Roman', 'Titillium Web',
 									'Georgia', 'Palatino Linotype', 'Tahoma', 'Courier New',
 									'Comic Sans MS', 'Trebuchet MS', 'Lucida Console', 'Impact'
 								);
-								// Define allowed fonts
 								foreach ($allowed_fonts as $font) {
-									$selected = selected($current_font, $font, false); // Set selected attribute
+									$selected = selected($current_font, $font, false);
 									echo "<option value='{$font}' {$selected}>{$font}</option>";
 								}
 								?>
 							</select>
 						</div>
-
 
 					</div>
 
@@ -235,58 +227,48 @@ function linkedin_posts_slider_options_page()
 				<!-- END: Post Text -->
 				<!-- Section: Post Interactions and Comments -->
 				<div class="wp-ui-form-section">
-
 					<h2 class="wp-ui-form-section-title">Post Interactions and Comments</h2>
-
 					<!-- Subsection: Inputs -->
 					<div class="wp-ui-form-subsection">
-
 						<!-- Field: Color -->
 						<div class="wp-ui-form-group">
 							<label for="section-interactions-color" class="wp-ui-form-label">Color:</label>
-							<input type="color" id="section-interactions-color" name="section-interactions-color" value="<?php echo esc_attr(get_option('section-interactions-color', '#454545')); ?>" class="wp-ui-form-input">
+							<input type="color" id="section-interactions-color" name="section-interactions-color" value="<?php echo esc_attr(get_custom_setting('section-interactions-color', '#454545')); ?>" class="wp-ui-form-input">
 						</div>
-
 						<!-- Field: Size -->
 						<div class="wp-ui-form-group">
 							<label for="section-interactions-font-size" class="wp-ui-form-label">Size:</label>
-							<input type="number" id="section-interactions-font-size" name="section-interactions-font-size" value="<?php echo esc_attr(get_option('section-interactions-font-size', '14')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-interactions-font-size" name="section-interactions-font-size" value="<?php echo esc_attr(get_custom_setting('section-interactions-font-size', '14')); ?>" class="wp-ui-form-input">
 						</div>
-
 						<!-- Field: Weight -->
 						<div class="wp-ui-form-group">
 							<label for="section-interactions-font-weight" class="wp-ui-form-label">Weight:</label>
-							<input type="number" id="section-interactions-font-weight" name="section-interactions-font-weight" value="<?php echo esc_attr(get_option('section-interactions-font-weight', '300')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-interactions-font-weight" name="section-interactions-font-weight" value="<?php echo esc_attr(get_custom_setting('section-interactions-font-weight', '300')); ?>" class="wp-ui-form-input">
 						</div>
-
 						<!-- Field: Line Height -->
 						<div class="wp-ui-form-group">
 							<label for="section-interactions-line-height" class="wp-ui-form-label">Line Height:</label>
-							<input type="number" id="section-interactions-line-height" name="section-interactions-line-height" value="<?php echo esc_attr(get_option('section-interactions-line-height', '18')); ?>" class="wp-ui-form-input">
+							<input type="number" id="section-interactions-line-height" name="section-interactions-line-height" value="<?php echo esc_attr(get_custom_setting('section-interactions-line-height', '18')); ?>" class="wp-ui-form-input">
 						</div>
-
 						<!-- Field: Font Family -->
 						<div class="wp-ui-form-group">
 							<label for="section-interactions-font-family" class="wp-ui-form-label">Font Family:</label>
 							<select id="section-interactions-font-family" name="section-interactions-font-family" class="wp-ui-form-input">
 								<?php
-								$current_font = get_option('section-interactions-font-family');
+								$current_font = get_custom_setting('section-interactions-font-family');
 								$allowed_fonts = array(
 									'Arial', 'Verdana', 'Times New Roman', 'Titillium Web',
 									'Georgia', 'Palatino Linotype', 'Tahoma', 'Courier New',
 									'Comic Sans MS', 'Trebuchet MS', 'Lucida Console', 'Impact'
 								);
-								// Define allowed fonts
 								foreach ($allowed_fonts as $font) {
-									$selected = selected($current_font, $font, false); // Set selected attribute
+									$selected = selected($current_font, $font, false);
 									echo "<option value='{$font}' {$selected}>{$font}</option>";
 								}
 								?>
 							</select>
 						</div>
-
 					</div>
-
 				</div>
 				<!-- END: Post Interactions and Comments -->
 
@@ -373,160 +355,47 @@ add_action('admin_menu', function () {
 // Function to handle form submission
 function handle_form_submission()
 {
-	// Check if user has the necessary permissions
-	if (current_user_can('manage_options')) {
-		// Check for nonce security
-		check_admin_referer('handle_form_submission_action', 'handle_form_submission_nonce');
+	if (!isset($_POST['handle_form_submission_nonce']) || !wp_verify_nonce($_POST['handle_form_submission_nonce'], 'handle_form_submission_action')) {
+		die('Invalid nonce.');
+	}
 
-		// Predefined list of font families for validation
-		$allowed_fonts = array(
-			'Arial', 'Verdana', 'Times New Roman', 'Titillium Web',
-			'Georgia', 'Palatino Linotype', 'Tahoma', 'Courier New',
-			'Comic Sans MS', 'Trebuchet MS', 'Lucida Console', 'Impact'
-		);
-		// Update this list based on your application
+	// Predefined list of font families for validation
+	$allowed_fonts = array(
+		'Arial', 'Verdana', 'Times New Roman', 'Titillium Web',
+		'Georgia', 'Palatino Linotype', 'Tahoma', 'Courier New',
+		'Comic Sans MS', 'Trebuchet MS', 'Lucida Console', 'Impact'
+	);
+	// Update this list based on your application
 
-		// Capture and update form submissions for the "Company Info" section
-		if (isset($_POST['section-company-color'])) {
-			$color_value = sanitize_text_field($_POST['section-company-color']);
-			if (preg_match('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/', $color_value)) {
-				update_option('section-company-color', $color_value);
+	$settings_to_handle = [
+		'section-interactions-color' => '/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/',
+		'section-interactions-font-size' => '/^\d+$/',
+		'section-interactions-font-weight' => '/^\d+$/',
+		'section-interactions-line-height' => '/^\d+$/',
+		'section-interactions-font-family' => '/^[a-zA-Z0-9\s]+$/',
+		'section-body-color' => '/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/',
+		'section-body-font-size' => '/^\d+$/',
+		'section-body-webkit-line-clamp' => '/^\d+$/',
+		'section-body-font-family' => '/^[a-zA-Z0-9\s]+$/',
+		'section-author-date-color' => '/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/',
+		'section-author-date-font-size' => '/^\d+$/',
+		'section-author-date-font-weight' => '/^\d+$/',
+		'section-author-date-line-height' => '/^\d+$/',
+		'section-author-date-font-family' => '/^[a-zA-Z0-9\s]+$/',
+		'section-company-color' => '/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/',
+		'section-company-font-size' => '/^\d+$/',
+		'section-company-font-weight' => '/^\d+$/',
+		'section-company-line-height' => '/^\d+$/',
+		'section-company-font-family' => '/^[a-zA-Z0-9\s]+$/'
+	];
+
+	foreach ($settings_to_handle as $setting_name => $validation_regex) {
+		if (isset($_POST[$setting_name])) {
+			$value = sanitize_text_field($_POST[$setting_name]);
+			if (preg_match($validation_regex, $value)) {
+				update_custom_setting($setting_name, $value);
 			}
 		}
-
-		if (isset($_POST['section-company-font-size'])) {
-			$font_size = intval($_POST['section-company-font-size']);
-			if ($font_size >= 1 && $font_size <= 100) {
-				update_option('section-company-font-size', $font_size);
-			}
-		}
-
-		if (isset($_POST['section-company-font-weight'])) {
-			$font_weight = intval($_POST['section-company-font-weight']);
-			if ($font_weight >= 100 && $font_weight <= 900) {
-				update_option('section-company-font-weight', $font_weight);
-			}
-		}
-
-		if (isset($_POST['section-company-line-height'])) {
-			$line_height = intval($_POST['section-company-line-height']);
-			if ($line_height >= 1 && $line_height <= 100) {
-				update_option('section-company-line-height', $line_height);
-			}
-		}
-
-		if (isset($_POST['section-company-font-family'])) {
-			$font_family = sanitize_text_field($_POST['section-company-font-family']);
-			if (in_array($font_family, $allowed_fonts)) {
-				update_option('section-company-font-family', $font_family);
-			}
-		}
-
-
-		// Capture and update form submissions for the "Username and Post Date" section
-		if (isset($_POST['section-author-date-color'])) {
-			$color_value = sanitize_text_field($_POST['section-author-date-color']);
-			if (preg_match('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/', $color_value)) {
-				update_option('section-author-date-color', $color_value);
-			}
-		}
-
-		if (isset($_POST['section-author-date-font-size'])) {
-			$font_size = intval($_POST['section-author-date-font-size']);
-			if ($font_size >= 1 && $font_size <= 100) {
-				update_option('section-author-date-font-size', $font_size);
-			}
-		}
-
-		if (isset($_POST['section-author-date-font-weight'])) {
-			$font_weight = intval($_POST['section-author-date-font-weight']);
-			if ($font_weight >= 100 && $font_weight <= 900) {
-				update_option('section-author-date-font-weight', $font_weight);
-			}
-		}
-
-		if (isset($_POST['section-author-date-line-height'])) {
-			$line_height = intval($_POST['section-author-date-line-height']);
-			if ($line_height >= 1 && $line_height <= 100) {
-				update_option('section-author-date-line-height', $line_height);
-			}
-		}
-
-		if (isset($_POST['section-author-date-font-family'])) {
-			$font_family = sanitize_text_field($_POST['section-author-date-font-family']);
-			if (in_array($font_family, $allowed_fonts)) {
-				update_option('section-author-date-font-family', $font_family);
-			}
-		}
-
-		// Capture and update form submissions for the "Post Text" section
-		if (isset($_POST['section-body-color'])) {
-			$color_value = sanitize_text_field($_POST['section-body-color']);
-			if (preg_match('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/', $color_value)) {
-				update_option('section-body-color', $color_value);
-			}
-		}
-
-		if (isset($_POST['section-body-font-size'])) {
-			$font_size = intval($_POST['section-body-font-size']);
-			if ($font_size >= 1 && $font_size <= 100) {
-				update_option('section-body-font-size', $font_size);
-			}
-		}
-
-		if (isset($_POST['section-body-webkit-line-clamp'])) {
-			$line_clamp = intval($_POST['section-body-webkit-line-clamp']);
-			if ($line_clamp >= 1 && $line_clamp <= 100) {
-				update_option('section-body-webkit-line-clamp', $line_clamp);
-			}
-		}
-
-		if (isset($_POST['section-body-font-family'])) {
-			$font_family = sanitize_text_field($_POST['section-body-font-family']);
-			if (in_array($font_family, $allowed_fonts)) {
-				update_option('section-body-font-family', $font_family);
-			}
-		}
-
-		// Capture and update form submissions for the "Post Interactions and Comments" section
-		if (isset($_POST['section-interactions-color'])) {
-			$color_value = sanitize_text_field($_POST['section-interactions-color']);
-			if (preg_match('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/', $color_value)) {
-				update_option('section-interactions-color', $color_value);
-			}
-		}
-
-		if (isset($_POST['section-interactions-font-size'])) {
-			$font_size = intval($_POST['section-interactions-font-size']);
-			if ($font_size >= 1 && $font_size <= 100) {
-				update_option('section-interactions-font-size', $font_size);
-			}
-		}
-
-		if (isset($_POST['section-interactions-font-weight'])) {
-			$font_weight = intval($_POST['section-interactions-font-weight']);
-			if ($font_weight >= 100 && $font_weight <= 900) {
-				update_option('section-interactions-font-weight', $font_weight);
-			}
-		}
-
-		if (isset($_POST['section-interactions-line-height'])) {
-			$line_height = intval($_POST['section-interactions-line-height']);
-			if ($line_height >= 1 && $line_height <= 100) {
-				update_option('section-interactions-line-height', $line_height);
-			}
-		}
-
-		if (isset($_POST['section-interactions-font-family'])) {
-			$font_family = sanitize_text_field($_POST['section-interactions-font-family']);
-			if (in_array($font_family, $allowed_fonts)) {
-				update_option('section-interactions-font-family', $font_family);
-			}
-		}
-		// Redirect back to the form page with a success message
-		wp_redirect(add_query_arg('status', 'success', wp_get_referer()));
-	} else {
-		wp_die('Unauthorized', 'You do not have the required permissions to update settings.');
 	}
 }
 // Attach the handle_form_submission() function to an appropriate WordPress hook
