@@ -369,6 +369,6 @@ function update_linkedin_settings()
 	}
 
 	wp_send_json_success('Settings updated successfully');
-	wp_die();
+	//wp_die();
 }
 add_action('wp_ajax_update_linkedin_settings', 'update_linkedin_settings');

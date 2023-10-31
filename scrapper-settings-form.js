@@ -8,17 +8,20 @@ jQuery(document).ready(function ($) {
         const linkedinUpdateFrequency = $('input[name="linkedin_update_frequency"]').val();
         const linkedinScrapperEndpoint = $('input[name="linkedin_scrapper_endpoint"]').val();
 
-        // Construct the data object
-        const formData = {
-            'linkedin_company_url': linkedinCompanyUrl,
-            'linkedin_slider_open_link': linkedinSliderOpenLink,
-            'linkedin_update_frequency': linkedinUpdateFrequency,
-            'linkedin_scrapper_endpoint': linkedinScrapperEndpoint,
-            'action': 'update_linkedin_settings'
-        };
+        jQuery.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'update_linkedin_settings',
+                linkedin_company_url: linkedinCompanyUrl,
+                linkedin_slider_open_link: linkedinSliderOpenLink,
+                linkedin_update_frequency: linkedinUpdateFrequency,
+                linkedin_scrapper_endpoint: linkedinScrapperEndpoint,
+            },
+            success: function (response) {
+                console.log('Update Form action response:', response);  // Debugging line
 
-        $.post(my_ajax_object.ajax_url, formData, function (response) {
-            console.log(response);
+            }
         });
     });
 });
