@@ -24,7 +24,7 @@ function linkedin_posts_scrapper_settings_page()
 
 	$settings_map = [];
 	foreach ($settings as $setting) {
-		$settings_map[$setting->setting_name] = $setting->value;
+		$settings_map[$setting->setting_name] = $setting->setting_value;
 	}
 
 	// Fetch statistics
