@@ -56,6 +56,9 @@ function linkedin_posts_slider_admin_table_page()
   // Start output
   ob_start();
 ?>
+  <script>
+
+  </script>
   <div class="wrap">
     <h1 style="text-align:center;"><?php echo esc_html(get_admin_page_title()); ?></h1>
     <table class="widefat fixed custom-table" cellspacing="0">

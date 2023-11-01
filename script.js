@@ -20,24 +20,7 @@ function updatePostOrder(postOrder) {
     });
 }
 
-function syncButtonClicked(buttonElement) {
-    // Get button and URN
-    var button = jQuery(buttonElement);
-    var urn = button.data("urn");
 
-    // Update button text
-    button.text("...");
-
-    // Make AJAX request
-    jQuery('#posts-table tbody').sortable({
-        update: function (event, ui) {
-            var postOrder = jQuery(this).sortable('toArray');
-            updatePostOrder(postOrder);
-        }
-    });
-
-    // ... rest of the existing code in syncButtonClicked ...
-}
 
 function publishButtonClicked(buttonElement) {
     // Get button and ID
@@ -136,17 +119,8 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    // Assuming there's a button with class sync-button for syncing
-    jQuery('.sync-button').on('click', function () {
-        syncButtonClicked(this);
-    });
 
-    jQuery('#posts-table tbody').sortable({
-        update: function (event, ui) {
-            var postOrder = jQuery(this).sortable('toArray');
-            updatePostOrder(postOrder);
-        }
-    });
+
 
     jQuery('.up-button, .down-button').on('click', function () {
         var button = jQuery(this);
