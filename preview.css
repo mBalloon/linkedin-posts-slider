@@ -243,6 +243,7 @@ div[style*='flex: 1; display: flex;'] {
 }
 
 .li-author-img {
+    padding-bottom: 60px;
     margin-top: -15px;
     margin-right: auto;
     margin-left: auto;
