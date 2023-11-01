@@ -272,7 +272,7 @@ function scrape_data()
 		{
 			global $wpdb, $settings_table;
 			$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM $settings_table WHERE setting_name = %s", $setting_name));
-			return ($value !== null) ? $value : $default_value;
+			return $value;
 		}
 	}
 

@@ -160,32 +160,19 @@ button:hover {
 }
 
 .section-company {
-  color: #454545;
-  font-size: 16px;
-  font-family: "Titillium Web";
   padding-top: 10px;
-  line-height: 21px;
 }
 
 .section-author-date {
-  color: #454545;
-  font-size: 14px;
-  font-family: "Titillium Web";
-  font-weight: 300;
   padding-top: 10px;
-  line-height: 18px;
   gap: 3px;
   margin-bottom: 10px;
 }
 
 .section-body {
-  color: #adb5bd;
-  font-size: 16px;
-  font-family: "Titillium Web";
   text-align: center;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
   display: -webkit-box;
   margin-right: 10px;
   margin-left: 10px;
@@ -197,11 +184,6 @@ button:hover {
   width: 100%;
   position: absolute;
   bottom: 7px;
-  color: #454545;
-  font-size: 14px;
-  font-family: "Titillium Web";
-  font-weight: 300;
-  line-height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;

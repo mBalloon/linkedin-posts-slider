@@ -20,7 +20,7 @@ if (!function_exists('get_custom_setting')) {
   {
     global $wpdb, $settings_table;
     $value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM $settings_table WHERE setting_name = %s", $setting_name));
-    return ($value !== null) ? $value : $default_value;
+    return $value;
   }
 }
 class Elementor_Slider_Widget extends \Elementor\Widget_Base
