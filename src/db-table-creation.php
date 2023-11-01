@@ -198,7 +198,7 @@ function linkedin_slider_settings_create_table()
   $settings_table = $wpdb->prefix . 'linkedin_slider_settings';
   $charset_collate = $wpdb->get_charset_collate();
 
-  $sql = "CREATE TABLE $settings_table (
+  $sql2 = "CREATE TABLE $settings_table (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         setting_name text NOT NULL,
         default_value text NOT NULL,
@@ -207,7 +207,7 @@ function linkedin_slider_settings_create_table()
     ) $charset_collate;";
 
   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-  dbDelta($sql);
+  dbDelta($sql2);
 
   // Default values to insert
   $default_values = [
