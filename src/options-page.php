@@ -21,15 +21,15 @@ add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
 
 
 global $wpdb; // Global WordPress database variable
-
-// Function to get setting value from custom table
-function get_custom_setting($setting_name, $default = '')
-{
-	global $wpdb;
-	$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM linkedin_slider_settings WHERE setting_name = %s", $setting_name));
-	return ($value !== null) ? $value : $default;
+if (!function_exists('get_custom_setting')) {
+	// Function to get setting value from custom table
+	function get_custom_setting($setting_name, $default = '')
+	{
+		global $wpdb;
+		$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM linkedin_slider_settings WHERE setting_name = %s", $setting_name));
+		return ($value !== null) ? $value : $default;
+	}
 }
-
 // Function to update setting value in custom table
 function update_custom_setting($setting_name, $setting_value)
 {

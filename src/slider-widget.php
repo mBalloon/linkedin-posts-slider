@@ -14,15 +14,15 @@ if (!defined('ABSPATH')) {
 
 global $wpdb;
 $settings_table = $wpdb->prefix . 'linkedin_slider_settings'; // Your custom table name
-
-// Function to get setting value from the custom table
-function get_custom_setting($setting_name, $default_value)
-{
-  global $wpdb, $settings_table;
-  $value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM $settings_table WHERE setting_name = %s", $setting_name));
-  return ($value !== null) ? $value : $default_value;
+if (!function_exists('get_custom_setting')) {
+  // Function to get setting value from the custom table
+  function get_custom_setting($setting_name, $default_value)
+  {
+    global $wpdb, $settings_table;
+    $value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM $settings_table WHERE setting_name = %s", $setting_name));
+    return ($value !== null) ? $value : $default_value;
+  }
 }
-
 class Elementor_Slider_Widget extends \Elementor\Widget_Base
 {
   /**
