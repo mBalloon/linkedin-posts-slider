@@ -4,8 +4,6 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-
-
 function enqueue_preview_styles()
 {
 	wp_enqueue_style('preview-styles', plugin_dir_url(dirname(__FILE__)) . 'preview.css');
@@ -308,13 +306,8 @@ function linkedin_posts_slider_options_page()
 				</div>
 				<!-- END: Post Interactions and Comments -->
 
-
-
-				<?php //wp_nonce_field('handle_form_submission_action', 'handle_form_submission_nonce'); 
-				?>
-
 				<!-- Your submit button -->
-				<?php submit_button(); ?>
+				<button type="submit">Update Settings</button>
 			</form>
 
 		</div>
@@ -388,52 +381,3 @@ function linkedin_posts_slider_options_page()
 add_action('admin_menu', function () {
 	add_options_page('Linkedin Slider Style Settings', 'Linkedin Posts Style Settings', 'manage_options', 'linkedin-posts-slider', 'linkedin_posts_slider_options_page');
 });
-
-// Function to handle form submission
-function handle_form_submission()
-{
-	//if (!isset($_POST['handle_form_submission_nonce']) || !wp_verify_nonce($_POST['handle_form_submission_nonce'], 'handle_form_submission_action')) {
-	//	die('Invalid nonce.');
-	//}
-
-	// Predefined list of font families for validation
-	$allowed_fonts = array(
-		'Arial', 'Verdana', 'Times New Roman', 'Titillium Web',
-		'Georgia', 'Palatino Linotype', 'Tahoma', 'Courier New',
-		'Comic Sans MS', 'Trebuchet MS', 'Lucida Console', 'Impact'
-	);
-	// Update this list based on your application
-
-	$settings_to_handle = [
-		'section-interactions-color' => '/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/',
-		'section-interactions-font-size' => '/^\d+$/',
-		'section-interactions-font-weight' => '/^\d+$/',
-		'section-interactions-line-height' => '/^\d+$/',
-		'section-interactions-font-family' => '/^[a-zA-Z0-9\s]+$/',
-		'section-body-color' => '/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/',
-		'section-body-font-size' => '/^\d+$/',
-		'section-body-webkit-line-clamp' => '/^\d+$/',
-		'section-body-font-family' => '/^[a-zA-Z0-9\s]+$/',
-		'section-author-date-color' => '/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/',
-		'section-author-date-font-size' => '/^\d+$/',
-		'section-author-date-font-weight' => '/^\d+$/',
-		'section-author-date-line-height' => '/^\d+$/',
-		'section-author-date-font-family' => '/^[a-zA-Z0-9\s]+$/',
-		'section-company-color' => '/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/',
-		'section-company-font-size' => '/^\d+$/',
-		'section-company-font-weight' => '/^\d+$/',
-		'section-company-line-height' => '/^\d+$/',
-		'section-company-font-family' => '/^[a-zA-Z0-9\s]+$/'
-	];
-
-	foreach ($settings_to_handle as $setting_name => $validation_regex) {
-		if (isset($_POST[$setting_name])) {
-			$value = sanitize_text_field($_POST[$setting_name]);
-			if (preg_match($validation_regex, $value)) {
-				update_custom_setting($setting_name, $value);
-			}
-		}
-	}
-}
-// Attach the handle_form_submission() function to an appropriate WordPress hook
-add_action('admin_post_handle_form_submission', 'handle_form_submission');
