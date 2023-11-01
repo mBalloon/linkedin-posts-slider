@@ -12,7 +12,7 @@ body {
   text-align: center;
   background-color: #ffffff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
-
+  height: inherit;
   margin-bottom: 4px;
 }
 
@@ -108,7 +108,6 @@ button:hover {
 
 .info-container {
   z-index: -1;
-  flex-grow: 1;
   height: 40%;
   max-height: 40%;
   display: flex;
@@ -201,6 +200,7 @@ button:hover {
   margin-right: 10px;
   margin-left: 10px;
   margin-bottom: 60px;
+  height: 100%;
 }
 
 .section-interactions {
