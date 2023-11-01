@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 // Handle the POST request here
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	global $wpdb;
-	$table_name = $wpdb->prefix . 'linkedin_slider_settings'; // Your table name
+	$settings_table = $wpdb->prefix . 'linkedin_slider_settings'; // Your table name
 
 	// Collect and sanitize data from POST request
 	$settings_to_update = [
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// Update the settings in the database
 	foreach ($settings_to_update as $setting_name => $new_value) {
 		$wpdb->update(
-			$table_name,
+			$settings_table,
 			['setting_value' => $new_value],
 			['setting_name' => $setting_name]
 		);

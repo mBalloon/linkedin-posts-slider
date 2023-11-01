@@ -195,10 +195,10 @@ function linkedin_posts_slider_create_table()
 function linkedin_slider_settings_create_table()
 {
   global $wpdb;
-  $table_name = $wpdb->prefix . 'linkedin_slider_settings';
+  $settings_table = $wpdb->prefix . 'linkedin_slider_settings';
   $charset_collate = $wpdb->get_charset_collate();
 
-  $sql = "CREATE TABLE $table_name (
+  $sql = "CREATE TABLE $settings_table (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         setting_name text NOT NULL,
         default_value text NOT NULL,
@@ -242,7 +242,7 @@ function linkedin_slider_settings_create_table()
 
   foreach ($default_values as $item) {
     $wpdb->insert(
-      $table_name,
+      $settings_table,
       array(
         'setting_name' => $item[0],
         'default_value' => $item[1],

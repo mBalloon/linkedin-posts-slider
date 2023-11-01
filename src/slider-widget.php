@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 // This class defines the Elementor Slider Widget
 
 global $wpdb;
-$table_name = $wpdb->prefix . 'linkedin_slider_settings'; // Your custom table name
+$settings_table = $wpdb->prefix . 'linkedin_slider_settings'; // Your custom table name
 
 // Function to get setting value from the custom table
 function get_custom_setting($setting_name, $default_value)
