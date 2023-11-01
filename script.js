@@ -1,5 +1,5 @@
 /* script.js */
-
+/*
 // Function to update post order
 function updatePostOrder(postOrder) {
     jQuery.ajax({
@@ -20,7 +20,7 @@ function updatePostOrder(postOrder) {
     });
 }
 
-
+*/
 
 function publishButtonClicked(buttonElement) {
     // Get button and ID

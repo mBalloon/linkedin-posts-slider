@@ -71,7 +71,7 @@ add_action('wp_ajax_nopriv_get_linkedin_posts', 'get_linkedin_posts');
 
 
 
-
+/*
 function update_post_order()
 {
 	global $wpdb;
@@ -91,7 +91,7 @@ function update_post_order()
 	wp_send_json_success();
 }
 add_action('wp_ajax_update_post_order', 'update_post_order');
-
+*/
 
 function delete_post()
 {

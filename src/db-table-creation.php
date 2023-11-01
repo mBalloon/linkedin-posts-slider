@@ -185,9 +185,19 @@ function linkedin_posts_slider_create_table()
         'comments' => $item['comments'],
         'synced' => 1,
         'published' => 1,
-        'post_order' => $item['post_order']
+        'post_order' => 0  // You can also set it to 0 or any placeholder
       ),
       array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d')
+    );
+
+    // Get the last inserted ID
+    $lastid = $wpdb->insert_id;
+
+    // Update the 'post_order' field to the last inserted ID
+    $wpdb->update(
+      $table_name,
+      array('post_order' => $lastid),
+      array('id' => $lastid)
     );
   }
 }
@@ -196,7 +206,7 @@ function linkedin_slider_settings_create_table()
 {
   global $wpdb;
   $settings_table = $wpdb->prefix . 'linkedin_slider_settings';
-  $charset_collate = $wpdb->get_charset_collate();
+  $charset_collate2 = $wpdb->get_charset_collate();
 
   $sql2 = "CREATE TABLE $settings_table (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -204,7 +214,7 @@ function linkedin_slider_settings_create_table()
         default_value text NOT NULL,
         setting_value text NOT NULL,
         PRIMARY KEY (id)
-    ) $charset_collate;";
+    ) $charset_collate2;";
 
   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
   dbDelta($sql2);
