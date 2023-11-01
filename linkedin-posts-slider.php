@@ -93,7 +93,8 @@ function linkedin_posts_slider_admin_table_page()
             <td>
               <div class="action-buttons">
                 <form method="post" style="display:inline;">
-                  <?php wp_nonce_field('linkedin_delete_action', 'linkedin_delete_nonce'); ?>
+                  <?php //wp_nonce_field('linkedin_delete_action', 'linkedin_delete_nonce'); 
+                  ?>
                   <input type="hidden" name="id" value="<?php echo esc_attr($row->id); ?>">
                   <input type="submit" value="Delete" class="delete-button" data-id="<?php echo esc_attr($row->id); ?>">
                 </form>

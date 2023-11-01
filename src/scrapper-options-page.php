@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Handle the POST request here
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['linkedin_settings_form'])) {
 	global $wpdb;
 	$settings_table = $wpdb->prefix . 'linkedin_slider_settings'; // Your table name
 
@@ -85,7 +85,8 @@ function linkedin_posts_scrapper_settings_page()
 
 		<!-- Settings Form Section -->
 		<form method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
-			<?php wp_nonce_field('update_linkedin_settings', 'linkedin_settings_nonce');
+			<input type="hidden" name="linkedin_settings_form" value="1">
+			<?php //wp_nonce_field('update_linkedin_settings', 'linkedin_settings_nonce');
 			?>
 			<table class="form-table">
 				<tr valign="top">

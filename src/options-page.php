@@ -274,7 +274,8 @@ function linkedin_posts_slider_options_page()
 
 
 
-				<?php wp_nonce_field('handle_form_submission_action', 'handle_form_submission_nonce'); ?>
+				<?php //wp_nonce_field('handle_form_submission_action', 'handle_form_submission_nonce'); 
+				?>
 
 				<!-- Your submit button -->
 				<?php submit_button(); ?>
@@ -355,9 +356,9 @@ add_action('admin_menu', function () {
 // Function to handle form submission
 function handle_form_submission()
 {
-	if (!isset($_POST['handle_form_submission_nonce']) || !wp_verify_nonce($_POST['handle_form_submission_nonce'], 'handle_form_submission_action')) {
-		die('Invalid nonce.');
-	}
+	//if (!isset($_POST['handle_form_submission_nonce']) || !wp_verify_nonce($_POST['handle_form_submission_nonce'], 'handle_form_submission_action')) {
+	//	die('Invalid nonce.');
+	//}
 
 	// Predefined list of font families for validation
 	$allowed_fonts = array(
