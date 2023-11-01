@@ -46,7 +46,43 @@ function update_custom_setting($setting_name, $setting_value)
 		)
 	);
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['style_settings_form'])) {
+	// Company Name Section
+	update_custom_setting('section-company-color', $_POST['section-company-color']);
+	update_custom_setting('section-company-font-size', $_POST['section-company-font-size']);
+	update_custom_setting('section-company-font-weight', $_POST['section-company-font-weight']);
+	update_custom_setting('section-company-line-height', $_POST['section-company-line-height']);
+	update_custom_setting('section-company-font-family', $_POST['section-company-font-family']);
+
+	// Username and Post Date Section
+	update_custom_setting('section-author-date-color', $_POST['section-author-date-color']);
+	update_custom_setting('section-author-date-font-size', $_POST['section-author-date-font-size']);
+	update_custom_setting('section-author-date-font-weight', $_POST['section-author-date-font-weight']);
+	update_custom_setting('section-author-date-line-height', $_POST['section-author-date-line-height']);
+	update_custom_setting('section-author-date-font-family', $_POST['section-author-date-font-family']);
+
+	// Post Text Section
+	update_custom_setting('section-body-color', $_POST['section-body-color']);
+	update_custom_setting('section-body-font-size', $_POST['section-body-font-size']);
+	update_custom_setting('section-body-webkit-line-clamp', $_POST['section-body-webkit-line-clamp']);
+	update_custom_setting('section-body-font-family', $_POST['section-body-font-family']);
+
+	// Post Interactions and Comments Section
+	update_custom_setting('section-interactions-color', $_POST['section-interactions-color']);
+	update_custom_setting('section-interactions-font-size', $_POST['section-interactions-font-size']);
+	update_custom_setting('section-interactions-font-weight', $_POST['section-interactions-font-weight']);
+	update_custom_setting('section-interactions-line-height', $_POST['section-interactions-line-height']);
+	update_custom_setting('section-interactions-font-family', $_POST['section-interactions-font-family']);
+
+	// Redirect back to settings page with a message
+	header("Location: " . $_SERVER['REQUEST_URI'] . "?settings-updated=true");
+	exit;
+}
+
+
 // Add an options page for the Linkedin Posts Slider widget in the WordPress admin menu.
+
 function linkedin_posts_slider_options_page()
 {
 	// Check user capabilities
@@ -64,8 +100,8 @@ function linkedin_posts_slider_options_page()
 			<h1>Style Live Editor</h1>
 
 			<!-- TODO: Add form fields here -->
-			<form method="post" action="<?php echo admin_url('admin-post.php'); ?>">
-				<input type="hidden" name="action" value="handle_form_submission">
+			<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+				<input type="hidden" name="style_settings_form" value="1">
 
 				<!-- Section: Company Name -->
 				<div class="wp-ui-form-section">

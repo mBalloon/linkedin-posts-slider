@@ -189,7 +189,7 @@ button:hover {
   display: -webkit-box;
   margin-right: 10px;
   margin-left: 10px;
-  margin-bottom: 60px;
+  padding-bottom: 60px;
 }
 
 .section-interactions {

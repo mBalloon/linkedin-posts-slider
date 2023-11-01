@@ -89,7 +89,7 @@ h1 {
     display: -webkit-box;
     margin-right: 10px;
     margin-left: 10px;
-    margin-bottom: 60px;
+    padding-bottom: 60px;
     color: #adb5bd;
     font-size: 16px;
     font-family: "Titillium Web";
