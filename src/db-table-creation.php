@@ -205,16 +205,16 @@ function linkedin_posts_slider_create_table()
 function linkedin_slider_settings_create_table()
 {
   global $wpdb;
-  $settings_table = $wpdb->prefix . 'linkedin_slider_settings';
-  $charset_collate2 = $wpdb->get_charset_collate();
+  $charset_collate = $wpdb->get_charset_collate();
 
-  $sql2 = "CREATE TABLE $settings_table (
+  $settings_table = $wpdb->prefix . 'linkedin_slider_settings';
+  $sql2 = "CREATE TABLE IF NOT EXISTS $settings_table (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
-        setting_name text NOT NULL,
-        default_value text NOT NULL,
-        setting_value text NOT NULL,
+        setting_name varchar(255) NOT NULL,
+        default_value varchar(255) DEFAULT NULL,
+        setting_value varchar(255) DEFAULT NULL,
         PRIMARY KEY (id)
-    ) $charset_collate2;";
+  ) $charset_collate;";
 
   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
   dbDelta($sql2);
@@ -251,17 +251,20 @@ function linkedin_slider_settings_create_table()
 
 
   foreach ($default_values as $item) {
-    $wpdb->insert(
-      $settings_table,
-      array(
-        'setting_name' => $item[0],
-        'default_value' => $item[1],
-        'setting_value' => $item[2]
-      ),
-      array('%s', '%s', '%s')
-    );
+    // Check if the setting already exists before inserting
+    $exists = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $settings_table WHERE setting_name = %s", $item[0]));
+    if (!$exists) {
+      $wpdb->insert(
+        $settings_table,
+        array(
+          'setting_name' => $item[0],
+          'default_value' => $item[1],
+          'setting_value' => $item[2]
+        ),
+        array('%s', '%s', '%s')
+      );
+    }
   }
 }
-
 register_activation_hook(__FILE__, 'linkedin_posts_slider_create_table');
 register_activation_hook(__FILE__, 'linkedin_slider_settings_create_table');
