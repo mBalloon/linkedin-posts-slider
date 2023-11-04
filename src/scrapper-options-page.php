@@ -55,12 +55,21 @@ function get_scrapper_setting($setting_name, $default = '')
 
 function linkedin_posts_scrapper_settings_page()
 {
+	global $wpdb;
 	$last_update = get_scrapper_setting('linkedin_scrapper_last_update', 'Not yet updated');
 	$status = get_scrapper_setting('linkedin_scrapper_status', 'Unknown');
 	$company_url = get_scrapper_setting('linkedin_company_url', '');
 	$open_link = get_scrapper_setting('linkedin_slider_open_link', 0);
 	$update_frequency = get_scrapper_setting('linkedin_update_frequency', 3600);
 	$endpoint = get_scrapper_setting('linkedin_scrapper_endpoint', '');
+	// Fetch total number of posts
+	$total_posts = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}linkedin_posts");
+
+	// Fetch number of published posts
+	$published_posts = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}linkedin_posts WHERE published = 1");
+
+	// Fetch number of synced posts
+	$synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}linkedin_posts WHERE synced = 1");
 
 ?>
 	<div class="wrap">
