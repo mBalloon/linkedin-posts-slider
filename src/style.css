@@ -101,9 +101,7 @@
 
 /* Column & Thumbnail Styles */
 
-.custom-table .column-id {
-  display: none;
-}
+.custom-table .column-id {}
 
 .custom-table th:nth-child(2),
 .custom-table td:nth-child(2) {
