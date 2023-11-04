@@ -77,7 +77,7 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7117516266000498688",
-          "post_order": "3",
+          "post_order": "2",
           "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
@@ -91,7 +91,7 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7084633761740423169",
-          "post_order": "5",
+          "post_order": "3",
           "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
@@ -109,7 +109,7 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7085263372841041920",
-          "post_order": "6",
+          "post_order": "4",
           "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
@@ -126,7 +126,7 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7023741456741777408",
-          "post_order": "8",
+          "post_order": "5",
           "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
@@ -144,7 +144,7 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7015728663870541824",
-          "post_order": "14",
+          "post_order": "6",
           "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
@@ -162,7 +162,7 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7092583182209875968",
-          "post_order": "20",
+          "post_order": "7",
           "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
@@ -177,7 +177,7 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7090069626461532160",
-          "post_order": "21",
+          "post_order": "8",
           "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
@@ -206,7 +206,8 @@ function linkedin_posts_slider_populate_defaults()
         'images' => serialize($post['images']), // serialize the array of images
         'reactions' => $post['reactions'],
         'comments' => $post['comments'],
-        'published' => 1 // Assuming default is published. Change as necessary.
+        'published' => 1, // Assuming default is published. Change as necessary.
+        'synced' => 1
       ),
       array(
         '%s', // urn
@@ -219,7 +220,8 @@ function linkedin_posts_slider_populate_defaults()
         '%s', // images (serialized array)
         '%s', // reactions
         '%s', // comments
-        '%d'  // published
+        '%d', // published
+        '%d'  // synced
       )
     );
   }

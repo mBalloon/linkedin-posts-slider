@@ -10,36 +10,39 @@ Author URI: https://github.com/omarnagy91
 */
 
 // Define plugin paths and URLs
+add_action('plugins_loaded', 'linkedin_posts_slider_init');
 
-define('LPS_PLUGIN_PATH', plugin_dir_path(__FILE__));
+function linkedin_posts_slider_init()
+{
+  define('LPS_PLUGIN_PATH', plugin_dir_path(__FILE__));
 
-define('LPS_PLUGIN_URL', plugin_dir_url(__FILE__));
+  define('LPS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-define('LPS_PLUGIN_BASENAME', plugin_basename(__FILE__));
-
-
-
-// Include necessary files
-
-require_once LPS_PLUGIN_PATH .  'src/db-table-creation.php';
-
-require_once LPS_PLUGIN_PATH .  'src/options-page.php';
-
-require_once LPS_PLUGIN_PATH .  'src/scrapper-options-page.php';
-
-// Include the slider widget class at the right time
-add_action('elementor/widgets/widgets_registered', function () {
-  require_once LPS_PLUGIN_PATH .  'src/slider-widget.php';
-});
-
-require_once LPS_PLUGIN_PATH .  'src/posts-table-page.php'; // Make sure this path is correct.
+  define('LPS_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 
 
-// Activation hook for creating custom tables and setting up default values
+  // Include necessary files
 
-register_activation_hook(__FILE__, 'linkedin_posts_slider_activation');
+  require_once LPS_PLUGIN_PATH .  'src/db-table-creation.php';
 
+  require_once LPS_PLUGIN_PATH .  'src/options-page.php';
+
+  require_once LPS_PLUGIN_PATH .  'src/scrapper-options-page.php';
+
+  // Include the slider widget class at the right time
+  add_action('elementor/widgets/widgets_registered', function () {
+    require_once LPS_PLUGIN_PATH .  'src/slider-widget.php';
+  });
+
+  require_once LPS_PLUGIN_PATH .  'src/posts-table-page.php'; // Make sure this path is correct.
+
+
+
+  // Activation hook for creating custom tables and setting up default values
+
+  register_activation_hook(__FILE__, 'linkedin_posts_slider_activation');
+}
 
 
 /**
