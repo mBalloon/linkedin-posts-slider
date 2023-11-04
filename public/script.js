@@ -118,3 +118,82 @@ jQuery(function ($) {
         }
     });
 });
+jQuery(document).ready(function ($) {
+    // Delete Post
+    $('.delete-button').on('click', function (e) {
+        e.preventDefault();
+        var postId = $(this).data('id');
+        if (confirm('Are you sure you want to delete this post?')) {
+            $.ajax({
+                url: linkedinPostsTable.ajax_url,
+                type: 'post',
+                data: {
+                    action: 'linkedin_delete_post',
+                    nonce: linkedinPostsTable.nonce,
+                    id: postId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#post-' + postId).fadeOut('slow', function () { $(this).remove(); });
+                    } else {
+                        alert('Error: ' + response.data.message);
+                    }
+                }
+            });
+        }
+    });
+
+    // Publish/Unpublish Post
+    $('.publish-button').on('click', function (e) {
+        e.preventDefault();
+        var button = $(this);
+        var postId = button.data('id');
+        var published = button.data('published');
+
+        $.ajax({
+            url: linkedinPostsTable.ajax_url,
+            type: 'post',
+            data: {
+                action: 'linkedin_publish_unpublish_post',
+                nonce: linkedinPostsTable.nonce,
+                id: postId,
+                published: published
+            },
+            success: function (response) {
+                if (response.success) {
+                    button.data('published', response.data.published);
+                    button.text(response.data.published ? 'Published' : 'Unpublished');
+                } else {
+                    alert('Error: ' + response.data.message);
+                }
+            }
+        });
+    });
+
+    // Move Post Up or Down
+    $('.up-button, .down-button').on('click', function (e) {
+        e.preventDefault();
+        var button = $(this);
+        var postId = button.closest('tr').find('.row-id').text();
+        var direction = button.hasClass('up-button') ? 'up' : 'down';
+
+        $.ajax({
+            url: linkedinPostsTable.ajax_url,
+            type: 'post',
+            data: {
+                action: 'linkedin_move_post',
+                nonce: linkedinPostsTable.nonce,
+                id: postId,
+                direction: direction
+            },
+            success: function (response) {
+                if (response.success) {
+                    // Reload the page to show the new order
+                    location.reload();
+                } else {
+                    alert('Error: ' + response.data.message);
+                }
+            }
+        });
+    });
+});

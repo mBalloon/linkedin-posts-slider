@@ -4,60 +4,75 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-// Handle the POST request here
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['linkedin_settings_form'])) {
+// Enqueue any required styles or scripts
+function enqueue_scrapper_settings_assets()
+{
+	wp_enqueue_style('scrapper-settings-styles', plugin_dir_url(__FILE__) . 'style.css');
+	// If you have a JS file for this page you can enqueue it here
+	// wp_enqueue_script('scrapper-settings-script', plugin_dir_url(__FILE__) . 'script.js');
+}
+add_action('admin_enqueue_scripts', 'enqueue_scrapper_settings_assets');
+
+function update_scrapper_settings($setting_name, $setting_value)
+{
 	global $wpdb;
-	$settings_table = $wpdb->prefix . 'linkedin_slider_settings'; // Your table name
+	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
 
-	// Collect and sanitize data from POST request
-	$settings_to_update = [
-		'linkedin_company_url' => sanitize_text_field($_POST['linkedin_company_url']),
-		'linkedin_slider_open_link' => intval($_POST['linkedin_slider_open_link']),
-		'linkedin_update_frequency' => intval($_POST['linkedin_update_frequency']),
-		'linkedin_scrapper_endpoint' => sanitize_text_field($_POST['linkedin_scrapper_endpoint'])
-	];
+	$wpdb->replace(
+		$settings_table,
+		array(
+			'setting_name' => $setting_name,
+			'setting_value' => $setting_value,
+		),
+		array(
+			'%s',
+			'%s',
+		)
+	);
+}
 
-	// Update the settings in the database
-	foreach ($settings_to_update as $setting_name => $new_value) {
-		$wpdb->update(
-			$settings_table,
-			['setting_value' => $new_value],
-			['setting_name' => $setting_name]
-		);
-	}
+// Handle the POST request here
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['linkedin_scrapper_settings_form'])) {
+	check_admin_referer('linkedin_scrapper_settings_action', 'linkedin_scrapper_settings_nonce');
+
+	update_scrapper_settings('linkedin_company_url', sanitize_text_field($_POST['linkedin_company_url']));
+	update_scrapper_settings('linkedin_slider_open_link', isset($_POST['linkedin_slider_open_link']) ? 1 : 0);
+	update_scrapper_settings('linkedin_update_frequency', intval($_POST['linkedin_update_frequency']));
+	update_scrapper_settings('linkedin_scrapper_endpoint', sanitize_text_field($_POST['linkedin_scrapper_endpoint']));
 
 	// Redirect back to settings page with a message
-	header("Location: " . $_SERVER['REQUEST_URI'] . "?settings-updated=true");
+	wp_redirect(add_query_arg('settings-updated', 'true', wp_get_referer()));
 	exit;
 }
 
+function get_scrapper_setting($setting_name, $default = '')
+{
+	global $wpdb;
+	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
+	$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM $settings_table WHERE setting_name = %s", $setting_name));
+	return (is_null($value)) ? $default : $value;
+}
 
-
-// Add an options page for the Linkedin Posts Slider widget in the WordPress admin menu.
 function linkedin_posts_scrapper_settings_page()
 {
+	$last_update = get_scrapper_setting('linkedin_scrapper_last_update', 'Not yet updated');
+	$status = get_scrapper_setting('linkedin_scrapper_status', 'Unknown');
+	$company_url = get_scrapper_setting('linkedin_company_url', '');
+	$open_link = get_scrapper_setting('linkedin_slider_open_link', 0);
+	$update_frequency = get_scrapper_setting('linkedin_update_frequency', 3600);
+	$endpoint = get_scrapper_setting('linkedin_scrapper_endpoint', '');
 
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'linkedin_posts';
-	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
-	$settings = $wpdb->get_results("SELECT * FROM $settings_table");
-
-	$settings_map = [];
-	foreach ($settings as $setting) {
-		$settings_map[$setting->setting_name] = $setting->setting_value;
-	}
-
-	// Fetch statistics
-	$total_posts = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
-	$published_posts = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE published = true");
-	$synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE synced = true");
-	$last_update = $settings_map['linkedin_scrapper_last_update'];
-	$status = $settings_map['linkedin_scrapper_status'];
 ?>
-
 	<div class="wrap">
 		<h1>LinkedIn Posts Scrapper Settings</h1>
-		<?php settings_errors('linkedin_scrapper_settings'); ?>
+		<?php if (isset($_GET['settings-updated'])) : ?>
+			<div id="message" class="updated notice is-dismissible">
+				<p><strong>Settings saved.</strong></p>
+				<button type="button" class="notice-dismiss">
+					<span class="screen-reader-text">Dismiss this notice.</span>
+				</button>
+			</div>
+		<?php endif; ?>
 
 		<!-- Stats Section -->
 		<div class="stats-wrapper">
@@ -84,70 +99,56 @@ function linkedin_posts_scrapper_settings_page()
 		</div>
 
 		<!-- Settings Form Section -->
-		<form method="POST" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
-			<input type="hidden" name="linkedin_settings_form" value="1">
-			<?php //wp_nonce_field('update_linkedin_settings', 'linkedin_settings_nonce');
-			?>
+		<form method="post" action="">
+			<?php wp_nonce_field('linkedin_scrapper_settings_action', 'linkedin_scrapper_settings_nonce'); ?>
 			<table class="form-table">
+				<!-- Company Profile URL -->
 				<tr valign="top">
 					<th scope="row">Company Profile URL</th>
-					<td><input type="text" name="linkedin_company_url" value="<?php echo esc_attr($settings_map['linkedin_company_url']); ?>" /></td>
+					<td>
+						<input type="text" name="linkedin_company_url" value="<?php echo esc_attr($company_url); ?>" />
+					</td>
 				</tr>
-
+				<!-- Post Links Behavior -->
 				<tr valign="top">
 					<th scope="row">Post Links Behavior</th>
-					<td><input type="checkbox" name="linkedin_slider_open_link" value="1" <?php checked(1, $settings_map['linkedin_slider_open_link'], true); ?> /></td>
+					<td>
+						<input type="checkbox" name="linkedin_slider_open_link" value="1" <?php checked(1, $open_link, true); ?> />
+					</td>
 				</tr>
-
+				<!-- Scrapping Frequency -->
 				<tr valign="top">
 					<th scope="row">Scrapping Frequency (in seconds)</th>
-					<td><input type="number" name="linkedin_update_frequency" value="<?php echo esc_attr($settings_map['linkedin_update_frequency']); ?>" /></td>
+					<td>
+						<input type="number" name="linkedin_update_frequency" value="<?php echo esc_attr($update_frequency); ?>" />
+					</td>
 				</tr>
+				<!-- Scrapper Endpoint -->
 				<tr valign="top">
 					<th scope="row">Scrapper Endpoint</th>
-					<td><input type="text" name="linkedin_scrapper_endpoint" value="<?php echo esc_attr($settings_map['linkedin_scrapper_endpoint']); ?>" /></td>
+					<td>
+						<input type="text" name="linkedin_scrapper_endpoint" value="<?php echo esc_attr($endpoint); ?>" />
+					</td>
 				</tr>
 			</table>
-
-			<button type="submit">Update Settings</button>
+			<p class="submit">
+				<button type="submit" class="button button-primary">Update Settings</button>
+			</p>
 		</form>
 	</div>
-
-	<style>
-		.stats-wrapper {
-			display: flex;
-			justify-content: space-around;
-			margin-bottom: 20px;
-			padding: 10px;
-			background-color: #f1f1f1;
-			border: 1px solid #ccc;
-			border-radius: 10px;
-		}
-
-		.stat-card {
-			text-align: center;
-		}
-
-		.stat-title {
-			display: block;
-			margin-bottom: 5px;
-			font-weight: bold;
-		}
-
-		.stat-value.status-ok {
-			color: green;
-			font-family: 'Courier New', Courier, monospace;
-			font-weight: bold;
-		}
-
-		.stat-value.status-error {
-			color: red;
-			font-family: 'Courier New', Courier, monospace;
-			font-weight: bold;
-		}
-	</style>
-	<script>
-
-	</script>
 <?php
 }
+
+// Register the settings page
+function linkedin_register_scrapper_settings_page()
+{
+	add_options_page(
+		'LinkedIn Posts Scrapper Settings',
+		'LinkedIn Scrapper Settings',
+		'manage_options',
+		'linkedin-scrapper-settings',
+		'linkedin_posts_scrapper_settings_page'
+	);
+}
+add_action('admin_menu', 'linkedin_register_scrapper_settings_page');
+?>

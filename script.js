@@ -1,26 +1,3 @@
-/* script.js */
-/*
-// Function to update post order
-function updatePostOrder(postOrder) {
-    jQuery.ajax({
-        url: ajaxurl,
-        type: 'POST',
-        data: {
-            action: 'update_post_order',
-            post_order: postOrder
-        },
-        success: function (response) {
-            // Handle success
-            console.log('Post order updated:', response);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            // Handle error
-            console.error('Error updating post order:', textStatus, errorThrown);
-        }
-    });
-}
-
-*/
 
 function publishButtonClicked(buttonElement) {
     // Get button and ID
