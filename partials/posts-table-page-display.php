@@ -14,7 +14,9 @@
         <tbody>
             <?php foreach ($rows as $row) : ?>
                 <tr id="post-<?php echo esc_attr($row->id); ?>">
-                    <td class="row-id" id="row-id"><?php echo esc_html($row->id); ?></td>
+                    <td class="column-id">
+                        <span class="row-id"><?php echo esc_html($row->id); ?></span>
+                    </td>
                     <td class="thumbnail-cell">
                         <?php
                         $images = json_decode($row->images);
