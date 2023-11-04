@@ -1,12 +1,13 @@
 <?php
 
-/**
- * Plugin Name: LinkedIn Posts Slider
- * Description: A plugin to display LinkedIn posts in a slider.
- * Version: 1.0
- * Author: Your Name
- * License: GPL2
- */
+/*
+Plugin Name: Linkedin Posts Slider
+Plugin URI: https://github.com/omarnagy91
+Description: This is a custom plugin that I'm developing.
+Version: 2.0
+Author: Omar Nagy
+Author URI: https://github.com/omarnagy91
+*/
 
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {

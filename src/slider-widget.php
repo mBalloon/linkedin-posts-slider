@@ -4,16 +4,7 @@ if (!defined('ABSPATH')) {
 }
 
 // This function fetches the custom style setting from the database or returns the default value
-function get_custom_setting($setting_name, $default_value)
-{
-  global $wpdb;
-  $table_name = $wpdb->prefix . 'linkedin_slider_settings';
-  $value = $wpdb->get_var($wpdb->prepare(
-    "SELECT value FROM $table_name WHERE name = %s",
-    $setting_name
-  ));
-  return ($value !== null) ? $value : $default_value;
-}
+require_once 'utils.php';
 
 // This class defines the Elementor Slider Widget
 class Elementor_Slider_Widget extends \Elementor\Widget_Base

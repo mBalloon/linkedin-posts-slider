@@ -14,15 +14,8 @@ add_action('admin_enqueue_scripts', 'enqueue_preview_assets');
 global $wpdb; // Global WordPress database variable
 
 // Function to get a specific setting value from the custom table or default value
-function get_custom_setting($setting_name, $default = '')
-{
-	global $wpdb;
-	$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM {$wpdb->prefix}linkedin_slider_settings WHERE setting_name = %s", $setting_name));
-	if (is_null($value)) {
-		return $default;
-	}
-	return $value;
-}
+// src/options-page.php
+require_once 'utils.php';
 
 // Function to update or insert setting value in custom table
 function update_custom_setting($setting_name, $setting_value)
