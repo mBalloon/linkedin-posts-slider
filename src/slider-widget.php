@@ -3,97 +3,174 @@ if (!defined('ABSPATH')) {
   exit; // Exit if accessed directly.
 }
 
-// This function fetches the custom style setting from the database or returns the default value
-require_once 'utils.php';
-
+/**
+ * Elementor Slider Widget.
+ *
+ * Elementor widget that inserts an embbedable content into the page, from any given URL.
+ *
+ * @since 1.0.0
+ */
 // This class defines the Elementor Slider Widget
+
+global $wpdb;
+$settings_table = $wpdb->prefix . 'linkedin_slider_settings'; // Your custom table name
+if (!function_exists('get_custom_setting')) {
+  // Function to get setting value from the custom table
+  function get_custom_setting($setting_name, $default_value)
+  {
+    global $wpdb, $settings_table;
+    $value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM $settings_table WHERE setting_name = %s", $setting_name));
+    return $value;
+  }
+}
 class Elementor_Slider_Widget extends \Elementor\Widget_Base
 {
-
-  // Register widget styles and scripts
-  public function get_style_depends()
-  {
-    return ['slider-style', 'swiper-style'];
-  }
-
-  public function get_script_depends()
-  {
-    return ['swiper-script', 'slider-script'];
-  }
-
+  /**
+   * Constructor
+   *
+   * @since 1.0.0
+   * @access public
+   */
   // Constructor for the widget
   public function __construct($data = [], $args = null)
   {
+    // Call the parent constructor
     parent::__construct($data, $args);
 
-    // Register styles
     wp_register_style('slider-style', plugins_url('../public/styles.css', __FILE__));
     wp_register_style('swiper-style', plugins_url('../public/swiperjs/swiper-bundle.css', __FILE__));
-
-    // Register scripts
     wp_register_script('swiper-script', plugins_url('../public/swiperjs/swiper-bundle.js', __FILE__), ['jquery'], false, true);
+    wp_enqueue_script('swiper-script');
     wp_register_script('slider-script', plugins_url('../public/script.js', __FILE__), ['jquery', 'swiper-script'], false, true);
-  }
-  private function generate_custom_css()
-  {
-    $custom_css = "
+    wp_localize_script('slider-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+    wp_enqueue_style('slider-style'); // Add this line to enqueue the style
+
+    $custom_css = '
       .section-company {
-        color: " . get_custom_setting('section-company-color', '#454545') . ";
-        font-size: " . get_custom_setting('section-company-font-size', '16px') . ";
-        font-family: " . get_custom_setting('section-company-font-family', '\"Titillium Web\"') . ";
-        line-height: " . get_custom_setting('section-company-line-height', '21px') . ";
+        color: ' . get_custom_setting('section-company-color', '#454545') . ';
+        font-size: ' . get_custom_setting('section-company-font-size', '16px') . ';
+        font-family: ' . get_custom_setting('section-company-font-family', '"Titillium Web"') . ';
+        line-height: ' . get_custom_setting('section-company-line-height', '21px') . ';
       }
       .section-author-date {
-        color: " . get_custom_setting('section-author-date-color', '#454545') . ";
-        font-size: " . get_custom_setting('section-author-date-font-size', '14px') . ";
-        font-family: " . get_custom_setting('section-author-date-font-family', '\"Titillium Web\"') . ";
-        font-weight: " . get_custom_setting('section-author-date-font-weight', '300') . ";
-        line-height: " . get_custom_setting('section-author-date-line-height', '18px') . ";
+        color: ' . get_custom_setting('section-author-date-color', '#454545') . ';
+        font-size: ' . get_custom_setting('section-author-date-font-size', '14px') . ';
+        font-family: ' . get_custom_setting('section-author-date-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_custom_setting('section-author-date-font-weight', '300') . ';
+        line-height: ' . get_custom_setting('section-author-date-line-height', '18px') . ';
       }
       .section-body {
-        color: " . get_custom_setting('section-body-color', '#adb5bd') . ";
-        font-size: " . get_custom_setting('section-body-font-size', '16px') . ";
-        font-family: " . get_custom_setting('section-body-font-family', '\"Titillium Web\"') . ";
-        -webkit-line-clamp: " . get_custom_setting('section-body-webkit-line-clamp', '5') . ";
+        color: ' . get_custom_setting('section-body-color', '#adb5bd') . ';
+        font-size: ' . get_custom_setting('section-body-font-size', '16px') . ';
+        font-family: ' . get_custom_setting('section-body-font-family', '"Titillium Web"') . ';
+        -webkit-line-clamp: ' . get_custom_setting('section-body-webkit-line-clamp', '5') . ';
       }
       .section-interactions {
-        color: " . get_custom_setting('section-interactions-color', '#454545') . ";
-        font-size: " . get_custom_setting('section-interactions-font-size', '14px') . ";
-        font-family: " . get_custom_setting('section-interactions-font-family', '\"Titillium Web\"') . ";
-        font-weight: " . get_custom_setting('section-interactions-font-weight', '300') . ";
-        line-height: " . get_custom_setting('section-interactions-line-height', '18px') . ";
-      }
-    ";
-    return $custom_css;
+        color: ' . get_custom_setting('section-interactions-color', '#454545') . ';
+        font-size: ' . get_custom_setting('section-interactions-font-size', '14px') . ';
+        font-family: ' . get_custom_setting('section-interactions-font-family', '"Titillium Web"') . ';
+        font-weight: ' . get_custom_setting('section-interactions-font-weight', '300') . ';
+        line-height: ' . get_custom_setting('section-interactions-line-height', '18px') . ';
+      }';
+
+    // Add the custom style
+    wp_add_inline_style('slider-style', $custom_css);
   }
-  // Widget name
+
+  /**
+   * Get widget name.
+   *
+   * Retrieve Slider widget name.
+   *
+   * @since 1.0.0
+   * @access public
+   * @return string Widget name.
+   */
   public function get_name()
   {
-    return 'linkedin-slider';
+    return 'Linkedin Slider';
   }
 
-  // Widget title
+  /**
+   * Get widget title.
+   *
+   * Retrieve Slider widget title.
+   *
+   * @since 1.0.0
+   * @access public
+   * @return string Widget title.
+   */
   public function get_title()
   {
-    return esc_html__('LinkedIn Posts Slider', 'elementor-slider-widget');
+    return esc_html__('Linkedin Slider', 'elementor-slider-widget');
   }
 
-  // Widget icon
+  /**
+   * Get widget icon.
+   *
+   * Retrieve Slider widget icon.
+   *
+   * @since 1.0.0
+   * @access public
+   * @return string Widget icon.
+   */
   public function get_icon()
   {
     return 'eicon-slider-album';
   }
 
-  // Widget categories
+  /**
+   * Get custom help URL.
+   *
+   * Retrieve a URL where the user can get more information about the widget.
+   *
+   * @since 1.0.0
+   * @access public
+   * @return string Widget help URL.
+   */
+  public function get_custom_help_url()
+  {
+    return 'https://developers.elementor.com/docs/widgets/';
+  }
+
+  /**
+   * Get widget categories.
+   *
+   * Retrieve the slider of categories the slider widget belongs to.
+   *
+   * @since 1.0.0
+   * @access public
+   * @return array Widget categories.
+   */
   public function get_categories()
   {
     return ['general'];
   }
 
-  // Register controls
+  /**
+   * Get widget keywords.
+   *
+   * Retrieve the slider of keywords the slider widget belongs to.
+   *
+   * @since 1.0.0
+   * @access public
+   * @return array Widget keywords.
+   */
+  public function get_keywords()
+  {
+    return ['slider', 'sliders', 'linkedin'];
+  }
+
+  /**
+   * Register slider widget controls.
+   *
+   * Add input fields to allow the user to customize the widget settings.
+   *
+   * @since 1.0.0
+   * @access protected
+   */
   protected function register_controls()
   {
-
     // 1h. Custom CSS box control
     $this->start_controls_section(
       'custom_css_section',
@@ -118,40 +195,90 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     $this->end_controls_section();
   }
 
-  // Render the widget
+  /**
+   * Render slider widget output on the frontend.
+   *
+   * Written in PHP and used to generate the final HTML.
+   *
+   * @since 1.0.0
+   * @access protected
+   */
   protected function render()
   {
-    $settings = $this->get_settings_for_display();
-    // Enqueue the styles and scripts
     wp_enqueue_style('swiper-style');
-    wp_enqueue_style('slider-style');
     wp_enqueue_script('swiper-script');
     wp_enqueue_script('slider-script');
+    wp_enqueue_style('slider-style');
 
-    // Localize script for AJAX URL
-    wp_localize_script('slider-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
-    // Print the custom CSS
-    $custom_css = $this->generate_custom_css();
-    if (!empty($custom_css)) {
-      echo '<style>' . $custom_css . '</style>';
-    }
+
+
 ?>
+
     <div class="swiper">
       <div class="swiper-wrapper">
-        <!-- Slides will be added dynamically by JS -->
+        <div class="li-placeholder swiper-slide"></div>
       </div>
-      <div class="next-right-arrow"><button type="button" class="swiper-button-next"></button></div>
-      <div class="pre-left-arrow"><button type="button" class="swiper-button-prev"></button></div>
+      <!-- Add Arrows -->
+      <div class="next-right-arrow"><button type="button" class="slick-next"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+            <g>
+              <g>
+                <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M335.083,271.083L228.416,377.749c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251c-8.341-8.341-8.341-21.824,0-30.165L289.835,256l-91.584-91.584c-8.341-8.341-8.341-21.824,0-30.165s21.824-8.341,30.165,0l106.667,106.667C343.424,249.259,343.424,262.741,335.083,271.083z" />
+              </g>
+            </g>
+          </svg></button></div>
+      <div class="pre-left-arrow"><button type="button" class="slick-prev"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+            <g>
+              <g>
+                <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M313.749,347.584c8.341,8.341,8.341,21.824,0,30.165c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251L176.917,271.083c-8.341-8.341-8.341-21.824,0-30.165l106.667-106.667c8.341-8.341,21.824-8.341,30.165,0s8.341,21.824,0,30.165L222.165,256L313.749,347.584z" />
+              </g>
+            </g>
+          </svg></button></div>
     </div>
+
+  <?php
+  }
+
+
+
+  /**
+   * Render slider widget output in the editor.
+   *
+   * Written as a Backbone JavaScript template and used to generate the live preview.
+   *
+   * @since 1.0.0
+   * @access protected
+   */
+  protected function content_template()
+  {
+    wp_enqueue_style('swiper-style');
+    wp_enqueue_script('swiper-script');
+    wp_enqueue_script('slider-script');
+    wp_enqueue_style('slider-style');
+
+
+
+  ?>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="li-placeholder swiper-slide"></div>
+      </div>
+      <!-- Add Arrows -->
+      <div class="next-right-arrow"><button type="button" class="slick-next"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+            <g>
+              <g>
+                <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M335.083,271.083L228.416,377.749c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251c-8.341-8.341-8.341-21.824,0-30.165L289.835,256l-91.584-91.584c-8.341-8.341-8.341-21.824,0-30.165s21.824-8.341,30.165,0l106.667,106.667C343.424,249.259,343.424,262.741,335.083,271.083z" />
+              </g>
+            </g>
+          </svg></button></div>
+      <div class="pre-left-arrow"><button type="button" class="slick-prev"><svg fill="#000000" height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+            <g>
+              <g>
+                <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M313.749,347.584c8.341,8.341,8.341,21.824,0,30.165c-4.16,4.16-9.621,6.251-15.083,6.251c-5.461,0-10.923-2.091-15.083-6.251L176.917,271.083c-8.341-8.341-8.341-21.824,0-30.165l106.667-106.667c8.341-8.341,21.824-8.341,30.165,0s8.341,21.824,0,30.165L222.165,256L313.749,347.584z" />
+              </g>
+            </g>
+          </svg></button></div>
+    </div>
+
 <?php
   }
 }
-
-// Register the widget
-function register_slider_widget($widgets_manager)
-{
-  require_once plugin_dir_path(__FILE__) . 'slider-widget.php';
-  $widgets_manager->register(new \Elementor_Slider_Widget());
-}
-
-add_action('elementor/widgets/register', 'register_slider_widget');

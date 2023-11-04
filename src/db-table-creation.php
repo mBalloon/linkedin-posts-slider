@@ -4,67 +4,41 @@ if (!defined('ABSPATH')) {
   exit;
 }
 
-/**
- * Function to create custom tables on plugin activation.
- */
 function linkedin_posts_slider_create_table()
 {
   global $wpdb;
-  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-  // Create the `linkedin_posts` table
   $table_name = $wpdb->prefix . 'linkedin_posts';
   $charset_collate = $wpdb->get_charset_collate();
-  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+  $sql = "CREATE TABLE $table_name (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         urn text NOT NULL,
         author text NOT NULL,
         username text NOT NULL,
         age text NOT NULL,
-        profile_picture text NOT NULL,
+        profilePicture text NOT NULL,
         post_text text NOT NULL,
         images text NOT NULL,
         reactions int NOT NULL,
         comments text NOT NULL,
-        synced boolean NOT NULL DEFAULT 0,
-        published boolean NOT NULL DEFAULT 0,
-        post_order int NOT NULL DEFAULT 0,
+        synced boolean NOT NULL,
+        published boolean NOT NULL,
+        post_order int NOT NULL,
         PRIMARY KEY (id)
     ) $charset_collate;";
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
   dbDelta($sql);
 
-  // Create the `linkedin_slider_settings` table
-  $settings_table = $wpdb->prefix . 'linkedin_slider_settings';
-  $sql2 = "CREATE TABLE IF NOT EXISTS $settings_table (
-        id mediumint(9) NOT NULL AUTO_INCREMENT,
-        setting_name varchar(255) NOT NULL,
-        default_value varchar(255) DEFAULT NULL,
-        setting_value varchar(255) DEFAULT NULL,
-        PRIMARY KEY (id)
-    ) $charset_collate;";
-  dbDelta($sql2);
-}
-
-/**
- * Populate the tables with default data on plugin activation.
- */
-function linkedin_posts_slider_populate_defaults()
-{
-  global $wpdb;
-
-  // Populate the `linkedin_posts` table with default data
-  $posts_table = $wpdb->prefix . 'linkedin_posts';
-
-  $default_posts = json_decode('
+  // JSON data from the file
+  $json_data = <<<'EOT'
       [
         {
           "urn": "urn:li:activity:7110664133217288192",
           "post_order": "1",
-          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "1mo •",
-          "post_text": "Announcing the MediSCAN Pro - Alpine Laser\'s latest high performance laser processing workstation optimized for medical device manufacturing!\n\nThe configuration shown here features programmable XYZ motion coupled with a Scanlab precSYS 5-axis #micromachining galvo and a TRUMPF 2230 ultra short pulsed 515nm green #laser source and coaxial vision.\n\nThis machine was designed to process very fine features and complex holes in hard to machine polymer materials. (Shown are 0.25mm holes in a 1mm Pellethane tube)\n\nOther configurations of this workstation can be optimized for flat sheet cutting, traditional 2D galvo applications, marking, complex ablation, to name a few.\n\nContact sales@alpinelaser.com for more information.\n\nSCANLAB GmbH\nTRUMPF North America\n#medicaldevicemanufacturing",
+          "post_text": "Announcing the MediSCAN Pro - Alpine Laser's latest high performance laser processing workstation optimized for medical device manufacturing!\n\nThe configuration shown here features programmable XYZ motion coupled with a Scanlab precSYS 5-axis #micromachining galvo and a TRUMPF 2230 ultra short pulsed 515nm green #laser source and coaxial vision.\n\nThis machine was designed to process very fine features and complex holes in hard to machine polymer materials. (Shown are 0.25mm holes in a 1mm Pellethane tube)\n\nOther configurations of this workstation can be optimized for flat sheet cutting, traditional 2D galvo applications, marking, complex ablation, to name a few.\n\nContact sales@alpinelaser.com for more information.\n\nSCANLAB GmbH\nTRUMPF North America\n#medicaldevicemanufacturing",
           "images": [
             "https://media.licdn.com/dms/image/D5622AQHrz8D5-4lTDw/feedshare-shrink_800/0/1695314437373?e=1700697600&v=beta&t=slwjjR_eHPJPHLveIXf24XLpNRp32hy41phrEB_pMyY",
             "https://media.licdn.com/dms/image/D5622AQGu92JK888ZUw/feedshare-shrink_800/0/1695314437386?e=1700697600&v=beta&t=Zf7xMoDtwBTCN905mseXz8rk77dtmfOSm08Tfh7qUUI",
@@ -77,8 +51,8 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7117516266000498688",
-          "post_order": "2",
-          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "post_order": "3",
+          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "1w •",
@@ -91,8 +65,8 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7084633761740423169",
-          "post_order": "3",
-          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "post_order": "5",
+          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "3mo •",
@@ -109,8 +83,8 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7085263372841041920",
-          "post_order": "4",
-          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "post_order": "6",
+          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "3mo •",
@@ -126,8 +100,8 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7023741456741777408",
-          "post_order": "5",
-          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "post_order": "8",
+          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "9mo •",
@@ -144,8 +118,8 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7015728663870541824",
-          "post_order": "6",
-          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "post_order": "14",
+          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "10mo •",
@@ -162,8 +136,8 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7092583182209875968",
-          "post_order": "7",
-          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "post_order": "20",
+          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "2mo •",
@@ -177,8 +151,8 @@ function linkedin_posts_slider_populate_defaults()
         },
         {
           "urn": "urn:li:activity:7090069626461532160",
-          "post_order": "8",
-          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "post_order": "21",
+          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "3mo •",
@@ -189,87 +163,108 @@ function linkedin_posts_slider_populate_defaults()
           "reactions": "85",
           "comments": "4 comments"
         }
-      
-    ]', true);
+      ]
+      EOT;
 
-  foreach ($default_posts as $post) {
+  // Decode JSON data into a PHP array
+  $data = json_decode($json_data, true);
+
+  // Iterate through the array and insert each item into the database
+  foreach ($data as $item) {
     $wpdb->insert(
-      $posts_table,
+      $table_name,
       array(
-        'urn' => $post['urn'],
-        'post_order' => $post['post_order'],
-        'profile_picture' => $post['profile_picture'],
-        'author' => $post['author'],
-        'username' => $post['username'],
-        'age' => $post['age'],
-        'post_text' => $post['post_text'],
-        'images' => serialize($post['images']), // serialize the array of images
-        'reactions' => $post['reactions'],
-        'comments' => $post['comments'],
-        'published' => 1, // Assuming default is published. Change as necessary.
-        'synced' => 1
+        'urn' => $item['urn'],
+        'author' => $item['author'],
+        'username' => $item['username'],
+        'age' => $item['age'],
+        'profilePicture' => $item['profilePicture'],
+        'post_text' => $item['post_text'],
+        'images' => json_encode($item['images']),
+        'reactions' => $item['reactions'],
+        'comments' => $item['comments'],
+        'synced' => 1,
+        'published' => 1,
+        'post_order' => 0  // You can also set it to 0 or any placeholder
       ),
-      array(
-        '%s', // urn
-        '%d', // post_order
-        '%s', // profile_picture
-        '%s', // author
-        '%s', // username
-        '%s', // age
-        '%s', // post_text
-        '%s', // images (serialized array)
-        '%s', // reactions
-        '%s', // comments
-        '%d', // published
-        '%d'  // synced
-      )
+      array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d')
+    );
+
+    // Get the last inserted ID
+    $lastid = $wpdb->insert_id;
+
+    // Update the 'post_order' field to the last inserted ID
+    $wpdb->update(
+      $table_name,
+      array('post_order' => $lastid),
+      array('id' => $lastid)
     );
   }
-  // Note: This is where you will include your JSON data and iterate through it
-  // to populate the `linkedin_posts` table as per your project requirements.
+}
+// Function to create the 'linkedin_slider_settings' table
+function linkedin_slider_settings_create_table()
+{
+  global $wpdb;
+  $charset_collate = $wpdb->get_charset_collate();
 
-  // Populate the `linkedin_slider_settings` table with default settings
   $settings_table = $wpdb->prefix . 'linkedin_slider_settings';
-  $default_settings = [
-    ['setting_name' => 'section-company-color', 'default_value' => '#454545', 'setting_value' => '#454545'],
-    ['setting_name' => 'section-company-font-size', 'default_value' => '16', 'setting_value' => '16'],
-    ['setting_name' => 'section-company-font-family', 'default_value' => '400', 'setting_value' => '400'],
-    ['setting_name' => 'section-company-line-height', 'default_value' => '18', 'setting_value' => '18'],
-    ['setting_name' => 'section-company-font-weight', 'default_value' => 'Titillium Web', 'setting_value' => 'Titillium Web'],
-    ['setting_name' => 'section-author-date-color', 'default_value' => '#454545', 'setting_value' => '#454545'],
-    ['setting_name' => 'section-author-date-font-size', 'default_value' => '14', 'setting_value' => '14'],
-    ['setting_name' => 'section-author-date-font-family', 'default_value' => 'Titillium Web', 'setting_value' => 'Titillium Web'],
-    ['setting_name' => 'section-author-date-font-weight', 'default_value' => '300', 'setting_value' => '300'],
-    ['setting_name' => 'section-author-date-line-height', 'default_value' => '18', 'setting_value' => '18'],
-    ['setting_name' => 'section-body-color', 'default_value' => '#adb5bd', 'setting_value' => '#adb5bd'],
-    ['setting_name' => 'section-body-font-size', 'default_value' => '16', 'setting_value' => '16'],
-    ['setting_name' => 'section-body-font-family', 'default_value' => 'Titillium Web', 'setting_value' => 'Titillium Web'],
-    ['setting_name' => 'section-body-webkit-line-clamp', 'default_value' => '5', 'setting_value' => '5'],
-    ['setting_name' => 'section-body-font-weight', 'default_value' => '', 'setting_value' => ''],
-    ['setting_name' => 'section-interactions-color', 'default_value' => '#454545', 'setting_value' => '#454545'],
-    ['setting_name' => 'section-interactions-font-size', 'default_value' => '14', 'setting_value' => '14'],
-    ['setting_name' => 'section-interactions-font-family', 'default_value' => 'Titillium Web', 'setting_value' => 'Titillium Web'],
-    ['setting_name' => 'section-interactions-font-weight', 'default_value' => '300', 'setting_value' => '300'],
-    ['setting_name' => 'section-interactions-line-height', 'default_value' => '18', 'setting_value' => '18'],
-    ['setting_name' => 'linkedin_company_url', 'default_value' => 'https://www.linkedin.com/company/alpine-laser/', 'setting_value' => 'https://www.linkedin.com/company/alpine-laser/'],
-    ['setting_name' => 'linkedin_slider_open_link', 'default_value' => '1', 'setting_value' => '1'],
-    ['setting_name' => 'linkedin_update_frequency', 'default_value' => '86400', 'setting_value' => '86400'], // 60 * 60 * 24 (24 hours in seconds)
-    ['setting_name' => 'linkedin_scrapper_status', 'default_value' => 'OK', 'setting_value' => 'OK'],
-    ['setting_name' => 'linkedin_scrapper_last_update', 'default_value' => 'Not available', 'setting_value' => 'Not available'],
-    ['setting_name' => 'linkedin_scrapper_endpoint', 'default_value' => 'https://scrape-js.onrender.com/scrape', 'setting_value' => 'https://scrape-js.onrender.com/scrape'],
+  $sql2 = "CREATE TABLE IF NOT EXISTS $settings_table (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        setting_name varchar(255) NOT NULL,
+        default_value varchar(255) DEFAULT NULL,
+        setting_value varchar(255) DEFAULT NULL,
+        PRIMARY KEY (id)
+  ) $charset_collate;";
+
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+  dbDelta($sql2);
+
+  // Default values to insert
+  $default_values = [
+    ['section-company-color', '#454545', '#454545'],
+    ['section-company-font-size', '16', '16'],
+    ['section-company-font-family', '400', '400'],
+    ['section-company-line-height', '18', '18'],
+    ['section-company-font-weight', 'Titillium Web', 'Titillium Web'],
+    ['section-author-date-color', '#454545', '#454545'],
+    ['section-author-date-font-size', '14', '14'],
+    ['section-author-date-font-family', 'Titillium Web', 'Titillium Web'],
+    ['section-author-date-font-weight', '300', '300'],
+    ['section-author-date-line-height', '18', '18'],
+    ['section-body-color', '#adb5bd', '#adb5bd'],
+    ['section-body-font-size', '16', '16'],
+    ['section-body-font-family', 'Titillium Web', 'Titillium Web'],
+    ['section-body-webkit-line-clamp', '5', '5'],
+    ['section-body-font-weight', ' ', ' '],
+    ['section-interactions-color', '#454545', '#454545'],
+    ['section-interactions-font-size', '14', '14'],
+    ['section-interactions-font-family', 'Titillium Web', 'Titillium Web'],
+    ['section-interactions-font-weight', '300', '300'],
+    ['section-interactions-line-height', '18', '18'],
+    ['linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/', 'https://www.linkedin.com/company/alpine-laser/'],
+    ['linkedin_slider_open_link', '1', '1'],
+    ['linkedin_update_frequency', '86400', '86400'], // 60 * 60 * 24 (24 hours in seconds)
+    ['linkedin_scrapper_status', 'OK', 'OK'],
+    ['linkedin_scrapper_last_update', 'Not available', 'Not available'],
+    ['linkedin_scrapper_endpoint', 'https://scrape-js.onrender.com/scrape', 'https://scrape-js.onrender.com/scrape']
   ];
 
-  foreach ($default_settings as $setting) {
-    if ($wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $settings_table WHERE setting_name = %s", $setting['setting_name'])) == 0) {
+
+  foreach ($default_values as $item) {
+    // Check if the setting already exists before inserting
+    $exists = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $settings_table WHERE setting_name = %s", $item[0]));
+    if (!$exists) {
       $wpdb->insert(
         $settings_table,
         array(
-          'setting_name' => $setting['setting_name'],
-          'default_value' => $setting['default_value'],
-          'setting_value' => $setting['setting_value'],
+          'setting_name' => $item[0],
+          'default_value' => $item[1],
+          'setting_value' => $item[2]
         ),
         array('%s', '%s', '%s')
       );
     }
   }
 }
+register_activation_hook(__FILE__, 'linkedin_posts_slider_create_table');
+register_activation_hook(__FILE__, 'linkedin_slider_settings_create_table');
