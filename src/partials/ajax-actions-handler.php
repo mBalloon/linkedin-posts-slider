@@ -202,7 +202,7 @@ function fetch_and_update_post_content($post)
         "namesArray" => [
             "URN",
             "age",
-            "profilePicture",
+            "profile_picture",
             "post_text",
             "reactions",
             "comments",
@@ -231,7 +231,7 @@ function fetch_and_update_post_content($post)
         'author' => 'Alpine Laser', // This should be dynamic if you have different authors
         'username' => 'alpine-laser', // This should also be dynamic based on the post data
         'age' => sanitize_text_field($post_data['age'][0]) . " •",
-        'profilePicture' => esc_url_raw($post_data['profilePicture'][0]),
+        'profile_picture' => esc_url_raw($post_data['profile_picture'][0]),
         'post_text' => sanitize_textarea_field($post_data['post_text'][0]),
         'images' => json_encode(array_filter($post_data['images'], 'strlen')), // Store images as JSON encoded string
         'reactions' => absint($post_data['reactions'][0]), // Convert to absolute integer

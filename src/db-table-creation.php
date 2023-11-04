@@ -21,7 +21,7 @@ function linkedin_posts_slider_create_table()
         author text NOT NULL,
         username text NOT NULL,
         age text NOT NULL,
-        profilePicture text NOT NULL,
+        profile_picture text NOT NULL,
         post_text text NOT NULL,
         images text NOT NULL,
         reactions int NOT NULL,
@@ -60,7 +60,7 @@ function linkedin_posts_slider_populate_defaults()
         {
           "urn": "urn:li:activity:7110664133217288192",
           "post_order": "1",
-          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "1mo •",
@@ -78,7 +78,7 @@ function linkedin_posts_slider_populate_defaults()
         {
           "urn": "urn:li:activity:7117516266000498688",
           "post_order": "3",
-          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "1w •",
@@ -92,7 +92,7 @@ function linkedin_posts_slider_populate_defaults()
         {
           "urn": "urn:li:activity:7084633761740423169",
           "post_order": "5",
-          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "3mo •",
@@ -110,7 +110,7 @@ function linkedin_posts_slider_populate_defaults()
         {
           "urn": "urn:li:activity:7085263372841041920",
           "post_order": "6",
-          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "3mo •",
@@ -127,7 +127,7 @@ function linkedin_posts_slider_populate_defaults()
         {
           "urn": "urn:li:activity:7023741456741777408",
           "post_order": "8",
-          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "9mo •",
@@ -145,7 +145,7 @@ function linkedin_posts_slider_populate_defaults()
         {
           "urn": "urn:li:activity:7015728663870541824",
           "post_order": "14",
-          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "10mo •",
@@ -163,7 +163,7 @@ function linkedin_posts_slider_populate_defaults()
         {
           "urn": "urn:li:activity:7092583182209875968",
           "post_order": "20",
-          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "2mo •",
@@ -178,7 +178,7 @@ function linkedin_posts_slider_populate_defaults()
         {
           "urn": "urn:li:activity:7090069626461532160",
           "post_order": "21",
-          "profilePicture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
+          "profile_picture": "https://media.licdn.com/dms/image/D560BAQFaqoyrA4ri6A/company-logo_100_100/0/1691067153061/alpine_laser_logo?e=1706140800&amp;v=beta&amp;t=MnwqT5MFRX2U6DpzGpU7PNhCRnkbTrb7ccnKfbSIluA",
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "3mo •",
@@ -198,7 +198,7 @@ function linkedin_posts_slider_populate_defaults()
       array(
         'urn' => $post['urn'],
         'post_order' => $post['post_order'],
-        'profile_picture' => $post['profilePicture'],
+        'profile_picture' => $post['profile_picture'],
         'author' => $post['author'],
         'username' => $post['username'],
         'age' => $post['age'],

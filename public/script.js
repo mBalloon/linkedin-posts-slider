@@ -93,7 +93,7 @@ jQuery(function ($) {
                         </div>
                         
                         <div class="info-container">
-                            <div class="li-author-img" style="background-image: url('${post.profilePicture}')"></div>
+                            <div class="li-author-img" style="background-image: url('${post.profile_picture}')"></div>
                             <div class="section-company section-company">${post.author}</div>
                             <div class="section-author-date">
                                 <span class="li-author-username">@${post.username} . </span>
