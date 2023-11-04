@@ -31,15 +31,6 @@ require_once plugin_dir_path(__FILE__) . 'src/admin-menu.php';
 require_once plugin_dir_path(__FILE__) . 'src/ajax-actions.php';
 require_once plugin_dir_path(__FILE__) . 'src/linkedin-posts-syncing.php';
 
-// Register the activation hook for table creation
-//register_activation_hook(__FILE__, 'linkedin_posts_slider_create_table');
-//register_activation_hook(__FILE__, 'linkedin_slider_settings_create_table');
-
-/**
- * Display the admin table page for managing LinkedIn posts.
- *
- * @return void
- */
 /**
  * Display the admin table page for managing LinkedIn posts.
  *
@@ -139,13 +130,20 @@ function move_row()
   global $wpdb;
   $table_name = $wpdb->prefix . 'linkedin_posts';
 
-  $id = intval($_POST['id']);
-  $action = $_POST['action'];
+  // Check if necessary data is set in the AJAX request
+  if (!isset($_POST['id'])) {
+    wp_send_json_error('No data received');
+    return;
+  }
 
-  // Step 1: Fetch current post_order and IDs
+  // Sanitize and validate the data
+  $id = intval($_POST['id']);
+  $action = sanitize_text_field($_POST['action']);
+
+  // Fetch current post_order and IDs
   $rows = $wpdb->get_results("SELECT id, post_order FROM $table_name ORDER BY post_order ASC");
 
-  // Step 2: Find the index of the row to be moved
+  // Find the index of the row to be moved
   $index = array_search($id, array_column($rows, 'id'));
 
   if ($index !== false && $index >= 0 && $index < count($rows)) {
@@ -184,3 +182,6 @@ function move_row()
 }
 add_action('wp_ajax_move_up', 'move_row');
 add_action('wp_ajax_move_down', 'move_row');
+
+register_activation_hook(__FILE__, 'linkedin_posts_slider_create_table');
+register_activation_hook(__FILE__, 'linkedin_slider_settings_create_table');
