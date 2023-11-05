@@ -88,9 +88,14 @@ $status = is_array($settings) && isset($settings['linkedin_scrapper_status']) ? 
 
 ?>
 
-<div class="wrap">
+function display_scrapper_options_form() {
+?>
+	<div class="wrap">
 
-	<h1><?php echo esc_html('Scrapper Options'); ?></h1>
+		<h1><?php echo esc_html('Scrapper Options'); ?></h1>
+<?php
+}
+add_action('admin_menu', 'display_scrapper_options_form');
 
 	<!-- Show status messages -->
 	<?php
