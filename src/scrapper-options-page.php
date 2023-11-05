@@ -41,17 +41,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	exit;
 }
 
-// Fetch stats
+// Check if the linkedin_posts table exists
 $posts_table = $wpdb->prefix . 'linkedin_posts';
-$total_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table");
-
-$published_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE published = 1");
-
-$synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE synced = 1");
+if($wpdb->get_var("SHOW TABLES LIKE '$posts_table'") != $posts_table) {
+    // Table doesn't exist
+    $total_posts = $published_posts = $synced_posts = 0;
+} else {
+    // Table exists, fetch stats
+    $total_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table");
+    $published_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE published = 1");
+    $synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE synced = 1");
+}
 
 $settings = get_option('linkedin_slider_settings');
-$last_update = $settings ? $settings['linkedin_scrapper_last_update'] : '';
-$status = $settings ? $settings['linkedin_scrapper_status'] : '';
+$last_update = is_array($settings) && isset($settings['linkedin_scrapper_last_update']) ? $settings['linkedin_scrapper_last_update'] : '';
+$status = is_array($settings) && isset($settings['linkedin_scrapper_status']) ? $settings['linkedin_scrapper_status'] : '';
 
 ?>
 
