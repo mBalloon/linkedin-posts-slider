@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Add custom admin menu for the plugin settings page
+/*
 function linkedin_posts_slider_admin_menu_setup()
 {
 	add_menu_page(
@@ -22,6 +23,7 @@ function linkedin_posts_slider_admin_menu_setup()
 	);
 }
 add_action('admin_menu', 'linkedin_posts_slider_admin_menu_setup');
+*/
 
 // Display settings form in the admin page
 function display_scrapper_options_form()

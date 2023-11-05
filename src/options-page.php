@@ -378,6 +378,8 @@ function linkedin_posts_slider_options_page()
 	</div>
 <?php
 }
+/*
 add_action('admin_menu', function () {
 	add_options_page('Linkedin Slider Style Settings', 'Linkedin Posts Style Settings', 'manage_options', 'linkedin-posts-slider', 'linkedin_posts_slider_options_page');
 });
+*/
