@@ -90,7 +90,7 @@ $status = is_array($settings) && isset($settings['linkedin_scrapper_status']) ? 
 
 <div class="wrap">
 
-	<h1><?php echo esc_html(get_the_title()); ?></h1>
+	<h1><?php echo esc_html('Scrapper Options'); ?></h1>
 
 	<!-- Show status messages -->
 	<?php
