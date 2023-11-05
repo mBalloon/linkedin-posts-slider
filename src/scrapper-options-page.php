@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (defined('DOING_AJAX') && DOING_AJAX && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	// Check nonce for security
 	check_admin_referer('update_scrapper_settings');
