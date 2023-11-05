@@ -135,7 +135,7 @@ $status = $settings ? $settings['linkedin_scrapper_status'] : '';
 
 		</table>
 
-		<?php submit_button(); ?>
+		<button type="submit">Update Settings</button>
 
 	</form>
 
