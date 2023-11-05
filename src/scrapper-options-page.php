@@ -57,6 +57,15 @@ $settings = get_option('linkedin_slider_settings');
 if (!is_array($settings)) {
     $settings = array();
 }
+$settings = array_merge(
+    array(
+        'linkedin_company_url' => '',
+        'linkedin_slider_open_link' => 0,
+        'linkedin_update_frequency' => 0,
+        'linkedin_scrapper_endpoint' => '',
+    ),
+    $settings
+);
 $last_update = is_array($settings) && isset($settings['linkedin_scrapper_last_update']) ? $settings['linkedin_scrapper_last_update'] : '';
 $status = is_array($settings) && isset($settings['linkedin_scrapper_status']) ? $settings['linkedin_scrapper_status'] : '';
 
