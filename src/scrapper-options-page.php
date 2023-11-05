@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Handle form submission
-if (defined('DOING_AJAX') && DOING_AJAX && $_SERVER['REQUEST_METHOD'] === 'POST') {
+if (defined('DOING_AJAX') && DOING_AJAX && $_SERVER['REQUEST_METHOD'] === 'POST' && function_exists('check_admin_referer')) {
 
 	// Check nonce for security
 	check_admin_referer('update_scrapper_settings');
@@ -15,6 +15,20 @@ if (defined('DOING_AJAX') && DOING_AJAX && $_SERVER['REQUEST_METHOD'] === 'POST'
 
 	// Table names
 	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
+
+	// Check if the table exists
+	if($wpdb->get_var("SHOW TABLES LIKE '$settings_table'") != $settings_table) {
+	    // Table doesn't exist, create it
+	    $charset_collate = $wpdb->get_charset_collate();
+	    $sql = "CREATE TABLE $settings_table (
+	        id mediumint(9) NOT NULL AUTO_INCREMENT,
+	        setting_name varchar(255) NOT NULL,
+	        setting_value varchar(255) NOT NULL,
+	        PRIMARY KEY  (id)
+	    ) $charset_collate;";
+	    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	    dbDelta($sql);
+	}
 
 	// Sanitize and validate input
 	$settings = [
