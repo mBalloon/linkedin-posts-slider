@@ -272,3 +272,4 @@ function linkedin_slider_settings_create_table()
 }
 register_activation_hook(__FILE__, 'linkedin_posts_slider_create_table');
 register_activation_hook(__FILE__, 'linkedin_slider_settings_create_table');
+register_activation_hook(__FILE__, 'linkedin_slider_settings_create_table');
