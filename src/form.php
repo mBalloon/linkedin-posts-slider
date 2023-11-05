@@ -44,7 +44,8 @@ $status = isset($settings['linkedin_scrapper_status']) ? $settings['linkedin_scr
     <!-- Settings Form -->
     <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
         <input type="hidden" name="action" value="update_scrapper_settings">
-        <?php wp_nonce_field('update_scrapper_settings'); ?>
+        <?php //wp_nonce_field('update_scrapper_settings'); 
+        ?>
 
         <!-- Form fields here -->
         <table class="form-table">
