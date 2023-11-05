@@ -32,10 +32,10 @@ if (defined('DOING_AJAX') && DOING_AJAX && $_SERVER['REQUEST_METHOD'] === 'POST'
 
 	// Sanitize and validate input
 	$settings = [
-		'linkedin_company_url' => esc_url_raw($_POST['linkedin_company_url']),
-		'linkedin_slider_open_link' => (int) $_POST['linkedin_slider_open_link'],
-		'linkedin_update_frequency' => (int) $_POST['linkedin_update_frequency'],
-		'linkedin_scrapper_endpoint' => esc_url_raw($_POST['linkedin_scrapper_endpoint']),
+		'linkedin_company_url' => isset($_POST['linkedin_company_url']) ? esc_url_raw($_POST['linkedin_company_url']) : '',
+		'linkedin_slider_open_link' => isset($_POST['linkedin_slider_open_link']) ? (int) $_POST['linkedin_slider_open_link'] : 0,
+		'linkedin_update_frequency' => isset($_POST['linkedin_update_frequency']) ? (int) $_POST['linkedin_update_frequency'] : 0,
+		'linkedin_scrapper_endpoint' => isset($_POST['linkedin_scrapper_endpoint']) ? esc_url_raw($_POST['linkedin_scrapper_endpoint']) : '',
 	];
 
 	// Update settings in database
