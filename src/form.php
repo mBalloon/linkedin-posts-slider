@@ -1,20 +1,52 @@
 <?php
-// Assume $settings is an array containing all the setting values.
+// Assume $settings is an array containing all the setting values and $total_posts, $published_posts, $synced_posts are calculated elsewhere in the plugin.
 // This file is 'form.php' which is included in the 'display_scrapper_options_form' function.
 
 if (function_exists('settings_errors')) {
     settings_errors('linkedin_scrapper_settings');
 }
 
+$last_update = isset($settings['linkedin_scrapper_last_update']) ? $settings['linkedin_scrapper_last_update'] : '';
+$status = isset($settings['linkedin_scrapper_status']) ? $settings['linkedin_scrapper_status'] : '';
+
 ?>
 <div class="wrap">
     <h1><?php echo esc_html('LinkedIn Scrapper Options'); ?></h1>
+
+    <!-- Stats -->
+    <div class="stats-wrapper">
+        <div class="stat-card">
+            <span class="stat-title"><?php _e('Last Update:', 'linkedin-posts-slider'); ?></span>
+            <span class="stat-value"><?php echo esc_html($last_update); ?></span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-title"><?php _e('Total Posts:', 'linkedin-posts-slider'); ?></span>
+            <span class="stat-value"><?php echo intval($total_posts); ?></span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-title"><?php _e('Published:', 'linkedin-posts-slider'); ?></span>
+            <span class="stat-value"><?php echo intval($published_posts); ?></span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-title"><?php _e('Synced:', 'linkedin-posts-slider'); ?></span>
+            <span class="stat-value"><?php echo intval($synced_posts); ?></span>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-title"><?php _e('Status:', 'linkedin-posts-slider'); ?></span>
+            <span class="stat-value status-<?php echo esc_attr($status); ?>"><?php echo esc_html($status); ?></span>
+        </div>
+    </div>
 
     <!-- Settings Form -->
     <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
         <input type="hidden" name="action" value="update_scrapper_settings">
         <?php wp_nonce_field('update_scrapper_settings'); ?>
 
+        <!-- Form fields here -->
         <table class="form-table">
             <tr>
                 <th scope="row"><label for="linkedin_company_url"><?php _e('Company Profile URL:', 'linkedin-posts-slider'); ?></label></th>
