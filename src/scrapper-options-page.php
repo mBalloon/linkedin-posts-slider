@@ -30,6 +30,13 @@ if (defined('DOING_AJAX') && DOING_AJAX && $_SERVER['REQUEST_METHOD'] === 'POST'
 		dbDelta($sql);
 	}
 
+	// Check if the table was created successfully
+	if ($wpdb->get_var("SHOW TABLES LIKE '$settings_table'") != $settings_table) {
+	    error_log("Failed to create table $settings_table");
+	} else {
+	    error_log("Table $settings_table created successfully");
+	}
+
 	// Sanitize and validate input
 	$settings = [
 		'linkedin_company_url' => isset($_POST['linkedin_company_url']) ? esc_url_raw($_POST['linkedin_company_url']) : '',
