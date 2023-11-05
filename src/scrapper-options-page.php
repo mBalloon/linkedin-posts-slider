@@ -93,6 +93,7 @@ function display_scrapper_options_form() {
 	<div class="wrap">
 
 		<h1><?php echo esc_html('Scrapper Options'); ?></h1>
+	</div>
 <?php
 }
 add_action('admin_menu', 'display_scrapper_options_form');
