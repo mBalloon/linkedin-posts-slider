@@ -57,7 +57,7 @@ $status = $settings['linkedin_scrapper_status'];
 
 <div class="wrap">
 
-	<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+	<h1><?php echo esc_html(get_the_title()); ?></h1>
 
 	<!-- Show status messages -->
 	<?php settings_errors('linkedin_scrapper_settings'); ?>
