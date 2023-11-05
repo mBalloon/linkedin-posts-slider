@@ -60,9 +60,9 @@ $status = $settings ? $settings['linkedin_scrapper_status'] : '';
 	<h1><?php echo esc_html(get_the_title()); ?></h1>
 
 	<!-- Show status messages -->
-	<?php 
+	<?php
 	if (function_exists('settings_errors')) {
-	  settings_errors('linkedin_scrapper_settings'); 
+		settings_errors('linkedin_scrapper_settings');
 	}
 	?>
 
@@ -99,7 +99,8 @@ $status = $settings ? $settings['linkedin_scrapper_status'] : '';
 	<!-- Settings Form -->
 	<form method="post" action="<?php echo admin_url('admin.php?page=linkedin_scrapper_settings'); ?>">
 
-		<?php wp_nonce_field('update_scrapper_settings'); ?>
+		<?php //wp_nonce_field('update_scrapper_settings'); 
+		?>
 
 		<table class="form-table">
 			<tr>
