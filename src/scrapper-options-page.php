@@ -54,6 +54,9 @@ if($wpdb->get_var("SHOW TABLES LIKE '$posts_table'") != $posts_table) {
 }
 
 $settings = get_option('linkedin_slider_settings');
+if (!is_array($settings)) {
+    $settings = array();
+}
 $last_update = is_array($settings) && isset($settings['linkedin_scrapper_last_update']) ? $settings['linkedin_scrapper_last_update'] : '';
 $status = is_array($settings) && isset($settings['linkedin_scrapper_status']) ? $settings['linkedin_scrapper_status'] : '';
 
