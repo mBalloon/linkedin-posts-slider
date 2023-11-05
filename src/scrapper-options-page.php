@@ -67,19 +67,22 @@ if($wpdb->get_var("SHOW TABLES LIKE '$posts_table'") != $posts_table) {
     $synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE synced = 1");
 }
 
-$settings = get_option('linkedin_slider_settings');
-if (!is_array($settings)) {
-    $settings = array();
-}
-$settings = array_merge(
-    array(
-        'linkedin_company_url' => '',
-        'linkedin_slider_open_link' => 0,
-        'linkedin_update_frequency' => 0,
-        'linkedin_scrapper_endpoint' => '',
-    ),
-    $settings
+global $wpdb;
+$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
+$results = $wpdb->get_results("SELECT * FROM $settings_table", ARRAY_A);
+
+$settings = array(
+    'linkedin_company_url' => '',
+    'linkedin_slider_open_link' => 0,
+    'linkedin_update_frequency' => 0,
+    'linkedin_scrapper_endpoint' => '',
 );
+
+foreach ($results as $row) {
+    if (array_key_exists($row['setting_name'], $settings)) {
+        $settings[$row['setting_name']] = $row['setting_value'];
+    }
+}
 $last_update = is_array($settings) && isset($settings['linkedin_scrapper_last_update']) ? $settings['linkedin_scrapper_last_update'] : '';
 $status = is_array($settings) && isset($settings['linkedin_scrapper_status']) ? $settings['linkedin_scrapper_status'] : '';
 
