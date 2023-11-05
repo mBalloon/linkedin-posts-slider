@@ -171,34 +171,38 @@ function linkedin_posts_slider_create_table()
 
   // Iterate through the array and insert each item into the database
   foreach ($data as $item) {
-    $wpdb->insert(
+    // Sanitize the data before inserting into the database
+    $sanitized_data = array_map('sanitize_text_field', $item);
+    $sanitized_data['images'] = json_encode($sanitized_data['images']);
+
+    $result = $wpdb->insert(
       $table_name,
-      array(
-        'urn' => $item['urn'],
-        'author' => $item['author'],
-        'username' => $item['username'],
-        'age' => $item['age'],
-        'profilePicture' => $item['profilePicture'],
-        'post_text' => $item['post_text'],
-        'images' => json_encode($item['images']),
-        'reactions' => $item['reactions'],
-        'comments' => $item['comments'],
-        'synced' => 1,
-        'published' => 1,
-        'post_order' => 0  // You can also set it to 0 or any placeholder
-      ),
+      $sanitized_data,
       array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d')
     );
+
+    // Check if the insert operation was successful
+    if ($result === false) {
+      // Handle error
+      error_log('Failed to insert data into the database');
+      continue;
+    }
 
     // Get the last inserted ID
     $lastid = $wpdb->insert_id;
 
     // Update the 'post_order' field to the last inserted ID
-    $wpdb->update(
+    $result = $wpdb->update(
       $table_name,
       array('post_order' => $lastid),
       array('id' => $lastid)
     );
+
+    // Check if the update operation was successful
+    if ($result === false) {
+      // Handle error
+      error_log('Failed to update the post_order field in the database');
+    }
   }
 }
 // Function to create the 'linkedin_slider_settings' table
