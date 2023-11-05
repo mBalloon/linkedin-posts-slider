@@ -50,8 +50,8 @@ $published_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE publi
 $synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE synced = 1");
 
 $settings = get_option('linkedin_slider_settings');
-$last_update = $settings['linkedin_scrapper_last_update'];
-$status = $settings['linkedin_scrapper_status'];
+$last_update = $settings ? $settings['linkedin_scrapper_last_update'] : '';
+$status = $settings ? $settings['linkedin_scrapper_status'] : '';
 
 ?>
 
@@ -60,7 +60,11 @@ $status = $settings['linkedin_scrapper_status'];
 	<h1><?php echo esc_html(get_the_title()); ?></h1>
 
 	<!-- Show status messages -->
-	<?php settings_errors('linkedin_scrapper_settings'); ?>
+	<?php 
+	if (function_exists('settings_errors')) {
+	  settings_errors('linkedin_scrapper_settings'); 
+	}
+	?>
 
 	<!-- Stats -->
 	<div class="stats-wrapper">
