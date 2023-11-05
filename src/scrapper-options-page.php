@@ -32,9 +32,9 @@ if (defined('DOING_AJAX') && DOING_AJAX && $_SERVER['REQUEST_METHOD'] === 'POST'
 
 	// Check if the table was created successfully
 	if ($wpdb->get_var("SHOW TABLES LIKE '$settings_table'") != $settings_table) {
-	    error_log("Failed to create table $settings_table");
+		error_log("Failed to create table $settings_table");
 	} else {
-	    error_log("Table $settings_table created successfully");
+		error_log("Table $settings_table created successfully");
 	}
 
 	// Sanitize and validate input
@@ -146,7 +146,7 @@ if (function_exists('settings_errors')) {
 <!-- Settings Form -->
 <form method="post" action="<?php echo admin_url('admin.php?page=linkedin_scrapper_settings'); ?>">
 
-	<?php //wp_nonce_field('update_scrapper_settings'); 
+	<?php wp_nonce_field('update_scrapper_settings');
 	?>
 
 	<table class="form-table">
@@ -229,18 +229,5 @@ echo <<<CSS
 
 </style>
 CSS;
-
-?>
-
-<?php
-
-// Scripts
-echo <<<JS
-
-<script>
-
-</script>  
-
-JS;
 
 ?>
