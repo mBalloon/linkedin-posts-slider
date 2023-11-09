@@ -39,46 +39,63 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
     wp_enqueue_style('slider-style');
 
     // Get custom settings
-    $settings = get_option('linkedin_slider_settings');
+    $settings = array(
+      'section-company-color' => get_option('section-company-color'),
+      'section-company-font-size' => get_option('section-company-font-size'),
+      'section-company-font-family' => get_option('section-company-font-family'),
+      'section-company-line-height' => get_option('section-company-line-height'),
+      'section-author-date-color' => get_option('section-author-date-color'),
+      'section-author-date-font-size' => get_option('section-author-date-font-size'),
+      'section-author-date-font-family' => get_option('section-author-date-font-family'),
+      'section-author-date-font-weight' => get_option('section-author-date-font-weight'),
+      'section-author-date-line-height' => get_option('section-author-date-line-height'),
+      'section-body-color' => get_option('section-body-color'),
+      'section-body-font-size' => get_option('section-body-font-size'),
+      'section-body-font-family' => get_option('section-body-font-family'),
+      'section-body-webkit-line-clamp' => get_option('section-body-webkit-line-clamp'),
+      'section-interactions-color' => get_option('section-interactions-color'),
+      'section-interactions-font-size' => get_option('section-interactions-font-size'),
+      'section-interactions-font-family' => get_option('section-interactions-font-family'),
+      'section-interactions-font-weight' => get_option('section-interactions-font-weight'),
+      'section-interactions-line-height' => get_option('section-interactions-line-height'),
+    );
 
     // Add custom CSS 
     $custom_css = "
-
-  // Company Name
-  .section-company {
-    color: {$settings['section-company-color']};
-    font-size: {$settings['section-company-font-size']}px; 
-    font-family: {$settings['section-company-font-family']};
-    line-height: {$settings['section-company-line-height']}px;
-  }
-  
-  // Author and Date 
-  .section-author-date {
-    color: {$settings['section-author-date-color']};
-    font-size: {$settings['section-author-date-font-size']}px;
-    font-family: {$settings['section-author-date-font-family']};
-    font-weight: {$settings['section-author-date-font-weight']};
-    line-height: {$settings['section-author-date-line-height']}px;
-  }
-
-  // Post Text
-  .section-body {
-    color: {$settings['section-body-color']};
-    font-size: {$settings['section-body-font-size']}px;
-    font-family: {$settings['section-body-font-family']};
-    -webkit-line-clamp: {$settings['section-body-webkit-line-clamp']};
-  }
-
-  // Interactions
-  .section-interactions {
-    color: {$settings['section-interactions-color']};
-    font-size: {$settings['section-interactions-font-size']}px;
-    font-family: {$settings['section-interactions-font-family']}; 
-    font-weight: {$settings['section-interactions-font-weight']};
-    line-height: {$settings['section-interactions-line-height']}px;
-  }
-
-";
+          // Company Name
+          .section-company {
+            color: {$settings['section-company-color']};
+            font-size: {$settings['section-company-font-size']}px; 
+            font-family: {$settings['section-company-font-family']};
+            line-height: {$settings['section-company-line-height']}px;
+          }
+          
+          // Author and Date 
+          .section-author-date {
+            color: {$settings['section-author-date-color']};
+            font-size: {$settings['section-author-date-font-size']}px;
+            font-family: {$settings['section-author-date-font-family']};
+            font-weight: {$settings['section-author-date-font-weight']};
+            line-height: {$settings['section-author-date-line-height']}px;
+          }
+    
+          // Post Text
+          .section-body {
+            color: {$settings['section-body-color']};
+            font-size: {$settings['section-body-font-size']}px;
+            font-family: {$settings['section-body-font-family']};
+            -webkit-line-clamp: {$settings['section-body-webkit-line-clamp']};
+          }
+    
+          // Interactions
+          .section-interactions {
+            color: {$settings['section-interactions-color']};
+            font-size: {$settings['section-interactions-font-size']}px;
+            font-family: {$settings['section-interactions-font-family']}; 
+            font-weight: {$settings['section-interactions-font-weight']};
+            line-height: {$settings['section-interactions-line-height']}px;
+          }
+        ";
 
     wp_add_inline_style('slider-style', $custom_css);
   }

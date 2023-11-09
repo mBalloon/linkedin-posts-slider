@@ -271,7 +271,7 @@ function scrape_data()
 		function get_custom_setting($setting_name, $default_value)
 		{
 			global $wpdb, $settings_table;
-			$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM $settings_table WHERE setting_name = %s", $setting_name));
+			$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM linkedin_slider_settings WHERE setting_name = %s", $setting_name));
 			return $value;
 		}
 	}

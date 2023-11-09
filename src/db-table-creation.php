@@ -206,70 +206,49 @@ function linkedin_posts_slider_create_table()
   }
 }
 // Function to create the 'linkedin_slider_settings' table
-function linkedin_slider_settings_create_table()
+// Activation function to initialize plugin options
+function linkedin_posts_slider_activate()
 {
-  global $wpdb;
-  $charset_collate = $wpdb->get_charset_collate();
+  // Define default settings
+  $default_settings = array(
+    'section-company-color' => '#454545',
+    'section-company-font-size' => '16',
+    'section-company-font-family' => 'Titillium Web',
+    'section-company-line-height' => '18',
+    'section-company-font-weight' => '400',
+    'section-author-date-color' => '#454545',
+    'section-author-date-font-size' => '14',
+    'section-author-date-font-family' => 'Titillium Web',
+    'section-author-date-font-weight' => '300',
+    'section-author-date-line-height' => '18',
+    'section-body-color' => '#adb5bd',
+    'section-body-font-size' => '16',
+    'section-body-font-family' => 'Titillium Web',
+    'section-body-webkit-line-clamp' => '5',
+    'section-body-font-weight' => ' ',
+    'section-interactions-color' => '#454545',
+    'section-interactions-font-size' => '14',
+    'section-interactions-font-family' => 'Titillium Web',
+    'section-interactions-font-weight' => '300',
+    'section-interactions-line-height' => '18',
+    'linkedin_company_url' => 'https://www.linkedin.com/company/alpine-laser/',
+    'linkedin_slider_open_link' => '1',
+    'linkedin_update_frequency' => '86400', // 24 hours in seconds
+    'linkedin_scrapper_status' => 'OK',
+    'linkedin_scrapper_last_update' => 'Not available',
+    'linkedin_scrapper_endpoint' => 'https://scrape-js.onrender.com/scrape',
+    // Add other settings as needed
+  );
 
-  $settings_table = $wpdb->prefix . 'linkedin_slider_settings';
-  $sql2 = "CREATE TABLE IF NOT EXISTS $settings_table (
-        id mediumint(9) NOT NULL AUTO_INCREMENT,
-        setting_name varchar(255) NOT NULL,
-        default_value varchar(255) DEFAULT NULL,
-        setting_value varchar(255) DEFAULT NULL,
-        PRIMARY KEY (id)
-  ) $charset_collate;";
-
-  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-  dbDelta($sql2);
-
-  // Default values to insert
-  $default_values = [
-    ['section-company-color', '#454545', '#454545'],
-    ['section-company-font-size', '16', '16'],
-    ['section-company-font-family', '400', '400'],
-    ['section-company-line-height', '18', '18'],
-    ['section-company-font-weight', 'Titillium Web', 'Titillium Web'],
-    ['section-author-date-color', '#454545', '#454545'],
-    ['section-author-date-font-size', '14', '14'],
-    ['section-author-date-font-family', 'Titillium Web', 'Titillium Web'],
-    ['section-author-date-font-weight', '300', '300'],
-    ['section-author-date-line-height', '18', '18'],
-    ['section-body-color', '#adb5bd', '#adb5bd'],
-    ['section-body-font-size', '16', '16'],
-    ['section-body-font-family', 'Titillium Web', 'Titillium Web'],
-    ['section-body-webkit-line-clamp', '5', '5'],
-    ['section-body-font-weight', ' ', ' '],
-    ['section-interactions-color', '#454545', '#454545'],
-    ['section-interactions-font-size', '14', '14'],
-    ['section-interactions-font-family', 'Titillium Web', 'Titillium Web'],
-    ['section-interactions-font-weight', '300', '300'],
-    ['section-interactions-line-height', '18', '18'],
-    ['linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/', 'https://www.linkedin.com/company/alpine-laser/'],
-    ['linkedin_slider_open_link', '1', '1'],
-    ['linkedin_update_frequency', '86400', '86400'], // 60 * 60 * 24 (24 hours in seconds)
-    ['linkedin_scrapper_status', 'OK', 'OK'],
-    ['linkedin_scrapper_last_update', 'Not available', 'Not available'],
-    ['linkedin_scrapper_endpoint', 'https://scrape-js.onrender.com/scrape', 'https://scrape-js.onrender.com/scrape']
-  ];
-
-
-  foreach ($default_values as $item) {
-    // Check if the setting already exists before inserting
-    $exists = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $settings_table WHERE setting_name = %s", $item[0]));
-    if (!$exists) {
-      $wpdb->insert(
-        $settings_table,
-        array(
-          'setting_name' => $item[0],
-          'default_value' => $item[1],
-          'setting_value' => $item[2]
-        ),
-        array('%s', '%s', '%s')
-      );
+  // Add or update default settings in WordPress options
+  foreach ($default_settings as $setting_name => $default_value) {
+    if (false === get_option($setting_name)) {
+      add_option($setting_name, $default_value);
     }
   }
 }
+
+// Hook activation function to plugin activation
+register_activation_hook(__FILE__, 'linkedin_posts_slider_activate');
+
 register_activation_hook(__FILE__, 'linkedin_posts_slider_create_table');
-register_activation_hook(__FILE__, 'linkedin_slider_settings_create_table');
-register_activation_hook(__FILE__, 'linkedin_slider_settings_create_table');

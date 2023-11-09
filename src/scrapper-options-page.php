@@ -9,60 +9,26 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-// Add custom admin menu for the plugin settings page
-/*
-function linkedin_posts_slider_admin_menu_setup()
-{
-	add_menu_page(
-		__('LinkedIn Posts Slider Settings', 'linkedin-posts-slider'),
-		__('LinkedIn Slider', 'linkedin-posts-slider'),
-		'manage_options',
-		'linkedin_scrapper_settings',
-		'display_scrapper_options_form',
-		'dashicons-linkedin'
-	);
-}
-add_action('admin_menu', 'linkedin_posts_slider_admin_menu_setup');
-*/
-
-// Display settings form in the admin page
 function display_scrapper_options_form()
 {
 	global $wpdb;
-	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
 	$posts_table = $wpdb->prefix . 'linkedin_posts';
 
-	// Fetch statistics for stats cards
-	if ($wpdb->get_var("SHOW TABLES LIKE '$posts_table'") == $posts_table) {
-		// Table exists, fetch stats
-		$total_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table");
-		$published_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE published = 1");
-		$synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE synced = 1");
-	} else {
-		// Table doesn't exist, stats are zero
-		$total_posts = $published_posts = $synced_posts = 0;
-	}
+	// Fetch total number of posts
+	$total_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table");
 
-	// Fetch settings from the database
-	$results = $wpdb->get_results("SELECT * FROM $settings_table", ARRAY_A);
+	// Fetch number of posts where 'synced' is true
+	$synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM $posts_table WHERE synced = 1");
 
+	// Fetch settings from WordPress options
 	$settings = array(
-		'linkedin_company_url' => '',
-		'linkedin_slider_open_link' => 0,
-		'linkedin_update_frequency' => 0,
-		'linkedin_scrapper_endpoint' => '',
-		'linkedin_scrapper_last_update' => '', // Assume this setting exists in your settings table
-		'linkedin_scrapper_status' => '', // Assume this setting exists in your settings table
+		'linkedin_company_url' => get_option('linkedin_company_url', ''),
+		'linkedin_slider_open_link' => get_option('linkedin_slider_open_link', 0),
+		'linkedin_update_frequency' => get_option('linkedin_update_frequency', 0),
+		'linkedin_scrapper_endpoint' => get_option('linkedin_scrapper_endpoint', ''),
+		'linkedin_scrapper_last_update' => get_option('linkedin_scrapper_last_update', ''), // This setting should exist in your options
+		'linkedin_scrapper_status' => get_option('linkedin_scrapper_status', ''), // This setting should exist in your options
 	);
-
-	foreach ($results as $row) {
-		if (array_key_exists($row['setting_name'], $settings)) {
-			$settings[$row['setting_name']] = $row['setting_value'];
-		}
-	}
-
-	$last_update = $settings['linkedin_scrapper_last_update'];
-	$status = $settings['linkedin_scrapper_status'];
 
 	// Pass the statistics and settings to the form
 	include(plugin_dir_path(__FILE__) . 'form.php');
@@ -84,22 +50,15 @@ function handle_scrapper_settings_form_submission()
 
 	check_admin_referer('update_scrapper_settings');
 
-	global $wpdb;
-	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
-
 	$settings = [
-		'linkedin_company_url' => isset($_POST['linkedin_company_url']) ? esc_url_raw($_POST['linkedin_company_url']) : '',
-		'linkedin_slider_open_link' => isset($_POST['linkedin_slider_open_link']) ? (int) $_POST['linkedin_slider_open_link'] : 0,
-		'linkedin_update_frequency' => isset($_POST['linkedin_update_frequency']) ? max(0, (int) $_POST['linkedin_update_frequency']) : 0,
-		'linkedin_scrapper_endpoint' => isset($_POST['linkedin_scrapper_endpoint']) ? esc_url_raw($_POST['linkedin_scrapper_endpoint']) : '',
+		'linkedin_company_url' => sanitize_text_field($_POST['linkedin_company_url']),
+		'linkedin_slider_open_link' => isset($_POST['linkedin_slider_open_link']) ? 1 : 0,
+		'linkedin_update_frequency' => sanitize_text_field($_POST['linkedin_update_frequency']),
+		'linkedin_scrapper_endpoint' => sanitize_text_field($_POST['linkedin_scrapper_endpoint']),
 	];
 
 	foreach ($settings as $name => $value) {
-		$wpdb->replace(
-			$settings_table,
-			['setting_name' => $name, 'setting_value' => $value],
-			['%s', '%s']
-		);
+		update_option($name, $value);
 	}
 
 	add_settings_error('linkedin_scrapper_settings', 'settings_updated', __('Settings updated successfully'), 'updated');
@@ -109,23 +68,3 @@ function handle_scrapper_settings_form_submission()
 	exit;
 }
 add_action('admin_post_update_scrapper_settings', 'handle_scrapper_settings_form_submission');
-
-// Create tables on plugin activation
-function linkedin_posts_slider_activation()
-{
-	global $wpdb;
-	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
-
-	if ($wpdb->get_var("SHOW TABLES LIKE '$settings_table'") != $settings_table) {
-		$charset_collate = $wpdb->get_charset_collate();
-		$sql = "CREATE TABLE $settings_table (
-            id mediumint(9) NOT NULL AUTO_INCREMENT,
-            setting_name varchar(255) NOT NULL,
-            setting_value varchar(255) NOT NULL,
-            PRIMARY KEY  (id)
-        ) $charset_collate;";
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql);
-	}
-}
-register_activation_hook(__FILE__, 'linkedin_posts_slider_activation');

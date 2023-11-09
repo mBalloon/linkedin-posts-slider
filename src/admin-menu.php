@@ -11,7 +11,8 @@ function linkedin_posts_slider_add_admin_menu()
         'Linkedin Slider Settings', // menu title
         'manage_options', // capability
         'linkedin_posts_slider', // menu slug
-        'linkedin_posts_slider_options_page' // function to output the page content
+        'linkedin_posts_slider_options_page', // function to output the page content
+        'dashicons-linkedin'
     );
 
     add_submenu_page(
