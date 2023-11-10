@@ -197,6 +197,6 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base
           </svg></button></div>
     </div>
 
-  <?php
+<?php
   }
-
+}
