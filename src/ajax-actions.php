@@ -57,21 +57,16 @@ function get_linkedin_posts()
 	);
 
 	// Decode the JSON-encoded images array
+	// Decode the JSON-encoded (or serialized) images array
 	foreach ($rows as &$row) {
-		if (!empty($row['images']) && is_string($row['images'])) {
-			$decoded_images = json_decode($row['images'], true);
-			if (json_last_error() === JSON_ERROR_NONE) {
-				// Assign decoded images if JSON decoding is successful
-				$row['images'] = $decoded_images;
-			} else {
-				// Handle invalid JSON data
-				$row['images'] = []; // Assign an empty array or any default value
-			}
+		if (!empty($row['images'])) {
+			$decoded_images = maybe_unserialize($row['images']);
+			$row['images'] = $decoded_images;
 		} else {
-			// Handle cases where images data is empty or not a string
-			$row['images'] = []; // Assign an empty array or any default value
+			$row['images'] = []; // Assign an empty array if no images
 		}
 	}
+
 
 	// Send the data back to the frontend
 	wp_send_json_success($rows);
