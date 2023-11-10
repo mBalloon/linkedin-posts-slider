@@ -30,7 +30,7 @@ function linkedin_posts_slider_add_admin_menu()
         'Scrapper Settings', // menu title
         'manage_options', // capability
         'linkedin_scrapper_settings', // menu slug
-        'display_scrapper_options_form' // function to output the page content
+        'linkedin_posts_scrapper_options_page' // function to output the page content
     );
 }
 

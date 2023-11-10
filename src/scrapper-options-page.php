@@ -51,7 +51,7 @@ add_action('admin_post_update_scrapper_settings', 'handle_scrapper_settings_form
 
 
 // Function to display the scrapper options page
-function linkedin_posts_slider_options_page()
+function linkedin_posts_scrapper_options_page()
 {
 	global $wpdb;
 	// Check user capabilities
@@ -161,5 +161,4 @@ function linkedin_posts_slider_options_page()
 }
 
 
-// ... [rest of the code in src/scrapper-options-page.php]
 ?>
