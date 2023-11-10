@@ -31,6 +31,16 @@ function handle_scrapper_settings_form_submission()
 			'linkedin_slider_open_link' => isset($_POST['linkedin_slider_open_link']) ? 1 : 0,
 			'linkedin_update_frequency' => sanitize_text_field($_POST['linkedin_update_frequency']),
 			'linkedin_scrapper_endpoint' => sanitize_text_field($_POST['linkedin_scrapper_endpoint']),
+
+			// New settings
+			'linkedin_scrapper_full_post_selector' => sanitize_text_field($_POST['linkedin_scrapper_full_post_selector']),
+			'linkedin_scrapper_full_selectors_array' => sanitize_text_field($_POST['linkedin_scrapper_full_selectors_array']),
+			'linkedin_scrapper_full_attributes_array' => sanitize_text_field($_POST['linkedin_scrapper_full_attributes_array']),
+			'linkedin_scrapper_full_names_array' => sanitize_text_field($_POST['linkedin_scrapper_full_names_array']),
+			'linkedin_scrapper_single_post_selector' => sanitize_text_field($_POST['linkedin_scrapper_single_post_selector']),
+			'linkedin_scrapper_single_selectors_array' => sanitize_text_field($_POST['linkedin_scrapper_single_selectors_array']),
+			'linkedin_scrapper_single_attributes_array' => sanitize_text_field($_POST['linkedin_scrapper_single_attributes_array']),
+			'linkedin_scrapper_single_names_array' => sanitize_text_field($_POST['linkedin_scrapper_single_names_array']),
 		];
 
 		foreach ($settings as $name => $value) {
@@ -68,15 +78,23 @@ function linkedin_posts_scrapper_options_page()
 	// Retrieve settings values for form population
 	$last_update = get_option('linkedin_scrapper_last_update', 'Never');
 	$status = get_option('linkedin_scrapper_status', 'Unknown');
+	// New settings retrieval
+	$full_post_selector = get_option('linkedin_scrapper_full_post_selector', '');
+	$full_selectors_array = get_option('linkedin_scrapper_full_selectors_array', '');
+	$full_attributes_array = get_option('linkedin_scrapper_full_attributes_array', '');
+	$full_names_array = get_option('linkedin_scrapper_full_names_array', '');
+	$single_post_selector = get_option('linkedin_scrapper_single_post_selector', '');
+	$single_selectors_array = get_option('linkedin_scrapper_single_selectors_array', '');
+	$single_attributes_array = get_option('linkedin_scrapper_single_attributes_array', '');
+	$single_names_array = get_option('linkedin_scrapper_single_names_array', '');
+	$linkedin_company_url = get_option('linkedin_company_url', '');
+	$linkedin_slider_open_link = get_option('linkedin_slider_open_link', 0);
+	$linkedin_update_frequency = get_option('linkedin_update_frequency', 0);
+	$linkedin_scrapper_endpoint = get_option('linkedin_scrapper_endpoint', '');
+
+
 	// Retrieve settings values for form population
-	$settings = array(
-		'linkedin_company_url' => get_option('linkedin_company_url', ''),
-		'linkedin_slider_open_link' => get_option('linkedin_slider_open_link', 0),
-		'linkedin_update_frequency' => get_option('linkedin_update_frequency', 0),
-		'linkedin_scrapper_endpoint' => get_option('linkedin_scrapper_endpoint', ''),
-		'linkedin_scrapper_last_update' => get_option('linkedin_scrapper_last_update', ''),
-		'linkedin_scrapper_status' => get_option('linkedin_scrapper_status', 'OK'),
-	);
+	$settings = array();
 
 	// Start the settings form
 ?>
@@ -116,7 +134,7 @@ function linkedin_posts_scrapper_options_page()
 				<tr>
 					<th scope="row"><label for="linkedin_company_url"><?php _e('Company Profile URL:', 'linkedin-posts-slider'); ?></label></th>
 					<td>
-						<input type="text" id="linkedin_company_url" name="linkedin_company_url" value="<?php echo esc_attr(get_option('linkedin_company_url')); ?>" class="regular-text">
+						<input type="text" id="linkedin_company_url" name="linkedin_company_url" value="<?php echo esc_attr($linkedin_company_url); ?>" class="regular-text">
 					</td>
 				</tr>
 
@@ -126,7 +144,7 @@ function linkedin_posts_scrapper_options_page()
 					<td>
 						<fieldset>
 							<label for="linkedin_slider_open_link">
-								<input type="checkbox" id="linkedin_slider_open_link" name="linkedin_slider_open_link" value="1" <?php checked(1, get_option('linkedin_slider_open_link'), true); ?>>
+								<input type="checkbox" id="linkedin_slider_open_link" name="linkedin_slider_open_link" value="1" <?php checked(1, $linkedin_slider_open_link, true); ?>>
 								<?php _e('Open post links in a new tab', 'linkedin-posts-slider'); ?>
 							</label>
 						</fieldset>
@@ -137,7 +155,7 @@ function linkedin_posts_scrapper_options_page()
 				<tr>
 					<th scope="row"><label for="linkedin_update_frequency"><?php _e('Update Frequency:', 'linkedin-posts-slider'); ?></label></th>
 					<td>
-						<input type="number" id="linkedin_update_frequency" name="linkedin_update_frequency" value="<?php echo esc_attr(get_option('linkedin_update_frequency')); ?>" class="small-text">
+						<input type="number" id="linkedin_update_frequency" name="linkedin_update_frequency" value="<?php echo esc_attr($linkedin_update_frequency); ?>" class="small-text">
 						<span><?php _e('seconds', 'linkedin-posts-slider'); ?></span>
 						<p class="description"><?php _e('The frequency at which the scrapper updates the posts.', 'linkedin-posts-slider'); ?></p>
 					</td>
@@ -147,8 +165,80 @@ function linkedin_posts_scrapper_options_page()
 				<tr>
 					<th scope="row"><label for="linkedin_scrapper_endpoint"><?php _e('Scrapper Endpoint:', 'linkedin-posts-slider'); ?></label></th>
 					<td>
-						<input type="text" id="linkedin_scrapper_endpoint" name="linkedin_scrapper_endpoint" value="<?php echo esc_attr(get_option('linkedin_scrapper_endpoint')); ?>" class="regular-text">
+						<input type="text" id="linkedin_scrapper_endpoint" name="linkedin_scrapper_endpoint" value="<?php echo esc_attr($linkedin_scrapper_endpoint); ?>" class="regular-text">
 						<p class="description"><?php _e('The endpoint from which the scrapper fetches LinkedIn posts.', 'linkedin-posts-slider'); ?></p>
+					</td>
+				</tr>
+				<!-- New Section: Full Profile Update Settings -->
+				<tr>
+					<th colspan="2">
+						<h2><?php _e('Full Profile Update Settings', 'linkedin-posts-slider'); ?></h2>
+					</th>
+				</tr>
+				<tr>
+					<th scope="row"><label for="linkedin_scrapper_full_post_selector"><?php _e('Full Post Selector:', 'linkedin-posts-slider'); ?></label></th>
+					<td>
+						<input type="text" id="linkedin_scrapper_full_post_selector" name="linkedin_scrapper_full_post_selector" value="<?php echo esc_attr($full_post_selector); ?>" class="regular-text">
+					</td>
+				</tr>
+				<!-- Full Selectors Array -->
+				<tr>
+					<th scope="row"><label for="linkedin_scrapper_full_selectors_array"><?php _e('Full Selectors Array:', 'linkedin-posts-slider'); ?></label></th>
+					<td>
+						<input type="text" id="linkedin_scrapper_full_selectors_array" name="linkedin_scrapper_full_selectors_array" value="<?php echo esc_attr($full_selectors_array); ?>" class="regular-text">
+					</td>
+				</tr>
+
+				<!-- Full Attributes Array -->
+				<tr>
+					<th scope="row"><label for="linkedin_scrapper_full_attributes_array"><?php _e('Full Attributes Array:', 'linkedin-posts-slider'); ?></label></th>
+					<td>
+						<input type="text" id="linkedin_scrapper_full_attributes_array" name="linkedin_scrapper_full_attributes_array" value="<?php echo esc_attr($full_attributes_array); ?>" class="regular-text">
+					</td>
+				</tr>
+
+				<!-- Full Names Array -->
+				<tr>
+					<th scope="row"><label for="linkedin_scrapper_full_names_array"><?php _e('Full Names Array:', 'linkedin-posts-slider'); ?></label></th>
+					<td>
+						<input type="text" id="linkedin_scrapper_full_names_array" name="linkedin_scrapper_full_names_array" value="<?php echo esc_attr($full_names_array); ?>" class="regular-text">
+					</td>
+				</tr>
+
+
+				<!-- New Section: Single Post Fetching Settings -->
+				<tr>
+					<th colspan="2">
+						<h2><?php _e('Single Post Fetching Settings', 'linkedin-posts-slider'); ?></h2>
+					</th>
+				</tr>
+				<tr>
+					<th scope="row"><label for="linkedin_scrapper_single_post_selector"><?php _e('Single Post Selector:', 'linkedin-posts-slider'); ?></label></th>
+					<td>
+						<input type="text" id="linkedin_scrapper_single_post_selector" name="linkedin_scrapper_single_post_selector" value="<?php echo esc_attr($single_post_selector); ?>" class="regular-text">
+					</td>
+				</tr>
+				<!-- Single Selectors Array -->
+				<tr>
+					<th scope="row"><label for="linkedin_scrapper_single_selectors_array"><?php _e('Single Selectors Array:', 'linkedin-posts-slider'); ?></label></th>
+					<td>
+						<input type="text" id="linkedin_scrapper_single_selectors_array" name="linkedin_scrapper_single_selectors_array" value="<?php echo esc_attr($single_selectors_array); ?>" class="regular-text">
+					</td>
+				</tr>
+
+				<!-- Single Attributes Array -->
+				<tr>
+					<th scope="row"><label for="linkedin_scrapper_single_attributes_array"><?php _e('Single Attributes Array:', 'linkedin-posts-slider'); ?></label></th>
+					<td>
+						<input type="text" id="linkedin_scrapper_single_attributes_array" name="linkedin_scrapper_single_attributes_array" value="<?php echo esc_attr($single_attributes_array); ?>" class="regular-text">
+					</td>
+				</tr>
+
+				<!-- Single Names Array -->
+				<tr>
+					<th scope="row"><label for="linkedin_scrapper_single_names_array"><?php _e('Single Names Array:', 'linkedin-posts-slider'); ?></label></th>
+					<td>
+						<input type="text" id="linkedin_scrapper_single_names_array" name="linkedin_scrapper_single_names_array" value="<?php echo esc_attr($single_names_array); ?>" class="regular-text">
 					</td>
 				</tr>
 			</table>

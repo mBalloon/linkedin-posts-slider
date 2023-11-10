@@ -12,26 +12,14 @@ data = {
     "url": "https://www.linkedin.com/company/alpine-laser/",
     "postSelector": 'li[class="mb-1"]',
     "selectorsArray": [
-        'li[class="mb-1"] article',
-        'time',
-        'span[data-test-id="social-actions_reaction-count"]',
-        'a[data-id="social-actions_comments"]',
-        'a[data-tracking-control-name="organization_guest_main-feed-card_feed-actor-name"]'
+        \'li[class="mb-1"] article\',
+        \'time\',
+        \'span[data-test-id="social-actions_reaction-count"]\',
+        \'a[data-id="social-actions_comments"]',
+        \'a[data-tracking-control-name="organization_guest_main-feed-card_feed-actor-name"]\'
     ],
-    "attributesArray": [
-        "data-activity-urn",
-        "innerText",
-        "innerText",
-        "innerText",
-        "innerText"
-    ],
-    "namesArray": [
-        "URN",
-        "age",
-        "reactions",
-        "comments",
-        "company-name"
-    ]
+    "attributesArray": ["data-activity-urn","innerText","innerText","innerText","innerText"],
+    "namesArray": ["URN","age","reactions","comments","company-name"]
 }
 
 # Make the POST request and get the response
