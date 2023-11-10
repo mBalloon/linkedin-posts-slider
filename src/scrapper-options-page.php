@@ -49,7 +49,7 @@ function handle_scrapper_settings_form_submission()
 add_action('admin_post_update_scrapper_settings', 'handle_scrapper_settings_form_submission');
 
 // Function to display the scrapper options page
-function linkedin_posts_slider_options_page()
+function linkedin_posts_scrapper_options_page()
 {
 	global $wpdb;
 	// Check user capabilities
