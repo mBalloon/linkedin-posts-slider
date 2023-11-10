@@ -26,7 +26,6 @@ require_once plugin_dir_path(__FILE__) . 'src/widget-registration.php';
 require_once plugin_dir_path(__FILE__) . 'src/options-page.php';
 require_once plugin_dir_path(__FILE__) . 'src/scrapper-options-page.php';
 require_once plugin_dir_path(__FILE__) . 'src/db-table-creation.php';
-require_once plugin_dir_path(__FILE__) . 'src/cron-event.php';
 require_once plugin_dir_path(__FILE__) . 'src/admin-menu.php';
 require_once plugin_dir_path(__FILE__) . 'src/ajax-actions.php';
 //require_once plugin_dir_path(__FILE__) . 'src/linkedin-posts-syncing.php';
