@@ -238,13 +238,13 @@ function linkedin_posts_slider_activate()
     'linkedin_scrapper_last_update' => 'Not available',
     'linkedin_scrapper_endpoint' => 'https://scrape-js.onrender.com/scrape',
     'linkedin_scrapper_full_post_selector' => 'li[class="mb-1"]',
-    'linkedin_scrapper_full_selectors_array' => '[\'li[class="mb-1"] article\',\'time\',\'span[data-test-id="social-actions_reaction-count"]\',\'a[data-id="social-actions_comments"]\',\'a[data-tracking-control-name="organization_guest_main-feed-card_feed-actor-name"]\']',
+    'linkedin_scrapper_full_selectors_array' => '[\'li[class="mb-1"] article\',"a[data-tracking-control-name=\'organization_guest_main-feed-card_feed-actor-name\']",\'time\',\'a[data-id="social-actions_reactions"]\',\'a[data-id="social-actions_comments"]\']',
     'linkedin_scrapper_full_attributes_array' => '["data-activity-urn","innerText","innerText","innerText","innerText"]',
-    'linkedin_scrapper_full_names_array' => '["URN","age","reactions","comments","company-name"]',
+    'linkedin_scrapper_full_names_array' => '["URN","company_name","age","reactions" ,"comments"]',
     'linkedin_scrapper_single_post_selector' => 'section[class="mb-3"]',
-    'linkedin_scrapper_single_selectors_array' => '[\'section[class="mb-3"] article\', \'time\', \'a[data-tracking-control-name="public_post_feed-actor-image"] img\', \'p[data-test-id="main-feed-activity-card_commentary"]', 'span[data-test-id="social-actionsreaction-count"]\', \'a[data-id="social-actions_comments"]\', \'ul[data-test-id="feed-images-content"] img\']',
-    'linkedin_scrapper_single_attributes_array' => '["data-attributed-urn", "innerText", "src", "innerText", "innerText", "innerText", "src"]',
-    'linkedin_scrapper_single_names_array' => '["URN", "age", "profilePicture", "post_text", "reactions", "comments", "images"]'
+    'linkedin_scrapper_single_selectors_array' => '[\'section[class="mb-3"] article\',\'time\',\'a[data-tracking-control-name="public_post_feed-actor-image"] img\',\'p[data-test-id="main-feed-activity-card_commentary"]\',\'span[data-test-id="social-actionsreaction-count"]\',\'a[data-test-id="social-actions_comments"]\',\'ul[data-test-id="feed-images-content"] img\']',
+    'linkedin_scrapper_single_attributes_array' => '["data-attributed-urn","innerText","src","innerText","innerText","innerText","src"]',
+    'linkedin_scrapper_single_names_array' => '["URN","age","profilePicture","post_text","reactions" ,"comments","images"]'
     // Add other settings as needed
   );
 

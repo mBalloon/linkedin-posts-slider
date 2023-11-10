@@ -101,218 +101,224 @@ function delete_post()
 add_action('wp_ajax_delete_post', 'delete_post');
 
 
-// Function to process scraped data
-function process_scraped_data($data_array)
+// Include WordPress functions
+include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+
+// Schedule a cron job
+if (!wp_next_scheduled('linkedin_posts_slider_cron_job')) {
+	wp_schedule_event(time(), 'custom', 'linkedin_posts_slider_cron_job');
+}
+
+// Add a custom interval based on the 'linkedin_update_frequency' setting
+add_filter('cron_schedules', 'linkedin_posts_slider_add_cron_interval');
+function linkedin_posts_slider_add_cron_interval($schedules)
+{
+	$interval = get_option('linkedin_update_frequency', 3600); // Default to 1 hour if not set
+	$schedules['custom'] = array(
+		'interval' => $interval,
+		'display' => __('Custom Interval', 'linkedin-posts-slider'),
+	);
+	return $schedules;
+}
+
+// Cron job action
+add_action('linkedin_posts_slider_cron_job', 'linkedin_posts_slider_update_posts');
+function linkedin_posts_slider_update_posts()
+{
+	// Make request to LinkedIn Scrapper Endpoint
+	$response = linkedin_posts_slider_make_request();
+	if ($response && isset($response['results'])) {
+		linkedin_posts_slider_process_posts($response['results']);
+	}
+
+	// Update the status and last update time
+	linkedin_posts_slider_update_status($response !== null);
+}
+
+// Function to make the request to the LinkedIn Scrapper Endpoint
+function linkedin_posts_slider_make_request()
+{
+	$endpoint = get_option('linkedin_scrapper_endpoint', '');
+	$data = array(
+		"secret_key" => "test",
+		"url" => get_option('linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/'),
+		"postSelector" => get_option('linkedin_scrapper_full_post_selector', ''),
+		"selectorsArray" => get_option('linkedin_scrapper_full_selectors_array', ''),
+		"attributesArray" => get_option('linkedin_scrapper_full_attributes_array', ''),
+		"namesArray" => get_option('linkedin_scrapper_full_names_array', '')
+	);
+
+	$args = array(
+		'body' => json_encode($data),
+		'timeout' => '180', // 3 minutes
+		'headers' => array('Content-Type' => 'application/json')
+	);
+
+	$response = wp_remote_post($endpoint, $args);
+
+	if (is_wp_error($response)) {
+		error_log('LinkedIn Posts Slider - Error in request: ' . $response->get_error_message());
+		return null;
+	}
+
+	return json_decode(wp_remote_retrieve_body($response), true);
+}
+
+// Function to process the posts
+function linkedin_posts_slider_process_posts($posts)
 {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_posts';
-	$new_posts_added = false;
 
-	foreach ($data_array as $data) {
-		if ($data['company-name'][0] !== 'Alpine Laser') {
-			continue;  // Skip to the next object if company-name is not "Alpine Laser"
+	foreach ($posts as $post) {
+		// Check if post has required data
+		if (!isset($post['URN'], $post['company_name'], $post['age'], $post['reactions'])) {
+			continue;
 		}
 
-		$urn = $data['URN'][0];
-		$reactions = intval($data['reactions'][0]);  // Sanitize as integer
-		$comments = sanitize_text_field($data['comments'][0]);  // Sanitize as text
-		$age = sanitize_text_field($data['age'][0]);  // Sanitize as text
+		// Check company name
+		if ($post['company_name'][0] !== 'Alpine Laser') {
+			continue;
+		}
 
-		// Check for existing post by urn
-		$existing_post = $wpdb->get_row($wpdb->prepare(
-			"SELECT * FROM $table_name WHERE urn = %s",
-			$urn
-		));
+		$urn = sanitize_text_field($post['URN'][0]);
+		$age = sanitize_text_field($post['age'][0]);
+		$reactions = intval($post['reactions'][0]);
+		$comments = isset($post['comments']) ? sanitize_text_field($post['comments'][0]) : '';
+
+		// Check for existing post
+		$existing_post = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE urn = %s", $urn));
 
 		if ($existing_post) {
 			// Update existing post
 			$wpdb->update(
 				$table_name,
 				array(
+					'age' => $age,
 					'reactions' => $reactions,
 					'comments' => $comments,
-					'age' => $age + " •"
+					'synced' => 0 // Mark as unsynced for further update
 				),
 				array('urn' => $urn)
 			);
 		} else {
-			// Create new post
+			// Insert new post
 			$wpdb->insert(
 				$table_name,
 				array(
 					'urn' => $urn,
-					'synced' => false,
-					'published' => false
+					'author' => 'Placeholder', // Placeholder values
+					'username' => 'Placeholder',
+					'age' => $age,
+					'profilePicture' => 'Placeholder',
+					'post_text' => 'Placeholder',
+					'images' => 'Placeholder',
+					'reactions' => $reactions,
+					'comments' => $comments,
+					'synced' => 0, // Not synced yet
+					'published' => 0,
+					'post_order' => 0
 				)
 			);
-			$new_posts_added = true;  // Set flag if a new post is added
 		}
 	}
-	if ($new_posts_added) {
-		sync_unsynced_posts();  // Call sync_unsynced_posts if any new posts were added
-	}
+
+	// Process each unsynced post
+	linkedin_posts_slider_process_unsynced_posts();
 }
 
-function sync_unsynced_posts()
+// Function to process unsynced posts
+function linkedin_posts_slider_process_unsynced_posts()
 {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'linkedin_posts';
-	$settings_table = $wpdb->prefix . 'linkedin_slider_settings';
-	while (true) {
-		// Find first unsynced post
-		$unsynced_post = $wpdb->get_row("SELECT * FROM $table_name WHERE synced = false LIMIT 1");
 
-		if (!$unsynced_post) {
-			// Break if no unsynced posts found
-			break;
+	// Get unsynced posts
+	$unsynced_posts = $wpdb->get_results("SELECT * FROM $table_name WHERE synced = 0");
+
+	foreach ($unsynced_posts as $post) {
+		// Make request for each unsynced post
+		$response = linkedin_posts_slider_fetch_single_post($post->urn);
+		if ($response && isset($response['results'][0])) {
+			// Update post with new data
+			linkedin_posts_slider_update_single_post($post->id, $response['results'][0]);
 		}
-
-		$urn = $unsynced_post->urn;
-		$request_url = "https://scrape-js.onrender.com/scrape";
-		$post_url = 'https://www.linkedin.com/feed/update/' . $urn;
-
-		// Prepare request data
-		$request_data = array(
-			"secret_key" => "test",
-			"url" => $post_url,
-			"postSelector" => 'section[class="mb-3"]',
-			"selectorsArray" => ['section[class="mb-3"] article', 'time', 'a[data-tracking-control-name="public_post_feed-actor-image"] img', 'p[data-test-id="main-feed-activity-card_commentary"]', 'span[data-test-id="social-actionsreaction-count"]', 'a[data-id="social-actions_comments"]', 'ul[data-test-id="feed-images-content"] img'],
-			"attributesArray" => ["data-attributed-urn", "innerText", "src", "innerText", "innerText", "innerText", "src"],
-			"namesArray" => ["URN", "age", "profilePicture", "post_text", "reactions", "comments", "images"]
-			// ... rest of the data ...
-		);
-
-		// Make POST request
-		$response = wp_remote_post($request_url, array('body' => json_encode($request_data), 'headers' => array('Content-Type' => 'application/json')));
-
-		if (is_wp_error($response)) {
-			// Handle error
-			error_log($response->get_error_message());
-			continue;  // Skip to next iteration
-		}
-
-		$response_data = json_decode(wp_remote_retrieve_body($response), true);
-		$post_data = $response_data['results'][0];
-
-		// Sanitize and prepare updated post data
-		$updated_data = array(
-			'author' => 'Alpine Laser',
-			'username' => 'alpine-laser',
-			'age' => sanitize_text_field($post_data['age'][0]) + " •",
-			'profilePicture' => esc_url_raw($post_data['profilePicture'][0]),
-			'post_text' => sanitize_textarea_field($post_data['post_text'][0]),
-			'images' => array_filter($post_data['images'], 'strlen'),  // Remove any empty strings
-			'reactions' => absint($post_data['reactions'][0]),  // Convert to absolute integer
-			'comments' => sanitize_text_field($post_data['comments'][0]),
-			'synced' => true,
-			'published' => false,
-			'post_order' => $unsynced_post->id,
-		);
-
-		// Update post in database
-		$wpdb->update($table_name, $updated_data, array('id' => $unsynced_post->id));
 	}
-
-	$wpdb->update(
-		$settings_table,
-		['setting_value' => current_time('mysql')],  // Data to update
-		['setting_name' => 'linkedin_scrapper_last_update']  // Where condition
-	);
 }
 
-
-
-// Update scrape_data function to call process_scraped_data
-// Function to extract company name from URL
-function extract_company_name($url)
+// Function to fetch single post data
+function linkedin_posts_slider_fetch_single_post($urn)
 {
-	$parsed_url = parse_url($url);
-	$path_parts = explode('/', $parsed_url['path']);
-	if (in_array('company', $path_parts)) {
-		$company_index = array_search('company', $path_parts) + 1;
-		if ($company_index < count($path_parts)) {
-			return $path_parts[$company_index];
-		}
-	}
-	return null;
-}
+	$endpoint = get_option('linkedin_scrapper_endpoint', '');
+	$post_url = 'https://www.linkedin.com/feed/update/' . $urn;
 
-// Function to scrape data
-function scrape_data()
-{
-	global $wpdb;
-	$settings_table = $wpdb->prefix . 'linkedin_slider_settings'; // Your custom table name
-
-	if (!function_exists('get_custom_setting')) {
-
-		// Function to get setting value from the custom table
-		function get_custom_setting($setting_name, $default_value)
-		{
-			global $wpdb, $settings_table;
-			$value = $wpdb->get_var($wpdb->prepare("SELECT setting_value FROM linkedin_slider_settings WHERE setting_name = %s", $setting_name));
-			return $value;
-		}
-	}
-
-	$url = "https://scrape-js.onrender.com/scrape";
 	$data = array(
 		"secret_key" => "test",
-		"url" => get_custom_setting('linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/'),
-		"postSelector" => 'li[class="mb-1"]',
-		"selectorsArray" => array(
-			'li[class="mb-1"] article',
-			'time',
-			'span[data-test-id="social-actions_reaction-count"]',
-			'a[data-id="social-actions_comments"]',
-			'a[data-tracking-control-name="organization_guest_main-feed-card_feed-actor-name"]'
-		),
-		"attributesArray" => array(
-			"data-activity-urn",
-			"innerText",
-			"innerText",
-			"innerText",
-			"innerText"
-		),
-		"namesArray" => array(
-			"URN",
-			"age",
-			"reactions",
-			"comments",
-			"company-name"
-		)
+		"url" => $post_url,
+		"postSelector" => get_option('linkedin_scrapper_single_post_selector', ''),
+		"selectorsArray" => get_option('linkedin_scrapper_single_selectors_array', ''),
+		"attributesArray" => get_option('linkedin_scrapper_single_attributes_array', ''),
+		"namesArray" => get_option('linkedin_scrapper_single_names_array', '')
 	);
 
-	$ch = curl_init($url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		'Content-Type: application/json'
-	));
-	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-	curl_setopt($ch, CURLOPT_TIMEOUT, 360);  // Set timeout to 6 minutes
-	$response = curl_exec($ch);
+	$args = array(
+		'body' => json_encode($data),
+		'timeout' => '120', // 2 minutes
+		'headers' => array('Content-Type' => 'application/json')
+	);
 
-	if ($response === false) {
-		$error = curl_error($ch);
-		curl_close($ch);
-		echo "An error occurred during the API call: $error";
+	$response = wp_remote_post($endpoint, $args);
+
+	if (is_wp_error($response)) {
+		error_log('LinkedIn Posts Slider - Error in single post request: ' . $response->get_error_message());
 		return null;
 	}
 
-	curl_close($ch);
-	$decoded_response = json_decode($response, true);
+	return json_decode(wp_remote_retrieve_body($response), true);
+}
 
-	if (isset($decoded_response["results"]) && is_array($decoded_response["results"])) {
-		process_scraped_data($decoded_response["results"]);  // Call process_scraped_data with response array
-		return $decoded_response["results"];
+// Function to update single post data
+function linkedin_posts_slider_update_single_post($post_id, $post_data)
+{
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'linkedin_posts';
+
+	// Prepare data for update
+	$update_data = array(
+		'author' => sanitize_text_field($post_data['author'][0] ?? 'Unknown'),
+		'username' => sanitize_text_field($post_data['username'][0] ?? 'Unknown'),
+		'profilePicture' => esc_url_raw($post_data['profilePicture'][0] ?? ''),
+		'post_text' => sanitize_text_field($post_data['post_text'][0] ?? ''),
+		'images' => maybe_serialize($post_data['images'] ?? array()),
+		'synced' => 1
+	);
+
+	// Update the post
+	$wpdb->update($table_name, $update_data, array('id' => $post_id));
+}
+
+// Function to update status and last update time
+function linkedin_posts_slider_update_status($success)
+{
+	if ($success) {
+		update_option('linkedin_scrapper_last_update', current_time('mysql'));
+		update_option('linkedin_scrapper_status', 'OK');
 	} else {
-		echo "No results found or an error occurred.";
-		return null;
+		update_option('linkedin_scrapper_status', 'ERROR');
 	}
 }
 
-// Schedule scrape_data function to run hourly
-if (!wp_next_scheduled('scrape_data_cron_job')) {
-	wp_schedule_event(time(), 'daily', 'scrape_data_cron_job');
+// Activate and deactivate hooks for cron job
+register_activation_hook(__FILE__, 'linkedin_posts_slider_activation');
+function linkedin_posts_slider_activation()
+{
+	if (!wp_next_scheduled('linkedin_posts_slider_cron_job')) {
+		wp_schedule_event(time(), 'custom', 'linkedin_posts_slider_cron_job');
+	}
 }
-add_action('scrape_data_cron_job', 'scrape_data');
+
+register_deactivation_hook(__FILE__, 'linkedin_posts_slider_deactivation');
+function linkedin_posts_slider_deactivation()
+{
+	wp_clear_scheduled_hook('linkedin_posts_slider_cron_job');
+}
