@@ -9,6 +9,8 @@ function linkedin_posts_slider_create_table()
   global $wpdb;
   $table_name = $wpdb->prefix . 'linkedin_posts';
   $charset_collate = $wpdb->get_charset_collate();
+
+  // Create table SQL
   $sql = "CREATE TABLE $table_name (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         urn text NOT NULL,
@@ -25,10 +27,11 @@ function linkedin_posts_slider_create_table()
         post_order int NOT NULL,
         PRIMARY KEY (id)
     ) $charset_collate;";
+
   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
   dbDelta($sql);
 
-  // JSON data from the file
+  // Decode JSON data
   $json_data = <<<'EOT'
       [
         {
@@ -169,43 +172,31 @@ function linkedin_posts_slider_create_table()
   // Decode JSON data into a PHP array
   $data = json_decode($json_data, true);
 
-  // Iterate through the array and insert each item into the database
+  // Insert each item into the database
   foreach ($data as $item) {
-    // Sanitize the data before inserting into the database
-    $sanitized_data = array_map('sanitize_text_field', $item);
-    $sanitized_data['images'] = json_encode($sanitized_data['images']);
-
-    $result = $wpdb->insert(
-      $table_name,
-      $sanitized_data,
-      array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d')
+    // Sanitize data
+    $sanitized_data = array(
+      'urn' => sanitize_text_field($item['urn']),
+      'author' => sanitize_text_field($item['author']),
+      'username' => sanitize_text_field($item['username']),
+      'age' => sanitize_text_field($item['age']),
+      'profilePicture' => esc_url_raw($item['profilePicture']),
+      'post_text' => sanitize_text_field($item['post_text']),
+      'images' => maybe_serialize($item['images']),
+      'reactions' => intval($item['reactions']),
+      'comments' => sanitize_text_field($item['comments']),
+      'synced' => 1,
+      'published' => 1,
+      'post_order' => 0 // Temporary placeholder
     );
 
-    // Check if the insert operation was successful
-    if ($result === false) {
-      // Handle error
-      error_log('Failed to insert data into the database');
-      continue;
-    }
+    $wpdb->insert($table_name, $sanitized_data);
 
-    // Get the last inserted ID
-    $lastid = $wpdb->insert_id;
-
-    // Update the 'post_order' field to the last inserted ID
-    $result = $wpdb->update(
-      $table_name,
-      array('post_order' => $lastid),
-      array('id' => $lastid)
-    );
-
-    // Check if the update operation was successful
-    if ($result === false) {
-      // Handle error
-      error_log('Failed to update the post_order field in the database');
-    }
+    // Update 'post_order' to match the row ID
+    $last_id = $wpdb->insert_id;
+    $wpdb->update($table_name, array('post_order' => $last_id), array('id' => $last_id));
   }
 }
-// Function to create the 'linkedin_slider_settings' table
 // Activation function to initialize plugin options
 function linkedin_posts_slider_activate()
 {
