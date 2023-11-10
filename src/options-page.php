@@ -17,38 +17,46 @@ function enqueue_preview_scripts()
 }
 add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['style_settings_form'])) {
-	// Company Name Section
-	update_option('section-company-color', sanitize_text_field($_POST['section-company-color']));
-	update_option('section-company-font-size', sanitize_text_field($_POST['section-company-font-size']));
-	update_option('section-company-font-weight', sanitize_text_field($_POST['section-company-font-weight']));
-	update_option('section-company-line-height', sanitize_text_field($_POST['section-company-line-height']));
-	update_option('section-company-font-family', sanitize_text_field($_POST['section-company-font-family']));
+add_action('admin_init', 'process_style_settings_form');
 
-	// Username and Post Date Section
-	update_option('section-author-date-color', sanitize_text_field($_POST['section-author-date-color']));
-	update_option('section-author-date-font-size', sanitize_text_field($_POST['section-author-date-font-size']));
-	update_option('section-author-date-font-weight', sanitize_text_field($_POST['section-author-date-font-weight']));
-	update_option('section-author-date-line-height', sanitize_text_field($_POST['section-author-date-line-height']));
-	update_option('section-author-date-font-family', sanitize_text_field($_POST['section-author-date-font-family']));
+function process_style_settings_form()
+{
+	if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['style_settings_form'])) {
+		// process form and update options
+		// Company Name Section
+		update_option('section-company-color', sanitize_text_field($_POST['section-company-color']));
+		update_option('section-company-font-size', sanitize_text_field($_POST['section-company-font-size']));
+		update_option('section-company-font-weight', sanitize_text_field($_POST['section-company-font-weight']));
+		update_option('section-company-line-height', sanitize_text_field($_POST['section-company-line-height']));
+		update_option('section-company-font-family', sanitize_text_field($_POST['section-company-font-family']));
 
-	// Post Text Section
-	update_option('section-body-color', sanitize_text_field($_POST['section-body-color']));
-	update_option('section-body-font-size', sanitize_text_field($_POST['section-body-font-size']));
-	update_option('section-body-webkit-line-clamp', sanitize_text_field($_POST['section-body-webkit-line-clamp']));
-	update_option('section-body-font-family', sanitize_text_field($_POST['section-body-font-family']));
+		// Username and Post Date Section
+		update_option('section-author-date-color', sanitize_text_field($_POST['section-author-date-color']));
+		update_option('section-author-date-font-size', sanitize_text_field($_POST['section-author-date-font-size']));
+		update_option('section-author-date-font-weight', sanitize_text_field($_POST['section-author-date-font-weight']));
+		update_option('section-author-date-line-height', sanitize_text_field($_POST['section-author-date-line-height']));
+		update_option('section-author-date-font-family', sanitize_text_field($_POST['section-author-date-font-family']));
 
-	// Post Interactions and Comments Section
-	update_option('section-interactions-color', sanitize_text_field($_POST['section-interactions-color']));
-	update_option('section-interactions-font-size', sanitize_text_field($_POST['section-interactions-font-size']));
-	update_option('section-interactions-font-weight', sanitize_text_field($_POST['section-interactions-font-weight']));
-	update_option('section-interactions-line-height', sanitize_text_field($_POST['section-interactions-line-height']));
-	update_option('section-interactions-font-family', sanitize_text_field($_POST['section-interactions-font-family']));
+		// Post Text Section
+		update_option('section-body-color', sanitize_text_field($_POST['section-body-color']));
+		update_option('section-body-font-size', sanitize_text_field($_POST['section-body-font-size']));
+		update_option('section-body-webkit-line-clamp', sanitize_text_field($_POST['section-body-webkit-line-clamp']));
+		update_option('section-body-font-family', sanitize_text_field($_POST['section-body-font-family']));
 
-	// Redirect back to settings page with a message
-	wp_safe_redirect($_SERVER['REQUEST_URI'] . "?settings-updated=true");
-	exit;
+		// Post Interactions and Comments Section
+		update_option('section-interactions-color', sanitize_text_field($_POST['section-interactions-color']));
+		update_option('section-interactions-font-size', sanitize_text_field($_POST['section-interactions-font-size']));
+		update_option('section-interactions-font-weight', sanitize_text_field($_POST['section-interactions-font-weight']));
+		update_option('section-interactions-line-height', sanitize_text_field($_POST['section-interactions-line-height']));
+		update_option('section-interactions-font-family', sanitize_text_field($_POST['section-interactions-font-family']));
+
+		// Redirect back to settings page with a message
+		wp_safe_redirect($_SERVER['REQUEST_URI'] . "?settings-updated=true");
+		exit;
+	}
 }
+
+
 function linkedin_posts_slider_options_page()
 {
 	// Check user capabilities
