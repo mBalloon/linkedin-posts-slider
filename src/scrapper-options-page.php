@@ -66,6 +66,9 @@ function linkedin_posts_slider_options_page()
 	$synced_posts = $wpdb->get_var("SELECT COUNT(*) FROM {$posts_table} WHERE synced = 1");
 
 	// Retrieve settings values for form population
+	$last_update = get_option('linkedin_scrapper_last_update', 'Never');
+	$status = get_option('linkedin_scrapper_status', 'Unknown');
+	// Retrieve settings values for form population
 	$settings = array(
 		'linkedin_company_url' => get_option('linkedin_company_url', ''),
 		'linkedin_slider_open_link' => get_option('linkedin_slider_open_link', 0),
