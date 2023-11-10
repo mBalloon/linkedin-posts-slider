@@ -218,7 +218,7 @@ function linkedin_posts_slider_process_posts($posts)
 					'username' => 'Placeholder',
 					'age' => $age,
 					'profilePicture' => 'Placeholder',
-					'post_text' => 'Placeholder',
+					'copy' => 'Placeholder',
 					'images' => 'Placeholder',
 					'reactions' => $reactions,
 					'comments' => $comments,
@@ -295,7 +295,7 @@ function linkedin_posts_slider_update_single_post($post_id, $post_data)
 		'author' => sanitize_text_field($post_data['author'][0] ?? 'Unknown'),
 		'username' => sanitize_text_field($post_data['username'][0] ?? 'Unknown'),
 		'profilePicture' => esc_url_raw($post_data['profilePicture'][0] ?? ''),
-		'post_text' => sanitize_text_field($post_data['post_text'][0] ?? ''),
+		'copy' => sanitize_text_field($post_data['copy'][0] ?? ''),
 		'images' => maybe_serialize($post_data['images'] ?? array()),
 		'synced' => 1
 	);

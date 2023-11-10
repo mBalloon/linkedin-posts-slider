@@ -18,7 +18,7 @@ function linkedin_posts_slider_create_table()
         username text NOT NULL,
         age text NOT NULL,
         profilePicture text NOT NULL,
-        post_text text NOT NULL,
+        copy text NOT NULL,
         images text NOT NULL,
         reactions int NOT NULL,
         comments text NOT NULL,
@@ -41,7 +41,7 @@ function linkedin_posts_slider_create_table()
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "1mo •",
-          "post_text": "Announcing the MediSCAN Pro - Alpine Laser's latest high performance laser processing workstation optimized for medical device manufacturing!\n\nThe configuration shown here features programmable XYZ motion coupled with a Scanlab precSYS 5-axis #micromachining galvo and a TRUMPF 2230 ultra short pulsed 515nm green #laser source and coaxial vision.\n\nThis machine was designed to process very fine features and complex holes in hard to machine polymer materials. (Shown are 0.25mm holes in a 1mm Pellethane tube)\n\nOther configurations of this workstation can be optimized for flat sheet cutting, traditional 2D galvo applications, marking, complex ablation, to name a few.\n\nContact sales@alpinelaser.com for more information.\n\nSCANLAB GmbH\nTRUMPF North America\n#medicaldevicemanufacturing",
+          "copy": "Announcing the MediSCAN Pro - Alpine Laser's latest high performance laser processing workstation optimized for medical device manufacturing!\n\nThe configuration shown here features programmable XYZ motion coupled with a Scanlab precSYS 5-axis #micromachining galvo and a TRUMPF 2230 ultra short pulsed 515nm green #laser source and coaxial vision.\n\nThis machine was designed to process very fine features and complex holes in hard to machine polymer materials. (Shown are 0.25mm holes in a 1mm Pellethane tube)\n\nOther configurations of this workstation can be optimized for flat sheet cutting, traditional 2D galvo applications, marking, complex ablation, to name a few.\n\nContact sales@alpinelaser.com for more information.\n\nSCANLAB GmbH\nTRUMPF North America\n#medicaldevicemanufacturing",
           "images": [
             "https://media.licdn.com/dms/image/D5622AQHrz8D5-4lTDw/feedshare-shrink_800/0/1695314437373?e=1700697600&v=beta&t=slwjjR_eHPJPHLveIXf24XLpNRp32hy41phrEB_pMyY",
             "https://media.licdn.com/dms/image/D5622AQGu92JK888ZUw/feedshare-shrink_800/0/1695314437386?e=1700697600&v=beta&t=Zf7xMoDtwBTCN905mseXz8rk77dtmfOSm08Tfh7qUUI",
@@ -59,7 +59,7 @@ function linkedin_posts_slider_create_table()
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "1w •",
-          "post_text": "Come see a live demo of femtosecond tube cutting today and tomorrow at MDM in booth 2803!",
+          "copy": "Come see a live demo of femtosecond tube cutting today and tomorrow at MDM in booth 2803!",
           "images": [
             "https://media.licdn.com/dms/image/D4E22AQHZ109l5a2sMg/feedshare-shrink_800/0/1696948113736?e=1700697600&v=beta&t=keJyTShAaigbh_J5MNMW6ZZKkM1WwZY58ajF0vkf-O4"
           ],
@@ -73,7 +73,7 @@ function linkedin_posts_slider_create_table()
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "3mo •",
-          "post_text": "Just completed the installation of two femtosecond laser tube cutting workstations paired with bar feeders and custom Alpine automated part extractors enabling this customer to run catheter shaft production lights out.\n\nContact the team at Alpine Laser today to see how we can help you transform your laser cutting operation.\n\nsales@alpinelaser.com",
+          "copy": "Just completed the installation of two femtosecond laser tube cutting workstations paired with bar feeders and custom Alpine automated part extractors enabling this customer to run catheter shaft production lights out.\n\nContact the team at Alpine Laser today to see how we can help you transform your laser cutting operation.\n\nsales@alpinelaser.com",
           "images": [
             "https://media.licdn.com/dms/image/D5622AQE0uiOv1X59Og/feedshare-shrink_800/0/1689108312570?e=1700697600&v=beta&t=eJ1Ntg5tN2cqRJ--r5sJcHbaLCGW60wGlbWvl5OAZH8",
             "https://media.licdn.com/dms/image/D5622AQEDvNoAXKgCkA/feedshare-shrink_800/0/1689108308231?e=1700697600&v=beta&t=1soEvuOe2pQNSHGwxWPl5jPdBttmoM3T8rQm_Myxkss",
@@ -91,7 +91,7 @@ function linkedin_posts_slider_create_table()
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "3mo •",
-          "post_text": "Need cuts with no heat affected zone and very clean edges? Take a look at these sample parts cut with the Alpine Laser Medicut Pro workstation utilizing a top of the line ultra short pulse femtosecond laser from TRUMPF.",
+          "copy": "Need cuts with no heat affected zone and very clean edges? Take a look at these sample parts cut with the Alpine Laser Medicut Pro workstation utilizing a top of the line ultra short pulse femtosecond laser from TRUMPF.",
           "images": [
             "https://media.licdn.com/dms/image/D4D22AQGqLOmYU5zQJQ/feedshare-shrink_800/0/1689258424335?e=1700697600&v=beta&t=uP8Ie76uxvmOw9ahFB3slq595VwceCZnTBhObQLgGkM",
             "https://media.licdn.com/dms/image/D4D22AQFjeXMtn0ZgcQ/feedshare-shrink_800/0/1689258424269?e=1700697600&v=beta&t=v7XNtnlThPCVqQm4mYP_-0eKuWfLRkqwBQUMbXuzlxw",
@@ -108,7 +108,7 @@ function linkedin_posts_slider_create_table()
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "9mo •",
-          "post_text": "* Femtosecond Workstation Spotlight *\n\n- Extremely compact integration of an Ultra-Short Pulse, Femtosecond laser source\n- Hollow Core Fiber Delivery with Active Beam Management\n- Laser control module and laser head unit mounted within the machine base\n- Available in both programmable 2 and 4 axis configurations\n\nInquire to learn more at sales@alpinelaser.com",
+          "copy": "* Femtosecond Workstation Spotlight *\n\n- Extremely compact integration of an Ultra-Short Pulse, Femtosecond laser source\n- Hollow Core Fiber Delivery with Active Beam Management\n- Laser control module and laser head unit mounted within the machine base\n- Available in both programmable 2 and 4 axis configurations\n\nInquire to learn more at sales@alpinelaser.com",
           "images": [
             "https://media.licdn.com/dms/image/C5622AQG3G4m1HdBRTQ/feedshare-shrink_800/0/1674590456558?e=1700697600&v=beta&t=k5YtvgDRkv5WaSn1dHoYUCeUv0cTuOOxRMGtQvZXWSg",
             "https://media.licdn.com/dms/image/C5622AQHltS4_M21yfQ/feedshare-shrink_800/0/1674590456620?e=1700697600&v=beta&t=XjGMMnhIUNUcXz6xMwiUb-T9Aq1608FNLQ-_XARboyk",
@@ -126,7 +126,7 @@ function linkedin_posts_slider_create_table()
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "10mo •",
-          "post_text": "* Workstation Spotlight * \n\n Our team shipped and installed this 4-axis Fiber Laser Tube Cutter just before Christmas! \n\n This workstation is configured with... \n\n - Programmable 4-axis motion control \n\n - Complete Quick Change Tooling and Class 1 Cutting Enclosure \n\n - Integrated Closed loop wet cut system \n\n - Compact footprint with side access E-box",
+          "copy": "* Workstation Spotlight * \n\n Our team shipped and installed this 4-axis Fiber Laser Tube Cutter just before Christmas! \n\n This workstation is configured with... \n\n - Programmable 4-axis motion control \n\n - Complete Quick Change Tooling and Class 1 Cutting Enclosure \n\n - Integrated Closed loop wet cut system \n\n - Compact footprint with side access E-box",
           "images": [
             "https://media.licdn.com/dms/image/C5622AQHvYERDghz__Q/feedshare-shrink_800/0/1672680058000?e=1700697600&v=beta&t=KoWwS3CnANMtkSZ06pxmG2s65N7xpsNiBCnJWcAVMZU",
             "https://media.licdn.com/dms/image/C5622AQGWbi5H_tF4dg/feedshare-shrink_800/0/1672680057456?e=1700697600&v=beta&t=slCQsGtSrTuAqbVmCIc8sVdbBjIjH07isIh_sm1wJhU",
@@ -144,7 +144,7 @@ function linkedin_posts_slider_create_table()
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "2mo •",
-          "post_text": "Laser cutting catheter shafts allows for continuously variable bending stiffness, torsion, and compression to open up a new realm of possibilities for medical device design engineers.\n\nShown below is a 0.027\" OD 0.0025\" wall (0.686mm OD .064mm wall) microcatheter shaft cut on the Medicut Pro Fiber Laser.\n\nContact us at sales@alpinelaser.com for more info.\n\nThank you TRUMPF for the photo.",
+          "copy": "Laser cutting catheter shafts allows for continuously variable bending stiffness, torsion, and compression to open up a new realm of possibilities for medical device design engineers.\n\nShown below is a 0.027\" OD 0.0025\" wall (0.686mm OD .064mm wall) microcatheter shaft cut on the Medicut Pro Fiber Laser.\n\nContact us at sales@alpinelaser.com for more info.\n\nThank you TRUMPF for the photo.",
           "images": [
             "https://media.licdn.com/dms/image/D5622AQElkuOrteJbWg/feedshare-shrink_800/0/1691003603850?e=1700697600&v=beta&t=zKadIpnMKGNDT1FflkoCtSLu6e_ZCMRSFWNR5U2vPC0"
           ],
@@ -159,7 +159,7 @@ function linkedin_posts_slider_create_table()
           "author": "Alpine Laser",
           "username": "alpine-laser",
           "age": "3mo •",
-          "post_text": "Laser cutting highly reflective material & precious metal alloys can prove challenging for traditional laser workstations.\n\nWe had a recent application inquiry to cut copper and ran the parts on our standard Medicut Pro system equipped with a Fiber Laser. The same success has been demonstrated with precious metal alloys such as Pt, PtIr, PtW, Au, Ag, etc.\n\nPart Description: Copper Tube 2mm OD with a 0.3mm wall\n\nContact us at sales@alpinelaser.com for more info.",
+          "copy": "Laser cutting highly reflective material & precious metal alloys can prove challenging for traditional laser workstations.\n\nWe had a recent application inquiry to cut copper and ran the parts on our standard Medicut Pro system equipped with a Fiber Laser. The same success has been demonstrated with precious metal alloys such as Pt, PtIr, PtW, Au, Ag, etc.\n\nPart Description: Copper Tube 2mm OD with a 0.3mm wall\n\nContact us at sales@alpinelaser.com for more info.",
           "images": [
             "https://media.licdn.com/dms/image/D4E22AQH9L9hhXmwLhg/feedshare-shrink_800/0/1690404325098?e=1700697600&v=beta&t=bf4OKRAsom5vyJVJZ1G9oS3Ay3x2Imvr-4EJC2j5Whs"
           ],
@@ -181,7 +181,7 @@ function linkedin_posts_slider_create_table()
       'username' => sanitize_text_field($item['username']),
       'age' => sanitize_text_field($item['age']),
       'profilePicture' => esc_url_raw($item['profilePicture']),
-      'post_text' => sanitize_text_field($item['post_text']),
+      'copy' => sanitize_text_field($item['copy']),
       'images' => maybe_serialize($item['images']),
       'reactions' => intval($item['reactions']),
       'comments' => sanitize_text_field($item['comments']),
@@ -235,7 +235,7 @@ function linkedin_posts_slider_activate()
     'linkedin_scrapper_single_post_selector' => 'section[class="mb-3"]',
     'linkedin_scrapper_single_selectors_array' => '[\'section[class="mb-3"] article\',\'time\',\'a[data-tracking-control-name="public_post_feed-actor-image"] img\',\'p[data-test-id="main-feed-activity-card_commentary"]\',\'span[data-test-id="social-actionsreaction-count"]\',\'a[data-test-id="social-actions_comments"]\',\'ul[data-test-id="feed-images-content"] img\']',
     'linkedin_scrapper_single_attributes_array' => '["data-attributed-urn","innerText","src","innerText","innerText","innerText","src"]',
-    'linkedin_scrapper_single_names_array' => '["URN","age","profilePicture","post_text","reactions" ,"comments","images"]'
+    'linkedin_scrapper_single_names_array' => '["URN","age","profilePicture","copy","reactions" ,"comments","images"]'
     // Add other settings as needed
   );
 

@@ -39,7 +39,7 @@ function sync_linkedin_posts()
                 'username' => $data['username'],
                 'age' => $data['age'],
                 'profilePicture' => $data['profilePicture'],
-                'post_text' => $data['copy'],
+                'copy' => $data['copy'],
                 'images' => json_encode($data['images']),
                 'reactions' => $data['reactions'],
                 'comments' => $data['comments'],

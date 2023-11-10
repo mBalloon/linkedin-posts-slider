@@ -54,7 +54,7 @@ function linkedin_posts_slider_admin_table_page()
               ?>
             </td>
             <td><?php echo esc_html($row->age); ?></td>
-            <td><?php echo wp_trim_words(esc_html($row->post_text), 10, '...'); ?></td>
+            <td><?php echo wp_trim_words(esc_html($row->copy), 10, '...'); ?></td>
             <td>
               <div class="action-buttons">
                 <form method="post" style="display:inline;">
