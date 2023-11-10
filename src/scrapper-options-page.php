@@ -19,7 +19,7 @@ add_action('admin_enqueue_scripts', 'linkedin_posts_slider_enqueue_styles');
 // Handle form submission
 function handle_scrapper_settings_form_submission()
 {
-	if (isset($_POST['style_settings_form'])) {
+	if (isset($_POST['action']) && $_POST['action'] === 'update_scrapper_settings') {
 		if (!current_user_can('manage_options')) {
 			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
@@ -48,10 +48,8 @@ function handle_scrapper_settings_form_submission()
 }
 add_action('admin_post_update_scrapper_settings', 'handle_scrapper_settings_form_submission');
 
-
-
 // Function to display the scrapper options page
-function linkedin_posts_scrapper_options_page()
+function linkedin_posts_slider_options_page()
 {
 	global $wpdb;
 	// Check user capabilities
@@ -77,7 +75,7 @@ function linkedin_posts_scrapper_options_page()
 		'linkedin_scrapper_status' => get_option('linkedin_scrapper_status', 'OK'),
 	);
 
-
+	// Start the settings form
 ?>
 	<div class="wrap">
 		<h1><?php echo esc_html('LinkedIn Scrapper Options'); ?></h1>
