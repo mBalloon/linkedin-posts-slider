@@ -17,12 +17,10 @@ function enqueue_preview_scripts()
 }
 add_action('admin_enqueue_scripts', 'enqueue_preview_scripts');
 
-add_action('admin_init', 'process_style_settings_form');
-
 function process_style_settings_form()
 {
-	if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['style_settings_form'])) {
-		// process form and update options
+	if (isset($_POST['style_settings_form'])) {
+		// Process form and update options
 		// Company Name Section
 		update_option('section-company-color', sanitize_text_field($_POST['section-company-color']));
 		update_option('section-company-font-size', sanitize_text_field($_POST['section-company-font-size']));
@@ -51,11 +49,12 @@ function process_style_settings_form()
 		update_option('section-interactions-font-family', sanitize_text_field($_POST['section-interactions-font-family']));
 
 		// Redirect back to settings page with a message
-		wp_safe_redirect($_SERVER['REQUEST_URI'] . "?settings-updated=true");
+		$redirect_url = add_query_arg('settings-updated', 'true', $_SERVER['REQUEST_URI']);
+		wp_safe_redirect($redirect_url);
 		exit;
 	}
 }
-
+add_action('admin_init', 'process_style_settings_form');
 
 function linkedin_posts_slider_options_page()
 {
@@ -63,6 +62,14 @@ function linkedin_posts_slider_options_page()
 	if (!current_user_can('manage_options')) {
 		return;
 	}
+
+	// Check if the user has submitted the form
+	if (isset($_GET['settings-updated'])) {
+		add_settings_error('linkedin_posts_slider_messages', 'linkedin_posts_slider_message', __('Settings Saved', 'linkedin-posts-slider'), 'updated');
+	}
+
+	// Show error/update messages
+	settings_errors('linkedin_posts_slider_messages');
 
 ?>
 
