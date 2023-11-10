@@ -42,17 +42,11 @@ function linkedin_posts_slider_admin_table_page()
             <td><?php echo esc_html($row->id); ?></td>
             <td class="thumbnail-cell">
               <?php
-              // Use stripslashes to remove any added slashes
-              $json_images = stripslashes($row->images);
-              $images = json_decode($json_images);
-
-              // Debugging
-              echo '<pre>'; // Makes the debug output readable
-              echo 'JSON String: ' . htmlspecialchars($json_images) . "\n";
-              var_dump($images); // Check what $images contains
-              echo '</pre>';
+              // Unserialize the images data
+              $images = maybe_unserialize($row->images);
 
               if (!empty($images) && is_array($images)) {
+                // Assuming $images is an array of URLs
                 echo '<img src="' . esc_url($images[0]) . '" alt="" width="100" height="100" />';
               } else {
                 echo 'No image available';
