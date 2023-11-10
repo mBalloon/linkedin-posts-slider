@@ -43,8 +43,11 @@ function linkedin_posts_slider_admin_table_page()
             <td class="thumbnail-cell">
               <?php
               $images = json_decode($row->images);
-              if (!empty($images)) {
-                echo '<img src="' . esc_url($images[0]) . '" alt="" width="100" height="100" />';  /* Adjust width and height as needed */
+              // Debugging: Remove this line in production
+              var_dump($images); // Check what $images contains
+
+              if (!empty($images) && is_array($images)) {
+                echo '<img src="' . esc_url($images[0]) . '" alt="" width="100" height="100" />';  // Ensure the first item exists and is a valid URL
               }
               ?>
             </td>
