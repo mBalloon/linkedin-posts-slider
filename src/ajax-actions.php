@@ -37,12 +37,11 @@ function publish_unpublish()
 	}
 }
 add_action('wp_ajax_publish_unpublish', 'publish_unpublish');
-
 function get_linkedin_posts()
 {
 	global $wpdb;
 
-	// Check if the synced and published values are set to true
+	// Set the synced and published values to true
 	$synced = true;
 	$published = true;
 
@@ -59,12 +58,25 @@ function get_linkedin_posts()
 
 	// Decode the JSON-encoded images array
 	foreach ($rows as &$row) {
-		$row['images'] = json_decode($row['images']);
+		if (!empty($row['images']) && is_string($row['images'])) {
+			$decoded_images = json_decode($row['images'], true);
+			if (json_last_error() === JSON_ERROR_NONE) {
+				// Assign decoded images if JSON decoding is successful
+				$row['images'] = $decoded_images;
+			} else {
+				// Handle invalid JSON data
+				$row['images'] = []; // Assign an empty array or any default value
+			}
+		} else {
+			// Handle cases where images data is empty or not a string
+			$row['images'] = []; // Assign an empty array or any default value
+		}
 	}
 
 	// Send the data back to the frontend
 	wp_send_json_success($rows);
 }
+
 
 add_action('wp_ajax_get_linkedin_posts', 'get_linkedin_posts');
 add_action('wp_ajax_nopriv_get_linkedin_posts', 'get_linkedin_posts');
