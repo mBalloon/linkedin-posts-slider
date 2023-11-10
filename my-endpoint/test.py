@@ -1,7 +1,7 @@
 import requests
 
 # Define the URL of the Node.js server
-url = "http://localhost:3001/scrape"
+url = "https://scrape-js.onrender.com/scrape"
 
 # Define the data to be sent in the POST request
 data = {

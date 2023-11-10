@@ -71,28 +71,6 @@ add_action('wp_ajax_nopriv_get_linkedin_posts', 'get_linkedin_posts');
 
 
 
-/*
-function update_post_order()
-{
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'linkedin_posts';
-	$post_order = $_POST['post_order'];
-
-	foreach ($post_order as $index => $postId) {
-		$wpdb->update(
-			$table_name,
-			['post_order' => $index],
-			['id' => $postId],
-			['%d'],
-			['%d']
-		);
-	}
-
-	wp_send_json_success();
-}
-add_action('wp_ajax_update_post_order', 'update_post_order');
-*/
-
 function delete_post()
 {
 	global $wpdb;
@@ -190,7 +168,7 @@ function sync_unsynced_posts()
 		}
 
 		$urn = $unsynced_post->urn;
-		$request_url = "http://localhost:3001/scrape";
+		$request_url = "https://scrape-js.onrender.com/scrape";
 		$post_url = 'https://www.linkedin.com/feed/update/' . $urn;
 
 		// Prepare request data
@@ -276,7 +254,7 @@ function scrape_data()
 		}
 	}
 
-	$url = "http://localhost:3001/scrape";
+	$url = "https://scrape-js.onrender.com/scrape";
 	$data = array(
 		"secret_key" => "test",
 		"url" => get_custom_setting('linkedin_company_url', 'https://www.linkedin.com/company/alpine-laser/'),
